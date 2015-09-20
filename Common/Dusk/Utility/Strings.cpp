@@ -1,46 +1,22 @@
 #include "Strings.hpp"
 
-#if defined(DUSK_OS_WINDOWS)
-
-#else
-
-#define MAX_PATH 1024
-#include <libgen.h>
-#include <string.h>
-
-#endif
+#include <Dusk/Utility/Platform.hpp>
 
 namespace dusk
 {
 
 string Basename(const string& filename)
 {
-#if defined(DUSK_OS_WINDOWS)
-#else
-
-	if (filename.size() >= MAX_PATH)
-		return "";
-
-	char buffer[MAX_PATH];
-	strcpy(buffer, filename.c_str());
-	return string(basename(buffer));
-
-#endif
+	return filename.substr(filename.find_last_of("/\\") + 1);
 }
 
 string Dirname(const string& filename)
 {
-#if defined(DUSK_OS_WINDOWS)
-#else
+	if (filename.back() == '/' || filename.back() == '\\') {
+		return filename.substr(0, filename.substr(0, filename.length() - 1).find_last_of("/\\"));
+	}
 
-	if (filename.size() >= MAX_PATH)
-		return "";
-
-	char buffer[MAX_PATH];
-	strcpy(buffer, filename.c_str());
-	return string(dirname(buffer));
-
-#endif
+	return filename.substr(0, filename.find_last_of("/\\"));
 }
 
 } // namespace dusk

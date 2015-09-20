@@ -113,10 +113,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
+      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x86\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -143,10 +143,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
+      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x64\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -177,10 +177,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
+      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x86\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -211,10 +211,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
+      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x64\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
