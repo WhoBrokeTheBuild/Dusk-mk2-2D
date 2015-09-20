@@ -95,6 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -107,7 +108,8 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)compile-scripts.bat build $(Configuration) $(Platform) $(ProjectDir)Scripts</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -129,7 +132,8 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)compile-scripts.bat build $(Configuration) $(Platform) $(ProjectDir)Scripts</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,6 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -155,7 +160,8 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)compile-scripts.bat build $(Configuration) $(Platform) $(ProjectDir)Scripts</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -167,6 +173,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -181,28 +188,36 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)compile-scripts.bat build $(Configuration) $(Platform) $(ProjectDir)Scripts</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\Animation.cpp" />
+    <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Graphics\GraphicsSystem.cpp" />
-    <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
     <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Input\Inputs\Key.cpp" />
     <ClCompile Include="Input\Inputs\Mouse.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Graphics\Sprite.cpp" />
+    <ClCompile Include="Graphics\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Geometry\Vector2.hpp" />
+    <ClInclude Include="Graphics\Animation.hpp" />
+    <ClInclude Include="Graphics\GraphicsContext.hpp" />
     <ClInclude Include="Graphics\GraphicsSystem.hpp" />
-    <ClInclude Include="Graphics\Texture.hpp" />
     <ClInclude Include="Graphics\Window.hpp" />
     <ClInclude Include="Input\InputSystem.hpp" />
     <ClInclude Include="Input\Inputs\Key.hpp" />
     <ClInclude Include="Input\Inputs\Mouse.hpp" />
     <ClInclude Include="Program.hpp" />
+    <ClInclude Include="Graphics\Sprite.hpp" />
+    <ClInclude Include="Graphics\Texture.hpp" />
+    <ClInclude Include="Geometry\Rect.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

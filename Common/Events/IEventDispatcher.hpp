@@ -8,7 +8,7 @@
 
 #include <lua.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 typedef Delegate<void, const Event&> EventDelegate;
@@ -96,6 +96,6 @@ void IEventDispatcher::RemoveAllMethods( ObjectType* object )
 	}
 }
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_EVENT_DISPATCHER_HPP

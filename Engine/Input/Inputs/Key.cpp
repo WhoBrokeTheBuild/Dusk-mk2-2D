@@ -1,6 +1,6 @@
 #include "Key.hpp"
 
-namespace Dusk
+namespace dusk
 {
 
 int KeyEventData::PushDataToLua(lua_State* L) const
@@ -9,4 +9,4 @@ int KeyEventData::PushDataToLua(lua_State* L) const
 	return 1;
 }
 
-} // namespace Dusk
+} // namespace dusk

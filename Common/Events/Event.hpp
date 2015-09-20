@@ -8,7 +8,7 @@
 
 using std::string;
 
-namespace Dusk
+namespace dusk
 {
 
 typedef unsigned int EventID;
@@ -85,6 +85,6 @@ protected:
 
 }; // class Event
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_EVENT_HPP

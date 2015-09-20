@@ -2,12 +2,12 @@
 
 #include <Scripting/ScriptingSystem.hpp>
 
-namespace Dusk 
+namespace dusk 
 {
 
 ArrayList<IEventDispatcher*> IEventDispatcher::s_Dispatchers = ArrayList<IEventDispatcher*>();
 
-Dusk::IEventDispatcher::IEventDispatcher() :
+dusk::IEventDispatcher::IEventDispatcher() :
 	m_EventMap(),
 	m_Changed(false)
 {
@@ -209,4 +209,4 @@ int IEventDispatcher::Script_RemoveEventListener(lua_State* L)
 	return 0;
 }
 
-} // namespace Dusk
+} // namespace dusk

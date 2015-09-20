@@ -4,7 +4,7 @@
 #include <Logging/ILogger.hpp>
 #include <Utility/Types.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class ConsoleLogger :
@@ -21,6 +21,6 @@ public:
 
 }; // class ConsoleLogger
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_LOGGING_CONSOLE_LOGGER_HPP

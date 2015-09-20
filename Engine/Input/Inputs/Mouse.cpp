@@ -1,6 +1,6 @@
 #include "Mouse.hpp"
 
-namespace Dusk
+namespace dusk
 {
 	
 int MouseButtonEventData::PushDataToLua(lua_State* L) const
@@ -25,4 +25,4 @@ int MouseScrollEventData::PushDataToLua(lua_State* L) const
 	return 2;
 }
 
-} // namespace Dusk
+} // namespace dusk

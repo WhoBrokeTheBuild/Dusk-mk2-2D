@@ -2,7 +2,7 @@
 
 #include <experimental/filesystem>
 
-namespace Dusk
+namespace dusk
 {
 
 namespace fs = std::experimental::filesystem;
@@ -26,4 +26,4 @@ string Dirname(const string& filename)
 	}
 }
 
-} // namespace Dusk
+} // namespace dusk

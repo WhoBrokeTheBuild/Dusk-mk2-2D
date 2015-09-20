@@ -2,7 +2,7 @@
 
 #include <Tracking/ITrackedObject.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 Map<ITrackedObject*, MemoryTracker::AllocationRecord> MemoryTracker::s_Allocations = Map<ITrackedObject*, MemoryTracker::AllocationRecord>();
@@ -60,4 +60,4 @@ void MemoryTracker::
 	}
 }
 
-} // namespace Dusk
+} // namespace dusk

@@ -4,7 +4,7 @@
 #include <Logging/LoggingSystem.hpp>
 #include <Scripting/ScriptingSystem.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 bool ScriptHost::Init()
@@ -22,7 +22,6 @@ bool ScriptHost::Init()
 	luaL_openlibs(mp_LuaState);
 
 	ScriptingSystem::AddScriptHost(this);
-	RunFile("Assets/Scripts/Dusk.luac");
 
 	DuskBenchEnd("ScriptingSystem::Init");
 	return true;
@@ -76,4 +75,4 @@ error:
 	return false;
 }
 
-} // namespace Dusk
+} // namespace dusk

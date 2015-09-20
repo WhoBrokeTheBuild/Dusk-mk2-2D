@@ -4,7 +4,7 @@
 #include <Collections/Map.hpp>
 #include <Events/Event.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 enum Key
@@ -254,6 +254,6 @@ private:
 
 }; // class KeyEventData
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_INPUT_KEYS_HPP

@@ -1,7 +1,7 @@
 #ifndef DUSK_LOGGING_LOG_COLORS_HPP
 #define DUSK_LOGGING_LOG_COLORS_HPP
 
-namespace Dusk
+namespace dusk
 {
 
 enum LogForegroundColor
@@ -33,6 +33,6 @@ enum LogBackgroundColor
     LOG_BG_DEFAULT = 49
 };
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_LOGGING_LOG_COLORS_HPP

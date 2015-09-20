@@ -8,16 +8,23 @@
     <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Input\Inputs\Key.cpp" />
     <ClCompile Include="Input\Inputs\Mouse.cpp" />
+    <ClCompile Include="Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="Graphics\Animation.cpp" />
+    <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Graphics\GraphicsSystem.hpp" />
-    <ClInclude Include="Graphics\Texture.hpp" />
     <ClInclude Include="Graphics\Window.hpp" />
     <ClInclude Include="Program.hpp" />
     <ClInclude Include="Input\Inputs\Key.hpp" />
     <ClInclude Include="Input\Inputs\Mouse.hpp" />
     <ClInclude Include="Input\InputSystem.hpp" />
+    <ClInclude Include="Graphics\GraphicsContext.hpp" />
+    <ClInclude Include="Graphics\Animation.hpp" />
+    <ClInclude Include="Graphics\Sprite.hpp" />
+    <ClInclude Include="Graphics\Texture.hpp" />
+    <ClInclude Include="Geometry\Rect.hpp" />
+    <ClInclude Include="Geometry\Vector2.hpp" />
   </ItemGroup>
 </Project>

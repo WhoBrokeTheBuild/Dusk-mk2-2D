@@ -1,6 +1,6 @@
 #include "Event.hpp"
 
-namespace Dusk
+namespace dusk
 {
 
 const EventData EventData::BLANK_EVENT_DATA = EventData();
@@ -15,4 +15,4 @@ int EventData::PushDataToLua(lua_State* L) const
 	return 0;
 }
 
-} // namespace Dusk
+} // namespace dusk

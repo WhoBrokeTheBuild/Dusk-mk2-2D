@@ -1,12 +1,15 @@
 #include "GraphicsSystem.hpp"
 
 #include <Program.hpp>
-#include <Utility/Benchmark.hpp>
 #include <Graphics/Window.hpp>
+#include <Graphics/GraphicsContext.hpp>
+#include <Graphics/Texture.hpp>
+#include <Graphics/Sprite.hpp>
+#include <Utility/Benchmark.hpp>
 #include <Logging/LoggingSystem.hpp>
 #include <Scripting/ScriptingSystem.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 bool GraphicsSystem::Init()
@@ -32,11 +35,25 @@ Window* GraphicsSystem::GetWindow() const
 	return mp_Window;
 }
 
+
+GraphicsContext* GraphicsSystem::GetGraphicsContext() const
+{
+	if (mp_Window)
+	{
+		return mp_Window->GetGraphicsContext();
+	}
+	return nullptr;
+}
+
 void GraphicsSystem::InitScripting()
 {
-	ScriptingSystem::RegisterFunction("dusk_graphics_system_get_window", &GraphicsSystem::Script_GetWindow);
+	ScriptingSystem::RegisterFunction("dusk_graphics_system_get_window",           &GraphicsSystem::Script_GetWindow);
+	ScriptingSystem::RegisterFunction("dusk_graphics_system_get_graphics_context", &GraphicsSystem::Script_GetGraphicsContext);
 
 	Window::InitScripting();
+	GraphicsContext::InitScripting();
+	Texture::InitScripting();
+	Sprite::InitScripting();
 }
 
 int GraphicsSystem::Script_GetWindow(lua_State* L)
@@ -45,4 +62,10 @@ int GraphicsSystem::Script_GetWindow(lua_State* L)
 	return 1;
 }
 
-} // namespace Dusk
+int GraphicsSystem::Script_GetGraphicsContext(lua_State* L)
+{
+	lua_pushinteger(L, (ptrdiff_t)Program::Inst()->GetGraphicsSystem()->GetGraphicsContext());
+	return 1;
+}
+
+} // namespace dusk

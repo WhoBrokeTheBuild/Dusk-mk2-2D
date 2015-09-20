@@ -4,7 +4,7 @@
 #include <Tracking/ITrackedObject.hpp>
 #include <Events/Callbacks.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class ScriptHost;
@@ -69,6 +69,6 @@ private:
 
 }; // class Delegate
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_DELEGATE_HPP

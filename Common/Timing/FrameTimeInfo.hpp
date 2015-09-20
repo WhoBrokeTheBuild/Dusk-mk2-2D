@@ -1,7 +1,7 @@
 #ifndef DUSK_TIMING_TIME_INFO_HPP
 #define DUSK_TIMING_TIME_INFO_HPP
 
-namespace Dusk
+namespace dusk
 {
 
 /// A collection of timing related information.
@@ -46,6 +46,6 @@ public:
 
 }; // class TimeInfo
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_TIMING_TIME_INFO_HPP

@@ -16,7 +16,7 @@ using std::ostream;
 #define snprintf _snprintf
 #endif
 
-namespace Dusk
+namespace dusk
 {
 
 class ILogger;
@@ -93,6 +93,6 @@ LoggingSystem::Log(LVL, MSG, string(__FILE__), __LINE__)
 #define DuskExtLog( LVL, FMT, ... ) \
 LoggingSystem::ExtLog(LVL, FMT, string(__FILE__), __LINE__, __VA_ARGS__)
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_LOGGING_LOGGING_SYSTEM_HPP

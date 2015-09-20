@@ -1,6 +1,6 @@
 #include "FileLogger.hpp"
 
-namespace Dusk
+namespace dusk
 {
 
 Map<string, ofstream*> FileLogger::s_Streams;
@@ -47,4 +47,4 @@ void FileLogger::Log(const string& line, const LogForegroundColor& fgColor, cons
 	m_Stream->flush();
 }
 
-} // namespace Dusk
+} // namespace dusk

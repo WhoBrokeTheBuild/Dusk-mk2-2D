@@ -6,10 +6,12 @@
 #include <Events/Event.hpp>
 
 #include <lua.hpp>
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
-namespace Dusk
+namespace dusk
 {
+
+class GraphicsContext;
 
 class Window :
 	public ITrackedObject
@@ -21,58 +23,59 @@ public:
 	static const Flag DECORATED  = 4;
 
 	inline Window( void ) :
+		m_SFMLWindow(),
+		mp_GraphicsContext(nullptr),
+		m_Title(),
 		m_Fullscreen(false),
 		m_Decorated(false),
 		m_Resizable(false)
 	{ }
 
-	~Window( void ) { Term(); }
+	~Window() { Term(); }
 
 	virtual inline string GetClassName( void ) const { return "Window"; }
 
-	bool Init( const unsigned int& width, const unsigned int& height, const string& title, const Flag& flags );
-	void Term( void );
+	bool Init(const unsigned int& width, const unsigned int& height, const string& title, const Flag& flags);
+	void Term();
 
-	void Update(const Event& event);
+	void OnUpdate(const Event& event);
 
-	string GetTitle( void ) const;
-	void SetTitle( const string& title );
+	string GetTitle() const;
+	void SetTitle(const string& title);
 
-	void SetSize( const unsigned int& width, const unsigned int& height );
+	unsigned int GetWidth() const;
+	unsigned int GetHeight() const;
 
-	unsigned int GetWidth( void ) const;
-	void SetWidth( const unsigned int& width );
+	inline bool IsFullscreen() const { return m_Fullscreen; }
+	inline bool IsDecorated() const { return m_Decorated; }
+	inline bool IsResizable() const { return m_Resizable; }
 
-	unsigned int GetHeight( void ) const;
-	void SetHeight( const unsigned int& height );
+	GraphicsContext* GetGraphicsContext() const;
 
-	inline bool IsFullscreen( void ) const { return m_Fullscreen; }
-	inline bool IsDecorated( void ) const { return m_Decorated; }
-	inline bool IsResizable ( void ) const { return m_Resizable; }
-
-	static void InitScripting( void );
-	static int Script_SetSize  ( lua_State* L );
-	static int Script_GetWidth ( lua_State* L );
-	static int Script_GetHeight( lua_State* L );
-	static int Script_SetWidth ( lua_State* L );
-	static int Script_SetHeight( lua_State* L );
-	static int Script_GetTitle ( lua_State* L );
-	static int Script_SetTitle ( lua_State* L );
+	static void InitScripting();
+	static int Script_GetWidth(lua_State* L);
+	static int Script_GetHeight(lua_State* L);
+	static int Script_GetTitle(lua_State* L);
+	static int Script_SetTitle(lua_State* L);
 
 private:
 
-	bool CreateSFMLWindow( const unsigned int& width, const unsigned int& height );
+	bool CreateSFMLWindow(const unsigned int& width, const unsigned int& height);
 
-	sf::Window		*mp_SFMLWindow;
+	sf::RenderWindow m_SFMLWindow;
 
-	string			m_Title;
+	GraphicsContext* mp_GraphicsContext;
 
-	bool			m_Fullscreen,
-					m_Decorated,
-					m_Resizable;
+	string m_Title;
+
+	bool m_Fullscreen;
+	
+	bool m_Decorated;
+	
+	bool m_Resizable;
 
 }; // class Window
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_GRAPHICS_WINDOW_HPP

@@ -1,13 +1,16 @@
 #include "Window.hpp"
 
 #include <Program.hpp>
+#include <Graphics/GraphicsContext.hpp>
 #include <Utility/Benchmark.hpp>
+#include <Utility/Platform.hpp>
 #include <Logging/LoggingSystem.hpp>
-#include <Graphics/GraphicsSystem.hpp>
 #include <Input/InputSystem.hpp>
 #include <Scripting/ScriptingSystem.hpp>
 
-namespace Dusk
+#include <Windows.h>
+
+namespace dusk
 {
 	
 bool Window::Init(const unsigned int& width, const unsigned int& height, const string& title, const Flag& flags)
@@ -23,7 +26,9 @@ bool Window::Init(const unsigned int& width, const unsigned int& height, const s
 
 	bool res = CreateSFMLWindow(width, height);
 
-	Program::Inst()->AddEventListener(Program::EVT_UPDATE, this, &Window::Update);
+	mp_GraphicsContext = New GraphicsContext(m_SFMLWindow);
+
+	Program::Inst()->AddEventListener(Program::EVT_UPDATE, this, &Window::OnUpdate);
 
 	DuskBenchEnd("Window::Init");
 	return res;
@@ -31,17 +36,20 @@ bool Window::Init(const unsigned int& width, const unsigned int& height, const s
 
 void Window::Term()
 {
-	Program::Inst()->RemoveEventListener(Program::EVT_UPDATE, this, &Window::Update);
+	Program::Inst()->RemoveEventListener(Program::EVT_UPDATE, this, &Window::OnUpdate);
+
+	delete mp_GraphicsContext;
+	mp_GraphicsContext = nullptr;
 }
 
-void Window::Update(const Event& event)
+void Window::OnUpdate(const Event& event)
 {
 	sf::Event sfEvent;
-	while (mp_SFMLWindow->pollEvent(sfEvent))
+	while (m_SFMLWindow.pollEvent(sfEvent))
 	{
 		if (sfEvent.type == sf::Event::Closed)
 		{
-			mp_SFMLWindow->close();
+			m_SFMLWindow.close();
 			Program::Inst()->Exit();
 		}
 	}
@@ -68,25 +76,28 @@ bool Window::CreateSFMLWindow(const unsigned int& width, const unsigned int& hei
 			style |= sf::Style::Titlebar;
 	}
 
-	mp_SFMLWindow = new sf::Window(sf::VideoMode(width, height), m_Title, style);
+	m_SFMLWindow.create(sf::VideoMode(width, height), m_Title, style);
+
+	DuskExtLog("info", "Req %d %d", width, height);
+	DuskExtLog("info", "Act %d %d", m_SFMLWindow.getSize().x, m_SFMLWindow.getSize().y);
 
 	DuskBenchEnd("Window::CreateSFMLWindow");
-	return mp_SFMLWindow->isOpen();
+	return m_SFMLWindow.isOpen();
 }
 
 void Window::SetTitle(const string& title)
 {
-	mp_SFMLWindow->setTitle(title);
+	m_SFMLWindow.setTitle(title);
 }
 
 unsigned int Window::GetWidth() const
 {
-	return mp_SFMLWindow->getSize().x;
+	return m_SFMLWindow.getSize().x;
 }
 
 unsigned int Window::GetHeight() const
 {
-	return mp_SFMLWindow->getSize().y;
+	return m_SFMLWindow.getSize().y;
 }
 
 string Window::GetTitle() const
@@ -94,47 +105,17 @@ string Window::GetTitle() const
 	return m_Title;
 }
 
-void Window::SetSize(const unsigned int& width, const unsigned int& height)
+GraphicsContext* Window::GetGraphicsContext() const
 {
-	mp_SFMLWindow->setSize(sf::Vector2u(width, height));
-}
-
-void Window::SetWidth(const unsigned int& width)
-{
-	sf::Vector2u size = mp_SFMLWindow->getSize();
-	size.x = width;
-	mp_SFMLWindow->setSize(size);
-}
-
-void Window::SetHeight(const unsigned int& height)
-{
-	sf::Vector2u size = mp_SFMLWindow->getSize();
-	size.y = height;
-	mp_SFMLWindow->setSize(size);
+	return mp_GraphicsContext;
 }
 
 void Window::InitScripting()
 {
-	ScriptingSystem::RegisterFunction("dusk_window_set_size", &Window::Script_SetSize);
-
-	ScriptingSystem::RegisterFunction("dusk_window_get_width", &Window::Script_GetWidth);
-	ScriptingSystem::RegisterFunction("dusk_window_set_width", &Window::Script_SetWidth);
-
+	ScriptingSystem::RegisterFunction("dusk_window_get_width",  &Window::Script_GetWidth);
 	ScriptingSystem::RegisterFunction("dusk_window_get_height", &Window::Script_GetHeight);
-	ScriptingSystem::RegisterFunction("dusk_window_set_height", &Window::Script_SetHeight);
-
-	ScriptingSystem::RegisterFunction("dusk_window_get_title", &Window::Script_GetTitle);
-	ScriptingSystem::RegisterFunction("dusk_window_set_title", &Window::Script_SetTitle);
-}
-
-int Window::Script_SetSize(lua_State* L)
-{
-	Window* pWindow = (Window*)lua_tointeger(L, 1);
-	int width = (int)lua_tointeger(L, 2);
-	int height = (int)lua_tointeger(L, 3);
-	pWindow->SetSize(width, height);
-
-	return 0;
+	ScriptingSystem::RegisterFunction("dusk_window_get_title",  &Window::Script_GetTitle);
+	ScriptingSystem::RegisterFunction("dusk_window_set_title",  &Window::Script_SetTitle);
 }
 
 int Window::Script_GetWidth(lua_State* L)
@@ -145,30 +126,12 @@ int Window::Script_GetWidth(lua_State* L)
 	return 1;
 }
 
-int Window::Script_SetWidth(lua_State* L)
-{
-	Window* pWindow = (Window*)lua_tointeger(L, 1);
-	int width = (int)lua_tointeger(L, 2);
-	pWindow->SetWidth(width);
-
-	return 0;
-}
-
 int Window::Script_GetHeight(lua_State* L)
 {
 	Window* pWindow = (Window*)lua_tointeger(L, 1);
 	lua_pushinteger(L, (int)pWindow->GetHeight());
 
 	return 1;
-}
-
-int Window::Script_SetHeight(lua_State* L)
-{
-	Window* pWindow = (Window*)lua_tointeger(L, 1);
-	int height = (int)lua_tointeger(L, 2);
-	pWindow->SetHeight(height);
-
-	return 0;
 }
 
 int Window::Script_GetTitle(lua_State* L)
@@ -188,4 +151,4 @@ int Window::Script_SetTitle(lua_State* L)
 	return 0;
 }
 
-} // namespace Dusk
+} // namespace dusk

@@ -5,10 +5,11 @@
 
 #include <lua.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class Window;
+class GraphicsContext;
 
 class GraphicsSystem :
 	public ITrackedObject
@@ -27,9 +28,11 @@ public:
 	void Term();
 
 	Window* GetWindow() const;
+	GraphicsContext* GetGraphicsContext() const;
 
 	static void InitScripting();
 	static int Script_GetWindow(lua_State* L);
+	static int Script_GetGraphicsContext(lua_State* L);
 
 private:
 
@@ -37,6 +40,6 @@ private:
 
 }; // class GraphicsSystem
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_GRAPHICS_GRAPHICS_SYSTEM_HPP

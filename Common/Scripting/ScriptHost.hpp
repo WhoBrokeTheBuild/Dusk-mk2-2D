@@ -6,7 +6,7 @@
 
 #include <lua.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class ScriptHost :
@@ -36,6 +36,6 @@ private:
 
 }; // class ScriptHost
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_SCRIPTING_SCRIPT_HOST_HPP

@@ -3,6 +3,7 @@
 #include <Utility/Benchmark.hpp>
 #include <Logging/LoggingSystem.hpp>
 #include <Graphics/GraphicsSystem.hpp>
+#include <Graphics/GraphicsContext.hpp>
 #include <Timing/FrameTimeInfo.hpp>
 #include <Input/InputSystem.hpp>
 #include <Scripting/ScriptingSystem.hpp>
@@ -11,11 +12,12 @@
 #include <chrono>
 using namespace std::chrono;
 
-namespace Dusk 
+namespace dusk 
 {
 
 EventID Program::EVT_UPDATE	= 1;
-EventID Program::EVT_RENDER	= 3;
+EventID Program::EVT_RENDER	= 2;
+EventID Program::EVT_EXIT   = 3;
 
 bool Program::Init()
 {
@@ -49,7 +51,8 @@ bool Program::Init()
 	mp_ScriptHost = New ScriptHost();
 	mp_ScriptHost->Init();
 
-	mp_ScriptHost->RunFile("Assets/Scripts/Setup.luac");
+	mp_ScriptHost->RunFile("Scripts/Dusk");
+	mp_ScriptHost->RunFile("Scripts/Setup");
 
 	DuskBenchEnd("Program::Init");
 	return true;
@@ -111,6 +114,8 @@ void Program::Run()
 			secsSinceLastFrame = 0;
 		}
 	}
+
+	Dispatch(Event(EVT_EXIT));
 }
 
 void Program::Update(FrameTimeInfo& timeInfo)
@@ -120,7 +125,11 @@ void Program::Update(FrameTimeInfo& timeInfo)
 
 void Program::Render()
 {
+	GraphicsContext* ctx = GetGraphicsSystem()->GetGraphicsContext();
+
+	ctx->Clear();
 	Dispatch(Event(EVT_RENDER, RenderEventData()));
+	ctx->SwapBuffers();
 }
 
 bool Program::InitGraphics()
@@ -233,7 +242,7 @@ int Program::Script_GetProgram(lua_State* L)
 	return 1;
 }
 
-int Dusk::Program::Script_Exit(lua_State* L)
+int dusk::Program::Script_Exit(lua_State* L)
 {
 	Program* pProgram = (Program*)lua_tointeger(L, 1);
 	pProgram->Exit();
@@ -252,4 +261,4 @@ int Program::Script_GetInputSystem(lua_State* L)
 	return 1;
 }
 
-} // namespace Dusk
+} // namespace dusk

@@ -4,7 +4,7 @@
 #include <Events/Event.hpp>
 #include <Scripting/ScriptingSystem.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 EventID InputSystem::EVT_KEY_PRESS				= 1;
@@ -203,4 +203,4 @@ int MappedInputEventData::PushDataToLua(lua_State* L) const
 	return 1;
 }
 
-} // namespace Dusk
+} // namespace dusk

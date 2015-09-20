@@ -1,30 +1,52 @@
-#ifndef DUSK_TEXTURE_HPP
-#define DUSK_TEXTURE_HPP
+#ifndef DUSK_GRAPHICS_TEXTURE_HPP
+#define DUSK_GRAPHICS_TEXTURE_HPP
 
 #include <Tracking/ITrackedObject.hpp>
+#include <Utility/Types.hpp>
 
-namespace Dusk
+#include <lua.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
+namespace dusk
 {
+
+class Sprite;
 
 class Texture :
 	public ITrackedObject
 {
+
+	friend class Sprite;
+
 public:
 
-	inline Texture()
+	inline Texture() :
+		m_SFMLTexture()
 	{ }
 
-	virtual ~Texture();
+	virtual inline ~Texture() { Term(); }
 
 	virtual inline string GetClassName() const { return "Texture"; }
 
-	bool Load(const string& filename);
+	bool Init(const string& filename);
+
+	void Term();
+
+	static void InitScripting();
+	static int Script_New(lua_State* L);
+	static int Script_Delete(lua_State* L);
 
 private:
 
+	inline const sf::Texture& GetSFMLTexture() const
+	{
+		return m_SFMLTexture;
+	}
+
+	sf::Texture m_SFMLTexture;
 
 }; // class Texture
 
-} // namespace Dusk
+} // namespace dusk
 
-#endif // DUSK_TEXTURE_HPP
+#endif // DUSK_GRAPHICS_TEXTURE_HPP

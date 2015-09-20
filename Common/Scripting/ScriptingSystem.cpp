@@ -4,13 +4,13 @@
 #include <Logging/LoggingSystem.hpp>
 #include <Scripting/ScriptHost.hpp>
 
-namespace Dusk
+namespace dusk
 {
 	
-Map<string, LuaCallback> Dusk::ScriptingSystem::s_Functions;
-ArrayList<ScriptHost*> Dusk::ScriptingSystem::s_ScriptHosts;
+Map<string, LuaCallback> dusk::ScriptingSystem::s_Functions;
+ArrayList<ScriptHost*> dusk::ScriptingSystem::s_ScriptHosts;
 
-void Dusk::ScriptingSystem::AddScriptHost(ScriptHost* pHost)
+void dusk::ScriptingSystem::AddScriptHost(ScriptHost* pHost)
 {
 	s_ScriptHosts.add(pHost);
 
@@ -19,7 +19,7 @@ void Dusk::ScriptingSystem::AddScriptHost(ScriptHost* pHost)
 	}
 }
 
-ScriptHost* Dusk::ScriptingSystem::GetScriptHost(lua_State* L)
+ScriptHost* dusk::ScriptingSystem::GetScriptHost(lua_State* L)
 {
 	for (auto it : s_ScriptHosts)
 	{
@@ -30,12 +30,12 @@ ScriptHost* Dusk::ScriptingSystem::GetScriptHost(lua_State* L)
 	return nullptr;
 }
 
-void Dusk::ScriptingSystem::RemoveScriptHost(ScriptHost* pHost)
+void dusk::ScriptingSystem::RemoveScriptHost(ScriptHost* pHost)
 {
 	s_ScriptHosts.erase_all(pHost);
 }
 
-bool Dusk::ScriptingSystem::RegisterFunction(const string& funcName, LuaCallback callback)
+bool dusk::ScriptingSystem::RegisterFunction(const string& funcName, LuaCallback callback)
 {
 	if (funcName.empty())
 	{
@@ -64,4 +64,4 @@ bool Dusk::ScriptingSystem::RegisterFunction(const string& funcName, LuaCallback
 	return true;
 }
 
-} // namespace Dusk
+} // namespace dusk

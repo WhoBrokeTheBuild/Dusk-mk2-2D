@@ -6,12 +6,12 @@
 
 using std::string;
 
-namespace Dusk
+namespace dusk
 {
 
 string Basename(const string& filename);
 string Dirname(const string& filename);
 
-}; // namespace Dusk
+}; // namespace dusk
 
 #endif // DUSK_UTILITY_STRINGS_HPP

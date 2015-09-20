@@ -5,7 +5,7 @@
 
 #include <map>
 
-namespace Dusk
+namespace dusk
 {
 
 template <class K, class T, typename Sort = std::less<K>>
@@ -15,19 +15,19 @@ class Map :
 {
 public:
 
-	virtual inline string GetClassName( void ) const { return "Map"; }
+	virtual inline string GetClassName() const { return "Map"; }
 
 	inline void add(std::pair<K, T> pair)
 	{
 		insert(pair);
 	}
 
-    inline void add( const K& key, const T& item )
-    { 
+	inline void add(const K& key, const T& item)
+	{
 		insert(std::pair<K, T>(key, item)); 
 	}
 
-    inline bool contains_key( const K& key ) const
+	inline bool contains_key(const K& key) const
 	{
 		return (find(key) != cend()); 
 	}
@@ -72,6 +72,6 @@ public:
 
 }; // class Map<T, K, Sort>
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_COLLECTIONS_MAP_HPP

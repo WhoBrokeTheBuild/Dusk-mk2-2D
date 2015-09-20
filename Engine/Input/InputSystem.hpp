@@ -8,7 +8,7 @@
 
 #include <lua.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 typedef string MappedInputID;
@@ -105,6 +105,6 @@ private:
 
 }; // class InputSystem
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_INPUT_INPUT_SYSTEM_HPP

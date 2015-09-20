@@ -9,7 +9,7 @@
 #include <cstdarg>
 #include <chrono>
 
-namespace Dusk
+namespace dusk
 {
 
 char LoggingSystem::m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
@@ -137,6 +137,7 @@ bool LoggingSystem::AddFileLogger(const string& level, const string& filename)
 void LoggingSystem::InitScripting()
 {
 	ScriptingSystem::RegisterFunction("DuskLog", &LoggingSystem::Script_Log);
+	ScriptingSystem::RegisterFunction("dusk_log", &LoggingSystem::Script_Log);
 }
 
 int LoggingSystem::Script_Log(lua_State* L)
@@ -153,4 +154,4 @@ int LoggingSystem::Script_Log(lua_State* L)
 	return 0;
 }
 
-} // namespace Dusk
+} // namespace dusk

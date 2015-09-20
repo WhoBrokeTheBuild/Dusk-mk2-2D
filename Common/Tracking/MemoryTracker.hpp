@@ -4,7 +4,7 @@
 #include <Collections/Map.hpp>
 #include <Utility/Types.hpp>
 
-namespace Dusk
+namespace dusk
 {
 	
 class ITrackedObject;
@@ -56,6 +56,6 @@ private:
 
 }; // class MemoryTracker
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_TRACKING_MEMORY_TRACKER_H

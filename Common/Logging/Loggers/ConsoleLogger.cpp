@@ -2,7 +2,7 @@
 
 #include <Utility/Platform.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 void ConsoleLogger::Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor)
@@ -18,4 +18,4 @@ void ConsoleLogger::Log(const string& line, const LogForegroundColor& fgColor, c
 #endif
 }
 
-} // namespace Dusk
+} // namespace dusk

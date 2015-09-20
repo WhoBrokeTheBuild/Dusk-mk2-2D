@@ -3,7 +3,7 @@
 
 #include <Events/Event.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 enum MouseButton
@@ -113,6 +113,6 @@ private:
 
 }; // class MouseScrollEventData
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_INPUT_MOUSE_BUTTON_HPP

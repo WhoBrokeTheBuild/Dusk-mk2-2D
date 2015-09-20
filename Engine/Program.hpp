@@ -7,7 +7,7 @@
 #include <lua.hpp>
 #include <Events/Event.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class GraphicsSystem;
@@ -28,7 +28,8 @@ public:
 
 	static EventID
 		EVT_UPDATE,
-		EVT_RENDER;
+		EVT_RENDER,
+		EVT_EXIT;
 
 	static inline Program* Inst()
 	{
@@ -67,10 +68,6 @@ public:
 
 	// Temporary
 
-	void MappedInputPressCallback(const Event& event);
-	void KeyPressCallback(const Event& event);
-	void MouseButtonPressCallback(const Event& event);
-
 private:
 
     Program(  ) :
@@ -80,9 +77,7 @@ private:
 		m_UpdateInterval(),
 		mp_GraphicsSystem(nullptr),
 		mp_InputSystem(nullptr),
-		mp_ScriptHost(nullptr),
-
-		m_Remap(false)
+		mp_ScriptHost(nullptr)
 	{ };
 
 	Program(Program const&);
@@ -126,7 +121,6 @@ private:
 
 	// Temporary
 
-	bool m_Remap;
 
 }; // class Program
 
@@ -171,6 +165,6 @@ private:
 
 };
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_PROGRAM_H

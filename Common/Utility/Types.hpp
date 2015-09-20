@@ -6,12 +6,12 @@ using std::string;
 
 struct lua_State;
 
-namespace Dusk
+namespace dusk
 {
 
 typedef unsigned int Flag;
 typedef int(*LuaCallback)(lua_State* L);
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_TYPES_HPP

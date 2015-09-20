@@ -8,7 +8,7 @@
 
 using std::string;
 
-namespace Dusk
+namespace dusk
 {
 
 class ILogger :
@@ -22,6 +22,6 @@ public:
 
 }; // class Logger
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_LOGGING_LOGGER_HPP

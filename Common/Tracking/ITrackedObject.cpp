@@ -2,7 +2,7 @@
 
 #include <Tracking/MemoryTracker.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 void* ITrackedObject::operator new(size_t size)
@@ -57,4 +57,4 @@ void ITrackedObject::operator delete[](void *ptr)
 	free(ptr);
 }
 
-} // namespace Dusk
+} // namespace dusk

@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace Dusk
+namespace dusk
 {
 
 template <class T>
@@ -15,7 +15,7 @@ class ArrayList :
 {
 public:
 
-	virtual inline string GetClassName(void) const { return "Array List"; }
+	virtual inline string GetClassName() const { return "Array List"; }
 
 	inline void add(const T& item)
 	{ 
@@ -24,7 +24,7 @@ public:
 
 	inline bool contains(const T& item) const
 	{
-		return (empty() ? false : find(ConstBegin(), ConstEnd(), item) != ConstEnd());
+		return (empty() ? false : find(cbegin(), cend(), item) != cend());
 	}
 
 	inline bool has_index(const unsigned int& index) const
@@ -79,6 +79,6 @@ public:
 
 }; // class ArrayList
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_COLLECTIONS_ARRAY_LIST_HPP

@@ -6,7 +6,7 @@
 
 using std::string;
 
-namespace Dusk
+namespace dusk
 {
 
 inline void ConsolePause( const string& msg = "Press enter to continue..." )
@@ -16,6 +16,6 @@ inline void ConsolePause( const string& msg = "Press enter to continue..." )
 	std::cin.ignore();
 }
 
-}; // namespace Dusk
+}; // namespace dusk
 
 #endif // DUSK_UTILITY_CONSOLE_HPP

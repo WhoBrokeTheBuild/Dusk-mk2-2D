@@ -4,7 +4,7 @@
 #include <Tracking/ITrackedObject.hpp>
 #include <Events/Event.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class ScriptHost;
@@ -156,6 +156,6 @@ private:
 
 }; // class LuaFucntionCallback
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_CALLBACKS_HPP

@@ -1,5 +1,5 @@
-#include <Program.hpp>
 
+#include <Program.hpp>
 #include <Utility/Benchmark.hpp>
 #include <Scripting/ScriptingSystem.hpp>
 #include <Tracking/MemoryTracker.hpp>
@@ -7,7 +7,9 @@
 #include <Utility/Console.hpp>
 #include <Utility/Platform.hpp>
 
-using namespace Dusk;
+using dusk::MemoryTracker;
+using dusk::LoggingSystem;
+using dusk::Program;
 
 void initLoggingSystem() 
 {
@@ -31,10 +33,10 @@ void initLoggingSystem()
 	LoggingSystem::AddFileLogger("perf", "perf.log");
 	LoggingSystem::AddFileLogger("verbose", "info.log");
 
-	LoggingSystem::SetLevelForegroundColor("error", LOG_FG_RED);
-	LoggingSystem::SetLevelForegroundColor("info", LOG_FG_BLUE);
-	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
-	LoggingSystem::SetLevelForegroundColor("perf", LOG_FG_YELLOW);
+	LoggingSystem::SetLevelForegroundColor("error", dusk::LogForegroundColor::LOG_FG_RED);
+	LoggingSystem::SetLevelForegroundColor("info",  dusk::LogForegroundColor::LOG_FG_BLUE);
+	LoggingSystem::SetLevelForegroundColor("debug", dusk::LogForegroundColor::LOG_FG_GREEN);
+	LoggingSystem::SetLevelForegroundColor("perf",  dusk::LogForegroundColor::LOG_FG_YELLOW);
 
 	LoggingSystem::SetLoggingLevel("verbose");
 
@@ -49,7 +51,7 @@ int main(int argc, char* argv[])
 
 	LoggingSystem::InitScripting();
 
-	Dusk::Program* pProgram = Dusk::Program::Inst();
+	Program* pProgram = Program::Inst();
 
 	DuskLog("verbose", "Program instance created");
 
@@ -68,7 +70,7 @@ int main(int argc, char* argv[])
 	if (MemoryTracker::GetAllocationCount() > 0)
 	{
 		MemoryTracker::PrintAllocations();
-		Dusk::ConsolePause();
+		dusk::ConsolePause();
 	}
 
 #endif // DUSK_DEBUG_BUILD

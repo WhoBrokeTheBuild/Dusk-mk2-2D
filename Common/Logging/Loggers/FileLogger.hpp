@@ -9,7 +9,7 @@
 #include <fstream>
 using std::ofstream;
 
-namespace Dusk
+namespace dusk
 {
 
 class FileLogger :
@@ -37,6 +37,6 @@ private:
 
 }; // class FileLogger
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_LOGGING_FILE_LOGGER_HPP

@@ -3,7 +3,7 @@
 #include <Events/Event.hpp>
 #include <Scripting/ScriptHost.hpp>
 
-namespace Dusk
+namespace dusk
 {
 	
 LuaFucntionCallback::LuaFucntionCallback( ScriptHost* pScriptHost, const string& callback ) :
@@ -31,4 +31,4 @@ bool LuaFucntionCallback::IsEqualTo( const ICallback<void, const Event&>& rhs ) 
 	return false;
 }
 
-} // namespace Dusk
+} // namespace dusk

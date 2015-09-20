@@ -4,7 +4,7 @@
 #include <Utility/Platform.hpp>
 #include <Utility/Types.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class ITrackedObject

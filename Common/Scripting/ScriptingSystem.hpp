@@ -7,7 +7,7 @@
 
 #include <lua.hpp>
 
-namespace Dusk
+namespace dusk
 {
 
 class ScriptHost;
@@ -32,6 +32,6 @@ private:
 
 }; // class ScriptingSystem
 
-} // namespace Dusk
+} // namespace dusk
 
 #endif // DUSK_SCRIPTING_SCRIPTING_SYSTEM_HPP
