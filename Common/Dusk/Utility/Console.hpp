@@ -16,6 +16,6 @@ inline void ConsolePause( const string& msg = "Press enter to continue..." )
 	std::cin.ignore();
 }
 
-}; // namespace dusk
+} // namespace dusk
 
 #endif // DUSK_UTILITY_CONSOLE_HPP

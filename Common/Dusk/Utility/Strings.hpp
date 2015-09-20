@@ -12,6 +12,6 @@ namespace dusk
 string Basename(const string& filename);
 string Dirname(const string& filename);
 
-}; // namespace dusk
+} // namespace dusk
 
 #endif // DUSK_UTILITY_STRINGS_HPP

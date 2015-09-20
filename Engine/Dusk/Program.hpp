@@ -45,7 +45,7 @@ public:
 	virtual inline ~Program() { Term(); }
 
 	virtual inline string GetClassName() const { return "Program"; }
-	
+
 	void Run();
 
 	double GetCurrentFPS() const { return m_CurrentFPS; }
@@ -58,12 +58,12 @@ protected:
 
 	ScriptHost* GetScriptHost();
 
-	virtual inline bool Init();
-	virtual inline void Term();
-	virtual inline void Update(FrameTimeInfo& timeInfo);
-	virtual inline void PreRender(GraphicsContext* ctx);
-	virtual inline void Render(GraphicsContext* ctx);
-	virtual inline void PostRender(GraphicsContext* ctx);
+	virtual bool Init();
+	virtual void Term();
+	virtual void Update(FrameTimeInfo& timeInfo);
+	virtual void PreRender(GraphicsContext* ctx);
+	virtual void Render(GraphicsContext* ctx);
+	virtual void PostRender(GraphicsContext* ctx);
 
 private:
 

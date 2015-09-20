@@ -1,50 +1,51 @@
+WORKDIR = `pwd`
 
 CONF = Debug
 ARGS = CONF=$(CONF)
 
 CC = g++
-AR = ar
+LD = g++
 
 CCFLAGS = -pedantic-errors -pedantic -std=c++11 -Wall
-ARFLAGS = rvs
+LDFLAGS =
 
-ifeq ($(CONF), 'Debug')
+ifeq ($(CONF), Debug)
     CCFLAGS += -g -DDEBUG
 endif
-ifeq ($(CONF), 'Release')
+ifeq ($(CONF), Release)
     CCFLAGS += -O2 -DRELEASE
 endif
 
 OBJDIR = Build/$(CONF)
 OUTDIR = ../Build/$(CONF)
-OUT = $(OUTDIR)/libdusk-engine.a
+OUT = $(OUTDIR)/TestApp
 
 INC_PATH = \
--I. \
--I../Common \
+-I../Common/ \
+-I../Engine/ \
 `pkg-config --cflags lua5.2` \
 `pkg-config --cflags sfml-all`
 
+LIB_PATH = \
+-L$(OUTDIR)
+
+LIBS = \
+-ldusk-common \
+-ldusk-engine \
+`pkg-config --libs lua5.2` \
+`pkg-config --libs sfml-all`
+
 SOURCES = \
-Dusk/Graphics/GraphicsContext.cpp \
-Dusk/Graphics/GraphicsSystem.cpp \
-Dusk/Graphics/Sprite.cpp \
-Dusk/Graphics/Texture.cpp \
-Dusk/Input/Inputs/Key.cpp \
-Dusk/Input/Inputs/Mouse.cpp \
-Dusk/Input/Inputs/Mapped.cpp \
-Dusk/Input/InputSystem.cpp \
-Dusk/UpdateEventData.cpp \
-Dusk/RenderEventData.cpp \
-Dusk/Program.cpp
+TestApp.cpp \
+Main.cpp
 
 OBJECTS=$(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))
 
 all: deps $(OUT)
 
 deps:
-	cd ../Common; make $(ARGS)
-	cd ../Content; make $(ARGS)
+	cd ../Engine; make $(ARGS)
+	cd ../TestContent; make $(ARGS)
 
 clean:
 	rm -f $(OUT)
@@ -56,4 +57,4 @@ $(OBJDIR)/%.o: %.cpp
 
 $(OUT): $(OBJECTS)
 	mkdir -p $(OUTDIR)
-	$(AR) $(ARFLAGS) $(OUT) $(OBJECTS)
+	$(LD) $(LDFLAGS) $(LIB_PATH) $(OBJECTS) $(LIBS)-o $(OUT)

@@ -18,7 +18,7 @@ public:
 		mp_LuaState(nullptr)
 	{ }
 
-	~ScriptHost( void ) { Term(); }
+	virtual ~ScriptHost( void ) { Term(); }
 
 	virtual inline string GetClassName( void ) const { return "Script Host"; }
 

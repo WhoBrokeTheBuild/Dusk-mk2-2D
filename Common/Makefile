@@ -1,7 +1,6 @@
-WORKDIR = `pwd`
 
-CONF = 'Debug'
-ARCH = x64
+CONF = Debug
+ARGS = CONF=$(CONF)
 
 CC = g++
 AR = ar
@@ -9,30 +8,28 @@ AR = ar
 CCFLAGS = -pedantic-errors -pedantic -std=c++11 -Wall
 ARFLAGS = rvs
 
-ifeq $(CONF) 'Debug'
-    CCFLAGS = $(CCFLAGS) -g -DDEBUG
+ifeq ($(CONF), Debug)
+    CCFLAGS += -g -DDEBUG
 endif
-ifeq $(CONF) 'Release'
-    CCFLAGS = $(CCFLAGS) -O2 -DRELEASE
+ifeq ($(CONF), Release)
+    CCFLAGS += -O2 -DRELEASE
 endif
 
-OBJDIR = Build/$(CONF)/$(ARCH)
-OUTDIR = ../Build/$(CONF)/$(ARCH)
-OUT = $(OUTDIR)/dusk-common.a
+OBJDIR = Build/$(CONF)
+OUTDIR = ../Build/$(CONF)
+OUT = $(OUTDIR)/libdusk-common.a
 
-INC = \
+INC_PATH = \
 -I. \
--I../Libraries/lua/include \
--I../Libraries/SFML/include
+`pkg-config --cflags lua5.2`
 
 SOURCES = \
 Dusk/Events/Callbacks.cpp \
 Dusk/Events/Event.cpp \
 Dusk/Events/IEventDispatcher.cpp \
-Dusk/Logging/LoggingSystem.cpp \
-Dusk/Logging/Logger.cpp \
 Dusk/Logging/Loggers/ConsoleLogger.cpp \
 Dusk/Logging/Loggers/FileLogger.cpp \
+Dusk/Logging/Logging.cpp \
 Dusk/Scripting/ScriptHost.cpp \
 Dusk/Scripting/Scripting.cpp \
 Dusk/Tracking/ITrackedObject.cpp \
@@ -49,7 +46,8 @@ clean:
 
 $(OBJDIR)/%.o: %.cpp
 	mkdir -p `dirname $@`
-	$(CC) $(CCFLAGS) $(INC) -c $< -o $@
+	$(CC) $(CCFLAGS) $(INC_PATH) -c $< -o $@
 
 $(OUT): $(OBJECTS)
+	mkdir -p $(OUTDIR)
 	$(AR) $(ARFLAGS) $(OUT) $(OBJECTS)

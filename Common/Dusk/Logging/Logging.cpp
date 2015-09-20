@@ -114,7 +114,7 @@ void Logging::Format(const char* level, const char* message, const char* file, c
 	mins %= 60;
 
 	snprintf(s_LogBuffer, DUSK_LOGGING_MAX_BUFFER_SIZE,
-		"+%d.%d.%d.%d <%s:%d> [%s]: %s",
+		"+%lli.%lli.%lli.%lli <%s:%d> [%s]: %s",
 		hrs, mins, secs, ms,
 		file, line,
 		level, message);

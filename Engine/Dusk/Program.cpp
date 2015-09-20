@@ -12,7 +12,7 @@
 #include <chrono>
 using namespace std::chrono;
 
-namespace dusk 
+namespace dusk
 {
 
 Program* Program::sp_Inst = nullptr;

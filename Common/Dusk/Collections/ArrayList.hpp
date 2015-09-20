@@ -4,6 +4,7 @@
 #include <Dusk/Tracking/ITrackedObject.hpp>
 
 #include <vector>
+#include <algorithm>
 
 namespace dusk
 {
@@ -19,31 +20,31 @@ public:
 
 	inline void add(const T& item)
 	{ 
-		push_back(item);
+		std::vector<T>::push_back(item);
 	}
 
 	inline bool contains(const T& item) const
 	{
-		return (empty() ? false : find(cbegin(), cend(), item) != cend());
+		return (std::vector<T>::empty() ? false : std::find(std::vector<T>::cbegin(), std::vector<T>::cend(), item) != std::vector<T>::cend());
 	}
 
 	inline bool has_index(const unsigned int& index) const
 	{
-		return (empty() ? false : (index >= 0 && index <= size() - 1));
+		return (std::vector<T>::empty() ? false : (index >= 0 && index <= std::vector<T>::size() - 1));
 	}
 
 	inline unsigned int index_of(const T& item) const
 	{
-		return find(begin(), end(), item) - begin();
+		return std::find(std::vector<T>::begin(), std::vector<T>::end(), item) - std::vector<T>::begin();
 	}
 
 	inline bool erase_next(const T& item)
 	{
-		auto it = find(begin(), end(), item);
+		auto it = std::find(std::vector<T>::begin(), std::vector<T>::end(), item);
 		
-		if (it != end()) 
+		if (it != std::vector<T>::end()) 
 		{
-			erase(it);
+			std::vector<T>::erase(it);
 			return true;
 		}
 
@@ -52,15 +53,15 @@ public:
 
 	inline bool erase_all(const T& item)
 	{
-		auto it = find(begin(), end(), item);
+		auto it = std::find(std::vector<T>::begin(), std::vector<T>::end(), item);
 		
-		if (it == end())
+		if (it == std::vector<T>::end())
 			return false;
 
-		while (it != end()) 
+		while (it != std::vector<T>::end()) 
 		{
-			erase(it);
-			it = find(begin(), end(), item);
+			std::vector<T>::erase(it);
+			it = find(std::vector<T>::begin(), std::vector<T>::end(), item);
 		}
 
 		return true;
@@ -70,7 +71,7 @@ public:
 	{
 		if (has_index(index))
 		{
-			erase(begin() + index);
+			std::vector<T>::erase(std::vector<T>::begin() + index);
 			return true;
 		}
 

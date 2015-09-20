@@ -11,6 +11,10 @@
 namespace dusk
 {
 
+Flag GraphicsSystem::FULLSCREEN = 1;
+Flag GraphicsSystem::RESIZABLE  = 2;
+Flag GraphicsSystem::DECORATED  = 4;
+
 GraphicsSystem* GraphicsSystem::sp_Inst = nullptr;
 
 GraphicsSystem::GraphicsSystem() :

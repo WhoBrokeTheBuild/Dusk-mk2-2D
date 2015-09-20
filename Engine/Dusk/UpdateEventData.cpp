@@ -11,8 +11,7 @@ FrameTimeInfo* UpdateEventData::GetTimeInfo()
 int UpdateEventData::PushDataToLua(lua_State* L) const
 {
 	lua_newtable(L);
-	int top = lua_gettop(L);
-
+	
 	lua_pushnumber(L, mp_TimeInfo->CurrentFPS);
 	lua_setfield(L, -2, "CurrentFPS");
 

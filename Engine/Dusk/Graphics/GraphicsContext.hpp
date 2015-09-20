@@ -25,7 +25,7 @@ public:
 	void SwapBuffers();
 
 	void Draw(Sprite* sprite);
-	
+
 	static void Script_RegisterFunctions();
 	static int Script_Clear(lua_State* L);
 	static int Script_Draw(lua_State* L);
@@ -36,6 +36,8 @@ private:
 	inline GraphicsContext( sf::RenderWindow& pSFMLWindow ) :
 		m_SFMLWindow(pSFMLWindow)
 	{ }
+
+	virtual inline ~GraphicsContext() { }
 
 	sf::RenderWindow& m_SFMLWindow;
 

@@ -24,18 +24,18 @@ class GraphicsSystem :
 
 public:
 
-	static inline GraphicsSystem* Inst() 
+	static Flag FULLSCREEN;
+	static Flag RESIZABLE;
+	static Flag DECORATED;
+
+	static inline GraphicsSystem* Inst()
 	{
 		return sp_Inst;
 	}
 
-	static const Flag FULLSCREEN = 1;
-	static const Flag RESIZABLE = 2;
-	static const Flag DECORATED = 4;
-
 	GraphicsSystem();
 
-	~GraphicsSystem() { Term(); }
+	virtual ~GraphicsSystem() { Term(); }
 
 	virtual inline string GetClassName() const { return "Graphics System"; }
 

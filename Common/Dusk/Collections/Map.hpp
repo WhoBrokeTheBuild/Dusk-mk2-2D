@@ -19,28 +19,28 @@ public:
 
 	inline void add(std::pair<K, T> pair)
 	{
-		insert(pair);
+		std::map<K, T, Sort>::insert(pair);
 	}
 
 	inline void add(const K& key, const T& item)
 	{
-		insert(std::pair<K, T>(key, item)); 
+		std::map<K, T, Sort>::insert(std::pair<K, T>(key, item)); 
 	}
 
 	inline bool contains_key(const K& key) const
 	{
-		return (find(key) != cend()); 
+		return (std::map<K, T, Sort>::find(key) != std::map<K, T, Sort>::cend()); 
 	}
 
 	inline bool erase_next(const T& item)
 	{
-		auto it = begin();
+		auto it = std::map<K, T, Sort>::begin();
 
-		while (it != end()) 
+		while (it != std::map<K, T, Sort>::end()) 
 		{
 			if (it->second == item) 
 			{
-				erase(it);
+				std::map<K, T, Sort>::erase(it);
 				return true;
 			}
 			++it;
@@ -51,14 +51,14 @@ public:
 
 	inline bool erase_all(const T& item)
 	{
-		auto it = begin();
+		auto it = std::map<K, T, Sort>::begin();
 		bool found = false;
 
-		while (it != end())
+		while (it != std::map<K, T, Sort>::end())
 		{
 			if (it->second == item)
 			{
-				it = erase(it);
+				it = std::map<K, T, Sort>::erase(it);
 				found = true;
 			}
 			else 

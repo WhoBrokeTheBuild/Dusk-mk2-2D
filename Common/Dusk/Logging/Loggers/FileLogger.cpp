@@ -1,5 +1,7 @@
 #include "FileLogger.hpp"
 
+#include <cstring>
+
 namespace dusk
 {
 

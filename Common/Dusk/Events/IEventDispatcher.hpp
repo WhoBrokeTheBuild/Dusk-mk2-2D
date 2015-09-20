@@ -78,9 +78,9 @@ void IEventDispatcher::RemoveAllMethods( ObjectType* object )
 	while (needRepeat)
 	{
 		needRepeat = false;
-		for (auto mapIt : m_EventMap)
+		for (auto& mapIt : m_EventMap)
 		{
-			for (auto item : mapIt->second)
+			for (auto& item : mapIt.second)
 			{
 				if (item == nullptr)
 					continue;
