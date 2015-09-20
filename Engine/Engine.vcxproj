@@ -22,29 +22,30 @@
     <ProjectGuid>{AF9DA779-5498-42AF-BB8D-7C2133A48952}</ProjectGuid>
     <RootNamespace>Engine</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,22 +72,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>dusk</TargetName>
+    <TargetName>dusk-engine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>dusk</TargetName>
+    <TargetName>dusk-engine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>dusk</TargetName>
+    <TargetName>dusk-engine</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>dusk</TargetName>
+    <TargetName>dusk-engine</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -111,6 +112,12 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <Lib>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x86\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -135,6 +142,12 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <Lib>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x64\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -163,6 +176,12 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <Lib>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x86\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -191,33 +210,40 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <Lib>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\lua\lib\x64\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Graphics\Animation.cpp" />
-    <ClCompile Include="Graphics\GraphicsContext.cpp" />
-    <ClCompile Include="Graphics\GraphicsSystem.cpp" />
-    <ClCompile Include="Graphics\Window.cpp" />
-    <ClCompile Include="Input\InputSystem.cpp" />
-    <ClCompile Include="Input\Inputs\Key.cpp" />
-    <ClCompile Include="Input\Inputs\Mouse.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Program.cpp" />
-    <ClCompile Include="Graphics\Sprite.cpp" />
-    <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Dusk\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="Dusk\Graphics\GraphicsSystem.cpp" />
+    <ClCompile Include="Dusk\Input\InputSystem.cpp" />
+    <ClCompile Include="Dusk\Input\Inputs\Key.cpp" />
+    <ClCompile Include="Dusk\Input\Inputs\Mapped.cpp" />
+    <ClCompile Include="Dusk\Input\Inputs\Mouse.cpp" />
+    <ClCompile Include="Dusk\Graphics\Sprite.cpp" />
+    <ClCompile Include="Dusk\Graphics\Texture.cpp" />
+    <ClCompile Include="Dusk\Program.cpp" />
+    <ClCompile Include="Dusk\RenderEventData.cpp" />
+    <ClCompile Include="Dusk\UpdateEventData.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Geometry\Vector2.hpp" />
-    <ClInclude Include="Graphics\Animation.hpp" />
-    <ClInclude Include="Graphics\GraphicsContext.hpp" />
-    <ClInclude Include="Graphics\GraphicsSystem.hpp" />
-    <ClInclude Include="Graphics\Window.hpp" />
-    <ClInclude Include="Input\InputSystem.hpp" />
-    <ClInclude Include="Input\Inputs\Key.hpp" />
-    <ClInclude Include="Input\Inputs\Mouse.hpp" />
-    <ClInclude Include="Program.hpp" />
-    <ClInclude Include="Graphics\Sprite.hpp" />
-    <ClInclude Include="Graphics\Texture.hpp" />
-    <ClInclude Include="Geometry\Rect.hpp" />
+    <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
+    <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
+    <ClInclude Include="Dusk\Graphics\GraphicsSystem.hpp" />
+    <ClInclude Include="Dusk\Input\InputSystem.hpp" />
+    <ClInclude Include="Dusk\Input\Inputs\Key.hpp" />
+    <ClInclude Include="Dusk\Input\Inputs\Mouse.hpp" />
+    <ClInclude Include="Dusk\Graphics\Sprite.hpp" />
+    <ClInclude Include="Dusk\Graphics\Texture.hpp" />
+    <ClInclude Include="Dusk\Geometry\Rect.hpp" />
+    <ClInclude Include="Dusk\Input\Inputs\Mapped.hpp" />
+    <ClInclude Include="Dusk\Program.hpp" />
+    <ClInclude Include="Dusk\RenderEventData.hpp" />
+    <ClInclude Include="Dusk\UpdateEventData.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

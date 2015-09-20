@@ -1,30 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Program.cpp" />
-    <ClCompile Include="Graphics\GraphicsSystem.cpp" />
-    <ClCompile Include="Graphics\Window.cpp" />
-    <ClCompile Include="Input\InputSystem.cpp" />
-    <ClCompile Include="Input\Inputs\Key.cpp" />
-    <ClCompile Include="Input\Inputs\Mouse.cpp" />
-    <ClCompile Include="Graphics\GraphicsContext.cpp" />
-    <ClCompile Include="Graphics\Animation.cpp" />
-    <ClCompile Include="Graphics\Sprite.cpp" />
-    <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Dusk\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="Dusk\Graphics\GraphicsSystem.cpp" />
+    <ClCompile Include="Dusk\Graphics\Sprite.cpp" />
+    <ClCompile Include="Dusk\Graphics\Texture.cpp" />
+    <ClCompile Include="Dusk\Input\Inputs\Key.cpp" />
+    <ClCompile Include="Dusk\Input\Inputs\Mouse.cpp" />
+    <ClCompile Include="Dusk\Input\InputSystem.cpp" />
+    <ClCompile Include="Dusk\Program.cpp" />
+    <ClCompile Include="Dusk\RenderEventData.cpp" />
+    <ClCompile Include="Dusk\UpdateEventData.cpp" />
+    <ClCompile Include="Dusk\Input\Inputs\Mapped.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Graphics\GraphicsSystem.hpp" />
-    <ClInclude Include="Graphics\Window.hpp" />
-    <ClInclude Include="Program.hpp" />
-    <ClInclude Include="Input\Inputs\Key.hpp" />
-    <ClInclude Include="Input\Inputs\Mouse.hpp" />
-    <ClInclude Include="Input\InputSystem.hpp" />
-    <ClInclude Include="Graphics\GraphicsContext.hpp" />
-    <ClInclude Include="Graphics\Animation.hpp" />
-    <ClInclude Include="Graphics\Sprite.hpp" />
-    <ClInclude Include="Graphics\Texture.hpp" />
-    <ClInclude Include="Geometry\Rect.hpp" />
-    <ClInclude Include="Geometry\Vector2.hpp" />
+    <ClInclude Include="Dusk\Geometry\Rect.hpp" />
+    <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
+    <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
+    <ClInclude Include="Dusk\Graphics\GraphicsSystem.hpp" />
+    <ClInclude Include="Dusk\Graphics\Sprite.hpp" />
+    <ClInclude Include="Dusk\Graphics\Texture.hpp" />
+    <ClInclude Include="Dusk\Input\Inputs\Key.hpp" />
+    <ClInclude Include="Dusk\Input\Inputs\Mouse.hpp" />
+    <ClInclude Include="Dusk\Input\InputSystem.hpp" />
+    <ClInclude Include="Dusk\Program.hpp" />
+    <ClInclude Include="Dusk\UpdateEventData.hpp" />
+    <ClInclude Include="Dusk\RenderEventData.hpp" />
+    <ClInclude Include="Dusk\Input\Inputs\Mapped.hpp" />
   </ItemGroup>
 </Project>

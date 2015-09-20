@@ -1,38 +1,34 @@
 if not Dusk then Dusk = { } end
 
--- Dusk.Window
+-- Dusk.GraphicsSystem
 
-Dusk.GetWindow = function()
-	return Dusk.Window( dusk_graphics_system_get_window() )
+Dusk.GetGraphicsSystem = function()
+	return Dusk.GraphicsSystem( dusk_get_graphics_system() )
 end
 
-local Window = Dusk.Class(Dusk.IEventDispatcher, function(self, ptr)
-    Dusk.IEventDispatcher.init(self, ptr)
+local GraphicsSystem = Dusk.Class(Dusk.Object, function(self, ptr)
+	Dusk.Object.init(self, ptr)
 end)
 
-function Window:GetWidth()
-    return dusk_window_get_width(self.dusk_ptr)
+function GraphicsSystem:GetWinSize()
+    return dusk_graphics_system_get_window_size()
 end
 
-function Window:GetHeight()
-    return dusk_window_get_height(self.dusk_ptr)
+function GraphicsSystem:GetWinTitle()
+    return dusk_graphics_system_get_window_title()
 end
 
-function Window:GetTitle()
-    return dusk_window_get_title(self.dusk_ptr)
+function GraphicsSystem:SetWinTitle(title)
+    return dusk_graphics_system_set_window_title(title)
 end
 
-function Window:SetTitle(title)
-    return dusk_window_set_title(self.dusk_ptr, title)
+function GraphicsSystem:GetContext()
+	return Dusk.GraphicsContext( dusk_graphics_system_get_context() )
 end
 
-Dusk.Window = Window
+Dusk.GraphicsSystem = GraphicsSystem
 
 -- Dusk.GraphicsContext
-
-Dusk.GetGraphicsContext = function()
-	return Dusk.GraphicsContext( dusk_graphics_system_get_graphics_context() )
-end
 
 local GraphicsContext = Dusk.Class(Dusk.Object, function(self, ptr)
 	Dusk.Object.init(self, ptr)

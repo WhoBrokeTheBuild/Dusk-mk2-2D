@@ -75,36 +75,36 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
-    <NMakeBuildCommandLine>call compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>call $(SolutionDir)Tools\compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
-    <NMakeCleanCommandLine>call compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine>call $(SolutionDir)Tools\compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
-    <NMakeBuildCommandLine>call compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>call $(SolutionDir)Tools\compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
-    <NMakeCleanCommandLine>call compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine>call $(SolutionDir)Tools\compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
-    <NMakeBuildCommandLine>call compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>call compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>call $(SolutionDir)Tools\compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>call $(SolutionDir)Tools\compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
     <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
-    <NMakeBuildCommandLine>call compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>call compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
+    <NMakeBuildCommandLine>call $(SolutionDir)Tools\compile.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\compile.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>call $(SolutionDir)Tools\compile.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>

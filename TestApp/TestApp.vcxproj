@@ -19,32 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8586F1CE-676E-4FDE-816F-AD44A0B29E42}</ProjectGuid>
-    <RootNamespace>Common</RootNamespace>
+    <ProjectGuid>{BE401874-1F34-4D9F-A4D9-379222E579A9}</ProjectGuid>
+    <RootNamespace>TestApp</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -68,38 +68,33 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>dusk-common</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>dusk-common</TargetName>
-    <TargetExt>.lib</TargetExt>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>dusk-common</TargetName>
-    <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>dusk-common</TargetName>
-    <TargetExt>.lib</TargetExt>
-    <IntDir>Build\$(Configuration)\$(Platform)\</IntDir>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Common;..\Engine;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dusk-common.lib;dusk-engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,11 +102,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Common;..\Engine;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dusk-common.lib;dusk-engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,13 +117,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Common;..\Engine;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dusk-common.lib;dusk-engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,50 +134,23 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Common;..\Engine;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dusk-common.lib;dusk-engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dusk\Events\Callbacks.cpp" />
-    <ClCompile Include="Dusk\Events\Event.cpp" />
-    <ClCompile Include="Dusk\Events\IEventDispatcher.cpp" />
-    <ClCompile Include="Dusk\Logging\Loggers\ConsoleLogger.cpp" />
-    <ClCompile Include="Dusk\Logging\Loggers\FileLogger.cpp" />
-    <ClCompile Include="Dusk\Logging\Logging.cpp" />
-    <ClCompile Include="Dusk\Scripting\ScriptHost.cpp" />
-    <ClCompile Include="Dusk\Scripting\Scripting.cpp" />
-    <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
-    <ClCompile Include="Dusk\Tracking\ITrackedObject.cpp" />
-    <ClCompile Include="Dusk\Utility\Strings.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TestApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dusk\Collections\ArrayList.hpp" />
-    <ClInclude Include="Dusk\Collections\Map.hpp" />
-    <ClInclude Include="Dusk\Events\Callbacks.hpp" />
-    <ClInclude Include="Dusk\Events\Delegate.hpp" />
-    <ClInclude Include="Dusk\Events\Event.hpp" />
-    <ClInclude Include="Dusk\Events\IEventDispatcher.hpp" />
-    <ClInclude Include="Dusk\Logging\LogColors.hpp" />
-    <ClInclude Include="Dusk\Logging\ILogger.hpp" />
-    <ClInclude Include="Dusk\Logging\Loggers\ConsoleLogger.hpp" />
-    <ClInclude Include="Dusk\Logging\Loggers\FileLogger.hpp" />
-    <ClInclude Include="Dusk\Logging\Logging.hpp" />
-    <ClInclude Include="Dusk\Scripting\ScriptHost.hpp" />
-    <ClInclude Include="Dusk\Scripting\Scripting.hpp" />
-    <ClInclude Include="Dusk\Timing\FrameTimeInfo.hpp" />
-    <ClInclude Include="Dusk\Tracking\MemoryTracker.hpp" />
-    <ClInclude Include="Dusk\Tracking\ITrackedObject.hpp" />
-    <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
-    <ClInclude Include="Dusk\Utility\Types.hpp" />
-    <ClInclude Include="Dusk\Utility\Console.hpp" />
-    <ClInclude Include="Dusk\Utility\Platform.hpp" />
-    <ClInclude Include="Dusk\Utility\Strings.hpp" />
+    <ClInclude Include="Logging.h" />
+    <ClInclude Include="TestApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
