@@ -13,17 +13,19 @@ if %BUILD_ARCH% == Win32 (
     set BUILD_ARCH_ALT=x86
 )
 
+set BUILD_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%
+
 set LUAC=..\Tools\Lua\%BUILD_ARCH_ALT%\luac.exe
-set COPY=xcopy /s /e /y
+set COPY=xcopy /s /e /y /i
 
 set SCRIPTS_DIR=Scripts
-set OUT_SCRIPTS_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%\Scripts
+set OUT_SCRIPTS_DIR=%BUILD_DIR%\Scripts
 
 set TEXTURES_DIR=Textures
-set OUT_TEXTURES_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%\Textures
+set OUT_TEXTURES_DIR=%BUILD_DIR%\Textures
 
 set FONTS_DIR=Fonts
-set OUT_FONTS_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%\Fonts
+set OUT_FONTS_DIR=%BUILD_DIR%\Fonts
 
 if not exist %OUT_SCRIPTS_DIR% (
 	echo mkdir %OUT_SCRIPTS_DIR%
