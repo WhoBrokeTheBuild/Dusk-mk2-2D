@@ -10,6 +10,7 @@ namespace dusk
 
 class GraphicsSystem;
 class Sprite;
+class TextBuffer;
 
 class GraphicsContext :
 	public ITrackedObject
@@ -25,6 +26,7 @@ public:
 	void SwapBuffers();
 
 	void Draw(Sprite* sprite);
+	void Draw(TextBuffer* textBuffer);
 
 	static void Script_RegisterFunctions();
 	static int Script_Clear(lua_State* L);

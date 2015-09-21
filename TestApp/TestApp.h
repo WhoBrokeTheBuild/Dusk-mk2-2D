@@ -4,6 +4,8 @@
 #include <Dusk/Program.hpp>
 #include <Dusk/Timing/FrameTimeInfo.hpp>
 #include <Dusk/Graphics/GraphicsContext.hpp>
+#include <Dusk/Graphics/Font.hpp>
+#include <Dusk/Graphics/TextBuffer.hpp>
 
 class TestApp :
 	public dusk::Program
@@ -24,6 +26,11 @@ protected:
 	virtual void Update(dusk::FrameTimeInfo& timeInfo) override;
 
 	virtual void Render(dusk::GraphicsContext* ctx) override;
+
+private:
+
+	dusk::Font* mp_Font;
+	dusk::TextBuffer* mp_TextBuffer;
 
 };
 

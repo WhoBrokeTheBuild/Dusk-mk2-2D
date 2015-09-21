@@ -9,8 +9,12 @@ OUT_SCRIPTS_DIR=../Build/$CONF/Scripts
 TEXTURES_DIR=Textures
 OUT_TEXTURES_DIR=../Build/$CONF/Textures
 
+FONTS_DIR=Fonts
+OUT_FONTS_DIR=../Build/$CONF/Fonts
+
 mkdir -p $OUT_SCRIPTS_DIR
 mkdir -p $OUT_TEXTURES_DIR
+mkdir -p $OUT_FONTS_DIR
 
 if [ $ACTION = "build" ]; then
     for dir in $SCRIPTS_DIR/*/; do
@@ -34,7 +38,13 @@ if [ $ACTION = "build" ]; then
         cp $TEXTURES_DIR/* -t $OUT_TEXTURES_DIR/
     fi
 
+    if [ -d $FONTS_DIR ]; then
+        echo cp $FONTS_DIR/* -t $OUT_FONTS_DIR/
+        cp $FONTS_DIR/* -t $OUT_FONTS_DIR/
+    fi
+
 elif [ $ACTION = "clean" ]; then
     rm -rf $OUT_SCRIPTS_DIR
     rm -rf $OUT_TEXTURES_DIR
+    rm -rf $OUT_FONTS_DIR
 fi

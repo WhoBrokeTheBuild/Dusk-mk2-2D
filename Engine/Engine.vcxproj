@@ -229,9 +229,12 @@
     <ClCompile Include="Dusk\Program.cpp" />
     <ClCompile Include="Dusk\RenderEventData.cpp" />
     <ClCompile Include="Dusk\UpdateEventData.cpp" />
+    <ClCompile Include="Dusk\Graphics\Font.cpp" />
+    <ClCompile Include="Dusk\Graphics\TextBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
+    <ClInclude Include="Dusk\Graphics\Color.h" />
     <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
     <ClInclude Include="Dusk\Graphics\GraphicsSystem.hpp" />
     <ClInclude Include="Dusk\Input\InputSystem.hpp" />
@@ -244,6 +247,8 @@
     <ClInclude Include="Dusk\Program.hpp" />
     <ClInclude Include="Dusk\RenderEventData.hpp" />
     <ClInclude Include="Dusk\UpdateEventData.hpp" />
+    <ClInclude Include="Dusk\Graphics\Font.hpp" />
+    <ClInclude Include="Dusk\Graphics\TextBuffer.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

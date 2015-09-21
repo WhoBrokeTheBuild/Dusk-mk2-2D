@@ -22,6 +22,9 @@ set OUT_SCRIPTS_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%\Scripts
 set TEXTURES_DIR=Textures
 set OUT_TEXTURES_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%\Textures
 
+set FONTS_DIR=Fonts
+set OUT_FONTS_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%\Fonts
+
 if not exist %OUT_SCRIPTS_DIR% (
 	echo mkdir %OUT_SCRIPTS_DIR%
 	mkdir %OUT_SCRIPTS_DIR% || exit /b 1
@@ -33,17 +36,26 @@ if not exist %OUT_TEXTURES_DIR% (
 )
 
 if %ACTION% == build (
-	for /d %%f in (%SCRIPTS_DIR%\*) do (
-		echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf %SCRIPTS_DIR%\%%~nxf\*.lua
-		%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf %SCRIPTS_DIR%\%%~nxf\*.lua || exit /b 1
-	)
-	for %%f in (%SCRIPTS_DIR%\*.lua) do (
-		echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf %SCRIPTS_DIR%\%%~nf.lua
-		%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf %SCRIPTS_DIR%\%%~nf.lua || exit /b 1
+	if exist %SCRIPTS_DIR% (
+		for /d %%f in (%SCRIPTS_DIR%\*) do (
+			echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf %SCRIPTS_DIR%\%%~nxf\*.lua
+			%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf %SCRIPTS_DIR%\%%~nxf\*.lua || exit /b 1
+		)
+		for %%f in (%SCRIPTS_DIR%\*.lua) do (
+			echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf %SCRIPTS_DIR%\%%~nf.lua
+			%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf %SCRIPTS_DIR%\%%~nf.lua || exit /b 1
+		)
 	)
 
-	echo %COPY% %TEXTURES_DIR%\* %OUT_TEXTURES_DIR%\
-	%COPY% %TEXTURES_DIR%\* %OUT_TEXTURES_DIR%\ || exit /b 1
+	if exist %TEXTURES_DIR% (
+		echo %COPY% %TEXTURES_DIR% %OUT_TEXTURES_DIR%
+		%COPY% %TEXTURES_DIR% %OUT_TEXTURES_DIR% || exit /b 1
+	)
+
+	if exist %FONTS_DIR% (
+		echo %COPY% %FONTS_DIR% %OUT_FONTS_DIR%
+		%COPY% %FONTS_DIR% %OUT_FONTS_DIR% || exit /b 1
+	)
 )
 
 if %ACTION% == clean (
@@ -52,6 +64,9 @@ if %ACTION% == clean (
 
 	echo del /f /q %OUT_TEXTURES_DIR%\*.*
 	del /f /q %OUT_TEXTURES_DIR%\*.* || exit /b 1
+
+	echo del /f /q %OUT_FONTS_DIR%\*.*
+	del /f /q %OUT_FONTS_DIR%\*.* || exit /b 1
 )
 
 exit /b 0

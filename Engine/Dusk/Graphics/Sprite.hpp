@@ -47,12 +47,6 @@ public:
 		m_SFMLSprite.setPosition(sf::Vector2f(x, y));
 	}
 
-	static void Script_RegisterFunctions();
-	static int Script_New(lua_State* L);
-	static int Script_Delete(lua_State* L);
-	static int Script_GetPos(lua_State* L);
-	static int Script_SetPos(lua_State* L);
-
 private:
 
 	inline const sf::Sprite& GetSFMLSprite() const
@@ -65,6 +59,14 @@ private:
 	IntRect m_Rect;
 
 	sf::Sprite m_SFMLSprite;
+
+public:
+
+	static void Script_RegisterFunctions();
+	static int Script_New(lua_State* L);
+	static int Script_Delete(lua_State* L);
+	static int Script_GetPos(lua_State* L);
+	static int Script_SetPos(lua_State* L);
 
 }; // class Sprite
 

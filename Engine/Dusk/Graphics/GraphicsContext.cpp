@@ -2,6 +2,7 @@
 
 #include <Dusk/Graphics/GraphicsSystem.hpp>
 #include <Dusk/Graphics/Sprite.hpp>
+#include <Dusk/Graphics/TextBuffer.hpp>
 #include <Dusk/Scripting/Scripting.hpp>
 #include <Dusk/Logging/Logging.hpp>
 
@@ -21,6 +22,11 @@ void GraphicsContext::SwapBuffers()
 void GraphicsContext::Draw(Sprite* sprite)
 {
 	m_SFMLWindow.draw(sprite->GetSFMLSprite());
+}
+
+void GraphicsContext::Draw(TextBuffer* textBuffer)
+{
+	m_SFMLWindow.draw(textBuffer->GetSFMLText());
 }
 
 void GraphicsContext::Script_RegisterFunctions()

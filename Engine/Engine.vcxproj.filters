@@ -12,6 +12,8 @@
     <ClCompile Include="Dusk\RenderEventData.cpp" />
     <ClCompile Include="Dusk\UpdateEventData.cpp" />
     <ClCompile Include="Dusk\Input\Inputs\Mapped.cpp" />
+    <ClCompile Include="Dusk\Graphics\Font.cpp" />
+    <ClCompile Include="Dusk\Graphics\TextBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
@@ -27,5 +29,8 @@
     <ClInclude Include="Dusk\UpdateEventData.hpp" />
     <ClInclude Include="Dusk\RenderEventData.hpp" />
     <ClInclude Include="Dusk\Input\Inputs\Mapped.hpp" />
+    <ClInclude Include="Dusk\Graphics\TextBuffer.hpp" />
+    <ClInclude Include="Dusk\Graphics\Font.hpp" />
+    <ClInclude Include="Dusk\Graphics\Color.h" />
   </ItemGroup>
 </Project>
