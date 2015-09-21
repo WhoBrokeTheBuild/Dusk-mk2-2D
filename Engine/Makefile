@@ -30,6 +30,8 @@ Dusk/Graphics/GraphicsContext.cpp \
 Dusk/Graphics/GraphicsSystem.cpp \
 Dusk/Graphics/Sprite.cpp \
 Dusk/Graphics/Texture.cpp \
+Dusk/Graphics/Font.cpp \
+Dusk/Graphics/TextBuffer.cpp \
 Dusk/Input/Inputs/Key.cpp \
 Dusk/Input/Inputs/Mouse.cpp \
 Dusk/Input/Inputs/Mapped.cpp \
