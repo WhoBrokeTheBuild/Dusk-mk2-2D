@@ -6,17 +6,17 @@ namespace dusk
 
 enum LogForegroundColor
 {
-    LOG_FG_BLACK         = 30,
-    LOG_FG_RED           = 31,
-    LOG_FG_GREEN         = 32,
-    LOG_FG_YELLOW        = 33,
-    LOG_FG_BLUE          = 34,
-    LOG_FG_MAGENTA       = 35,
-    LOG_FG_CYAN          = 36,
-    LOG_FG_GRAY          = 37,
-    LOG_FG_GREY          = 37,
-    LOG_FG_WHITE         = 97,
-    LOG_FG_DEFAULT       = 39
+    LOG_FG_BLACK   = 30,
+    LOG_FG_RED     = 31,
+    LOG_FG_GREEN   = 32,
+    LOG_FG_YELLOW  = 33,
+    LOG_FG_BLUE    = 34,
+    LOG_FG_MAGENTA = 35,
+    LOG_FG_CYAN    = 36,
+    LOG_FG_GRAY    = 37,
+    LOG_FG_GREY    = 37,
+    LOG_FG_WHITE   = 97,
+    LOG_FG_DEFAULT = 39
 };
 
 enum LogBackgroundColor

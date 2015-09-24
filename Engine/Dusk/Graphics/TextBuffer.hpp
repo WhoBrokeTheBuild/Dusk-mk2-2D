@@ -13,61 +13,76 @@ namespace dusk
 class Font;
 
 class TextBuffer :
-	public ITrackedObject
+    public ITrackedObject
 {
 
-	friend class GraphicsContext;
+    friend class GraphicsContext;
 
 public:
 
-	inline TextBuffer() :
-		mp_Font(nullptr),
-		m_Text(),
-		m_Size(),
-		m_Color(),
-		m_SFMLText()
-	{ }
+    inline TextBuffer() :
+        mp_Font(nullptr),
+        m_Text(),
+        m_Size(),
+        m_Color(),
+        m_SFMLText()
+    { }
 
-	virtual inline ~TextBuffer() { Term(); }
+    virtual inline ~TextBuffer()
+    {
+        Term();
+    }
 
-	virtual inline string GetClassName() const { return "Text Buffer"; }
+    virtual inline string GetClassName() const
+    {
+        return "Text Buffer";
+    }
 
-	bool Init(Font* pFont, const string& text, const unsigned int& size, const Color& color);
-	void Term();
+    bool Init(Font* pFont, const string& text, const unsigned int& size, const Color& color);
+    void Term();
 
-	void SetFont(Font* pFont);
+    void SetFont(Font* pFont);
 
-	inline string GetText() const { return m_Text; }
-	void SetText(const string& text);
+    inline string GetText() const
+    {
+        return m_Text;
+    }
+    void SetText(const string& text);
 
-	inline unsigned int GetSize() const { return m_Size; }
-	void SetSize(const unsigned int& size);
+    inline unsigned int GetSize() const
+    {
+        return m_Size;
+    }
+    void SetSize(const unsigned int& size);
 
-	inline Color GetColor() const { return m_Color; }
-	void SetColor(const Color& color);
+    inline Color GetColor() const
+    {
+        return m_Color;
+    }
+    void SetColor(const Color& color);
 
 private:
 
-	inline const sf::Text& GetSFMLText() const
-	{
-		return m_SFMLText;
-	}
+    inline const sf::Text& GetSFMLText() const
+    {
+        return m_SFMLText;
+    }
 
-	Font* mp_Font;
+    Font* mp_Font;
 
-	string m_Text;
+    string m_Text;
 
-	unsigned int m_Size;
+    unsigned int m_Size;
 
-	Color m_Color;
+    Color m_Color;
 
-	sf::Text m_SFMLText;
+    sf::Text m_SFMLText;
 
 public:
 
-	static void Script_RegisterFunctions();
-	static int Script_New(lua_State* L);
-	static int Script_Delete(lua_State* L);
+    static void Script_RegisterFunctions();
+    static int Script_New(lua_State* L);
+    static int Script_Delete(lua_State* L);
 
 }; // class TextBuffer
 

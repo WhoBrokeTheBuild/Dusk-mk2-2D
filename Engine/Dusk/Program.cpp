@@ -17,158 +17,201 @@ namespace dusk
 
 Program* Program::sp_Inst = nullptr;
 
-EventID Program::EVT_UPDATE = 1;
-EventID Program::EVT_RENDER	= 2;
-EventID Program::EVT_EXIT = 3;
+EventID Program::EvtUpdate = 1;
+EventID Program::EvtRender = 2;
+EventID Program::EvtExit = 3;
 
 Program::Program() :
-	m_Running(),
-	m_TargetFPS(),
-	m_CurrentFPS(),
-	m_UpdateInterval(),
-	mp_ScriptHost(nullptr)
+    m_Running(),
+    m_TargetFPS(),
+    m_CurrentFPS(),
+    m_UpdateInterval(),
+    mp_ScriptHost(nullptr)
 {
-	sp_Inst = this;
+    sp_Inst = this;
 }
 
 void Program::Run()
 {
-	DuskLog("verbose", "Program running");
+    DuskLog("verbose", "Program running");
 
-	if (!Init())
-	{
-		DuskLog("error", "Failed to start program");
-		return;
-	}
+    if (!Init())
+    {
+        DuskLog("error", "Failed to start program");
+        return;
+    }
 
-	FrameTimeInfo timeInfo;
-	unsigned long long frameCount = 0;
+    FrameTimeInfo timeInfo;
+    unsigned long long frameCount = 0;
 
-	auto startTime = high_resolution_clock::now();
-	auto lastTime = startTime;
+    auto startTime = high_resolution_clock::now();
+    auto lastTime = startTime;
 
-	double secsSinceLastFrame = 0;
+    double secsSinceLastFrame = 0;
 
-	m_Running = true;
-	while (m_Running)
-	{
-		auto time = high_resolution_clock::now();
-		auto elapsedTime = time - lastTime;
-		lastTime = time;
+    m_Running = true;
+    while (m_Running)
+    {
+        auto time = high_resolution_clock::now();
+        auto elapsedTime = time - lastTime;
+        lastTime = time;
 
-		timeInfo.CurrentFPS = m_CurrentFPS;
-		timeInfo.TargetFPS = m_TargetFPS;
-		timeInfo.ElapsedSeconds = duration_cast<duration<double>>(elapsedTime).count();
-		timeInfo.ElapsedMilliseconds = duration_cast<duration<double, std::milli>>(elapsedTime).count();
-		timeInfo.TotalSeconds += timeInfo.ElapsedSeconds;
-		timeInfo.TotalMilliseconds += timeInfo.ElapsedMilliseconds;
+        timeInfo.CurrentFPS = m_CurrentFPS;
+        timeInfo.TargetFPS = m_TargetFPS;
+        timeInfo.ElapsedSeconds = duration_cast<duration<double>>(elapsedTime).count();
+        timeInfo.ElapsedMilliseconds = duration_cast<duration<double, std::milli>>(elapsedTime).count();
+        timeInfo.TotalSeconds += timeInfo.ElapsedSeconds;
+        timeInfo.TotalMilliseconds += timeInfo.ElapsedMilliseconds;
 
-		timeInfo.Delta = timeInfo.ElapsedSeconds / m_UpdateInterval;
+        timeInfo.Delta = timeInfo.ElapsedSeconds / m_UpdateInterval;
 
-		secsSinceLastFrame += timeInfo.ElapsedSeconds;
+        secsSinceLastFrame += timeInfo.ElapsedSeconds;
 
-		Update(timeInfo);
+        Update(timeInfo);
 
-		if (secsSinceLastFrame >= m_UpdateInterval)
-		{
-			GraphicsContext* ctx = GraphicsSystem::Inst()->GetContext();
-			PreRender(ctx);
-			Render(ctx);
-			PostRender(ctx);
+        if (secsSinceLastFrame >= m_UpdateInterval)
+        {
+            GraphicsContext* ctx = GraphicsSystem::Inst()->GetContext();
+            PreRender(ctx);
+            Render(ctx);
+            PostRender(ctx);
 
-			++frameCount;
-			m_CurrentFPS = (m_UpdateInterval / secsSinceLastFrame) * m_TargetFPS;
+            ++frameCount;
+            m_CurrentFPS = (m_UpdateInterval / secsSinceLastFrame) * m_TargetFPS;
 
-			secsSinceLastFrame = 0;
-		}
-	}
+            secsSinceLastFrame = 0;
+        }
+    }
 
-	Dispatch(Event(EVT_EXIT));
-	DuskLog("verbose", "Program Exiting");
+    Dispatch(Event(EvtExit));
+    DuskLog("verbose", "Program Exiting");
 }
 
 void Program::SetTargetFPS(double fps)
 {
-	m_TargetFPS = fps;
-	m_UpdateInterval = (1.0 / m_TargetFPS);
+    m_TargetFPS = fps;
+    m_UpdateInterval = (1.0 / m_TargetFPS);
 }
 
 ScriptHost* Program::GetScriptHost()
 {
-	return mp_ScriptHost;
+    return mp_ScriptHost;
 }
 
 bool Program::Init()
 {
-	DuskLog("verbose", "Program initializing");
-	DuskBenchStart();
+    DuskLog("verbose", "Program initializing");
+    DuskBenchStart();
 
-	GraphicsSystem::CreateInst()->Init(1024, 768, "Dusk 2D", GraphicsSystem::DECORATED);
-	InputSystem::CreateInst()->Init();
+    GraphicsSystem::CreateInst()->Init(1024, 768, "Dusk 2D", GraphicsSystem::Decorated);
+    InputSystem::CreateInst()->Init();
 
-	Script_RegisterFunctions();
+    Script_RegisterFunctions();
 
-	SetTargetFPS(60.0);
+    SetTargetFPS(60.0);
 
-	mp_ScriptHost = New ScriptHost();
-	mp_ScriptHost->Init();
+    mp_ScriptHost = New ScriptHost();
+    mp_ScriptHost->Init();
 
-	mp_ScriptHost->RunFile("Scripts/Dusk");
+    mp_ScriptHost->RunFile("Scripts/Dusk");
 
-	DuskBenchEnd("Program::Init");
-	return true;
+    DuskBenchEnd("Program::Init");
+    return true;
 }
 
 void Program::Term()
 {
-	delete mp_ScriptHost;
-	mp_ScriptHost = nullptr;
+    delete mp_ScriptHost;
+    mp_ScriptHost = nullptr;
 
-	GraphicsSystem::DestroyInst();
-	InputSystem::DestroyInst();
+    GraphicsSystem::DestroyInst();
+    InputSystem::DestroyInst();
 }
 
 void Program::Update(FrameTimeInfo& timeInfo)
 {
-	Dispatch(Event(EVT_UPDATE, UpdateEventData(&timeInfo)));
+    Dispatch(Event(EvtUpdate, UpdateEventData(&timeInfo)));
 }
 
 void Program::PreRender(GraphicsContext* ctx)
 {
-	ctx->Clear();
+    ctx->Clear();
 }
 
 void Program::Render(GraphicsContext* ctx)
 {
-	Dispatch(Event(EVT_RENDER, RenderEventData(ctx)));
+    Dispatch(Event(EvtRender, RenderEventData(ctx)));
 }
 
 void Program::PostRender(GraphicsContext* ctx)
 {
-	ctx->SwapBuffers();
+    ctx->SwapBuffers();
 }
 
 void Program::Script_RegisterFunctions()
 {
-	Scripting::RegisterFunction("dusk_get_program",  &Program::Script_GetProgram);
-	Scripting::RegisterFunction("dusk_program_exit", &Program::Script_Exit);
+    Scripting::RegisterFunction("dusk_get_program", &Program::Script_GetProgram);
+    Scripting::RegisterFunction("dusk_program_exit", &Program::Script_Exit);
 
-	IEventDispatcher::Script_RegisterFunctions();
-	GraphicsSystem::Script_RegisterFunctions();
-	InputSystem::InitScripting();
+    IEventDispatcher::Script_RegisterFunctions();
+    GraphicsSystem::Script_RegisterFunctions();
+    InputSystem::InitScripting();
 }
 
 int Program::Script_GetProgram(lua_State* L)
 {
-	lua_pushinteger(L, (ptrdiff_t)Program::Inst());
-	return 1;
+    lua_pushinteger(L, (ptrdiff_t)Program::Inst());
+    return 1;
 }
 
 int dusk::Program::Script_Exit(lua_State* L)
 {
-	Program* pProgram = (Program*)lua_tointeger(L, 1);
-	pProgram->Exit();
-	return 0;
+    Program* pProgram = (Program*)lua_tointeger(L, 1);
+    pProgram->Exit();
+    return 0;
+}
+
+FrameTimeInfo* UpdateEventData::GetTimeInfo()
+{
+    return mp_TimeInfo;
+}
+
+int UpdateEventData::PushDataToLua(lua_State* L) const
+{
+    lua_newtable(L);
+
+    lua_pushnumber(L, mp_TimeInfo->CurrentFPS);
+    lua_setfield(L, -2, "CurrentFPS");
+
+    lua_pushnumber(L, mp_TimeInfo->TargetFPS);
+    lua_setfield(L, -2, "TargetFPS");
+
+    lua_pushnumber(L, mp_TimeInfo->ElapsedSeconds);
+    lua_setfield(L, -2, "ElapsedSeconds");
+
+    lua_pushnumber(L, mp_TimeInfo->ElapsedMilliseconds);
+    lua_setfield(L, -2, "ElapsedMilliseconds");
+
+    lua_pushnumber(L, mp_TimeInfo->TotalSeconds);
+    lua_setfield(L, -2, "TotalSeconds");
+
+    lua_pushnumber(L, mp_TimeInfo->TotalMilliseconds);
+    lua_setfield(L, -2, "TotalMilliseconds");
+
+    lua_pushnumber(L, mp_TimeInfo->Delta);
+    lua_setfield(L, -2, "Delta");
+
+    return 1;
+}
+
+int RenderEventData::PushDataToLua(lua_State* L) const
+{
+    return 0;
+}
+
+GraphicsContext* RenderEventData::GetContext()
+{
+    return mp_Context;
 }
 
 } // namespace dusk

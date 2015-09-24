@@ -12,40 +12,46 @@ namespace dusk
 class TextBuffer;
 
 class Font :
-	public ITrackedObject
+    public ITrackedObject
 {
 
-	friend class TextBuffer;
+    friend class TextBuffer;
 
 public:
 
-	inline Font() :
-		m_SFMLFont()
-	{ }
+    inline Font() :
+        m_SFMLFont()
+    { }
 
-	virtual inline ~Font() { Term(); }
+    virtual inline ~Font()
+    {
+        Term();
+    }
 
-	virtual inline string GetClassName() const { return "Font"; }
+    virtual inline string GetClassName() const
+    {
+        return "Font";
+    }
 
-	bool Init(const string& filename);
-	void Term();
+    bool Init(const string& filename);
+    void Term();
 
 private:
 
-	inline const sf::Font& GetSFMLFont() const
-	{
-		return m_SFMLFont;
-	}
+    inline const sf::Font& GetSFMLFont() const
+    {
+        return m_SFMLFont;
+    }
 
-	string m_Filename;
+    string m_Filename;
 
-	sf::Font m_SFMLFont;
+    sf::Font m_SFMLFont;
 
 public:
 
-	static void Script_RegisterFunctions();
-	static int Script_New(lua_State* L);
-	static int Script_Delete(lua_State* L);
+    static void Script_RegisterFunctions();
+    static int Script_New(lua_State* L);
+    static int Script_Delete(lua_State* L);
 
 }; // class Font
 

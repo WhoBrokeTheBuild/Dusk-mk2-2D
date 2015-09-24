@@ -17,80 +17,98 @@ class Window;
 class GraphicsContext;
 
 class GraphicsSystem :
-	public ITrackedObject
+    public ITrackedObject
 {
 
-	friend class Program;
+    friend class Program;
 
 public:
 
-	static Flag FULLSCREEN;
-	static Flag RESIZABLE;
-	static Flag DECORATED;
+    static Flag Fullscreen;
+    static Flag Resizable;
+    static Flag Decorated;
 
-	static inline GraphicsSystem* Inst()
-	{
-		return sp_Inst;
-	}
+    static inline GraphicsSystem* Inst()
+    {
+        return sp_Inst;
+    }
 
-	GraphicsSystem();
+    GraphicsSystem();
 
-	virtual ~GraphicsSystem() { Term(); }
+    virtual ~GraphicsSystem()
+    {
+        Term();
+    }
 
-	virtual inline string GetClassName() const { return "Graphics System"; }
+    virtual inline string GetClassName() const
+    {
+        return "Graphics System";
+    }
 
-	bool Init(const unsigned int& width, const unsigned int& height, const string& title, const Flag& flags);
-	void Term();
+    bool Init(const unsigned int& width, const unsigned int& height, const string& title, const Flag& flags);
+    void Term();
 
-	void OnUpdate(const Event& evt);
+    void OnUpdate(const Event& evt);
 
-	Vector2u GetWindowSize() const;
+    Vector2u GetWindowSize() const;
 
-	inline string GetWindowTitle() const { return m_Title; }
-	void SetWindowTitle(const string& title);
+    inline string GetWindowTitle() const
+    {
+        return m_Title;
+    }
+    void SetWindowTitle(const string& title);
 
-	inline bool IsFullscreen() const { return m_Fullscreen; }
-	inline bool IsDecorated() const { return m_Decorated; }
-	inline bool IsResizable() const { return m_Resizable; }
+    inline bool IsFullscreen() const
+    {
+        return m_Fullscreen;
+    }
+    inline bool IsDecorated() const
+    {
+        return m_Decorated;
+    }
+    inline bool IsResizable() const
+    {
+        return m_Resizable;
+    }
 
-	GraphicsContext* GetContext() const;
+    GraphicsContext* GetContext() const;
 
 private:
 
-	static GraphicsSystem* sp_Inst;
+    static GraphicsSystem* sp_Inst;
 
-	static inline GraphicsSystem* CreateInst()
-	{
-		sp_Inst = New GraphicsSystem();
-		return sp_Inst;
-	}
+    static inline GraphicsSystem* CreateInst()
+    {
+        sp_Inst = New GraphicsSystem();
+        return sp_Inst;
+    }
 
-	static inline void DestroyInst()
-	{
-		delete sp_Inst;
-		sp_Inst = nullptr;
-	}
+    static inline void DestroyInst()
+    {
+        delete sp_Inst;
+        sp_Inst = nullptr;
+    }
 
-	bool CreateSFMLWindow(const unsigned int& width, const unsigned int& height);
+    bool CreateSFMLWindow(const unsigned int& width, const unsigned int& height);
 
-	string m_Title;
+    string m_Title;
 
-	bool m_Fullscreen;
-	bool m_Decorated;
-	bool m_Resizable;
+    bool m_Fullscreen;
+    bool m_Decorated;
+    bool m_Resizable;
 
-	sf::RenderWindow m_SFMLWindow;
+    sf::RenderWindow m_SFMLWindow;
 
-	GraphicsContext* mp_GraphicsContext;
+    GraphicsContext* mp_GraphicsContext;
 
 public:
 
-	static void Script_RegisterFunctions();
-	static int Script_Get(lua_State* L);
-	static int Script_GetContext(lua_State* L);
-	static int Script_GetWindowSize(lua_State* L);
-	static int Script_GetWindowTitle(lua_State* L);
-	static int Script_SetWindowTitle(lua_State* L);
+    static void Script_RegisterFunctions();
+    static int Script_Get(lua_State* L);
+    static int Script_GetContext(lua_State* L);
+    static int Script_GetWindowSize(lua_State* L);
+    static int Script_GetWindowTitle(lua_State* L);
+    static int Script_SetWindowTitle(lua_State* L);
 
 }; // class GraphicsSystem
 

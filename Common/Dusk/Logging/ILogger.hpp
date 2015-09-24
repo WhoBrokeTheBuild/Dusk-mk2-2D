@@ -12,13 +12,14 @@ namespace dusk
 {
 
 class ILogger :
-	public ITrackedObject
+    public ITrackedObject
 {
 public:
 
-	virtual inline ~ILogger() { }
+    virtual inline ~ILogger()
+    { }
 
-	virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor) = 0;
+    virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor) = 0;
 
 }; // class Logger
 

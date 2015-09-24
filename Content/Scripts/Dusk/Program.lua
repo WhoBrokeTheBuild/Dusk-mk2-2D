@@ -12,8 +12,8 @@ function Program:Exit()
 	dusk_program_exit(self.dusk_ptr);
 end
 
-Program.EVT_UPDATE	= 1;
-Program.EVT_RENDER	= 2;
-Program.EVT_EXIT	= 3;
+Program.EvtUpdate = 1;
+Program.EvtRender = 2;
+Program.EvtExit   = 3;
 
 Dusk.Program = Program

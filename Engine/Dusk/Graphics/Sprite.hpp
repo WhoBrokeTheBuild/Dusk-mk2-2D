@@ -16,57 +16,63 @@ class Texture;
 class GraphicsContext;
 
 class Sprite :
-	public ITrackedObject
+    public ITrackedObject
 {
 
-	friend class GraphicsContext;
+    friend class GraphicsContext;
 
 public:
 
-	inline Sprite() :
-		mp_Texture(nullptr),
-		m_Rect(),
-		m_SFMLSprite()
-	{ }
+    inline Sprite() :
+        mp_Texture(nullptr),
+        m_Rect(),
+        m_SFMLSprite()
+    { }
 
-	virtual inline ~Sprite() { Term(); }
+    virtual inline ~Sprite()
+    {
+        Term();
+    }
 
-	virtual inline string GetClassName() const { return "Sprite"; }
+    virtual inline string GetClassName() const
+    {
+        return "Sprite";
+    }
 
-	bool Init(Texture* pTexture, IntRect rect = IntRect(0, 0, 0, 0));
+    bool Init(Texture* pTexture, IntRect rect = IntRect(0, 0, 0, 0));
 
-	void Term();
+    void Term();
 
-	inline Vector2f GetPos() const 
-	{
-		return m_SFMLSprite.getPosition(); 
-	}
+    inline Vector2f GetPos() const
+    {
+        return m_SFMLSprite.getPosition();
+    }
 
-	inline void SetPos(const float& x, const float& y) 
-	{
-		m_SFMLSprite.setPosition(sf::Vector2f(x, y));
-	}
+    inline void SetPos(const float& x, const float& y)
+    {
+        m_SFMLSprite.setPosition(sf::Vector2f(x, y));
+    }
 
 private:
 
-	inline const sf::Sprite& GetSFMLSprite() const
-	{
-		return m_SFMLSprite; 
-	}
+    inline const sf::Sprite& GetSFMLSprite() const
+    {
+        return m_SFMLSprite;
+    }
 
-	Texture* mp_Texture;
+    Texture* mp_Texture;
 
-	IntRect m_Rect;
+    IntRect m_Rect;
 
-	sf::Sprite m_SFMLSprite;
+    sf::Sprite m_SFMLSprite;
 
 public:
 
-	static void Script_RegisterFunctions();
-	static int Script_New(lua_State* L);
-	static int Script_Delete(lua_State* L);
-	static int Script_GetPos(lua_State* L);
-	static int Script_SetPos(lua_State* L);
+    static void Script_RegisterFunctions();
+    static int Script_New(lua_State* L);
+    static int Script_Delete(lua_State* L);
+    static int Script_GetPos(lua_State* L);
+    static int Script_SetPos(lua_State* L);
 
 }; // class Sprite
 

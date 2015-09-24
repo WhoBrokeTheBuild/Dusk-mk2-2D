@@ -10,46 +10,46 @@ TestApp::TestApp()
 
 bool TestApp::Init()
 {
-	if (!Program::Init())
-	{
-		DuskLog("error", "Failed to init program");
-		return false;
-	}
+    if (!Program::Init())
+    {
+        DuskLog("error", "Failed to init program");
+        return false;
+    }
 
-	GetScriptHost()->RunFile("Scripts/Setup");
+    GetScriptHost()->RunFile("Scripts/Setup");
 
-	mp_Font = New Font();
-	mp_Font->Init("Fonts/Roboto.ttf");
+    mp_Font = New Font();
+    mp_Font->Init("Fonts/Roboto.ttf");
 
-	mp_TextBuffer = New TextBuffer();
-	mp_TextBuffer->Init(mp_Font, "Hello, World!", 32, Color::White);
+    mp_TextBuffer = New TextBuffer();
+    mp_TextBuffer->Init(mp_Font, "Hello, World!", 32, Color::White);
 
-	DuskLog("info", "Starting Up");
-	return true;
+    DuskLog("info", "Starting Up");
+    return true;
 }
 
 void TestApp::Term()
 {
-	DuskLog("info", "Shutting Down");
+    DuskLog("info", "Shutting Down");
 
-	delete mp_TextBuffer;
-	delete mp_Font;
+    delete mp_TextBuffer;
+    delete mp_Font;
 
-	Program::Term();
+    Program::Term();
 }
 
 void TestApp::Update(FrameTimeInfo& timeInfo)
 {
-	Program::Update(timeInfo);
+    Program::Update(timeInfo);
 
-	//DuskLog("info", "Updating");
+    //DuskLog("info", "Updating");
 }
 
 void TestApp::Render(GraphicsContext* ctx)
 {
-	Program::Render(ctx);
+    Program::Render(ctx);
 
-	ctx->Draw(mp_TextBuffer);
+    ctx->Draw(mp_TextBuffer);
 
-	//DuskLog("info", "Rendering");
+    //DuskLog("info", "Rendering");
 }

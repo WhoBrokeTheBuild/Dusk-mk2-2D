@@ -11,23 +11,23 @@ class ITrackedObject
 {
 public:
 
-	virtual string GetClassName() const = 0;
+    virtual string GetClassName() const = 0;
 
-	// Normal new operator
-	void* operator new  (size_t size);
-	void* operator new[](size_t size);
+    // Normal new operator
+    void* operator new  (size_t size);
+    void* operator new[](size_t size);
 
-	// Operator for placement new, takes in the filename and line number
-	void* operator new  (size_t size, int lineNumber, const char *filename);
-	void* operator new[](size_t size, int lineNumber, const char *filename);
+    // Operator for placement new, takes in the filename and line number
+    void* operator new  (size_t size, int lineNumber, const char *filename);
+    void* operator new[](size_t size, int lineNumber, const char *filename);
 
-	// Normal delete operator
-	void operator delete  (void *ptr);
-	void operator delete[](void *ptr);
+    // Normal delete operator
+    void operator delete  (void *ptr);
+    void operator delete[](void *ptr);
 
-	// Required because of the placement new operator, should not be used
-	inline void operator delete  (void *ptr, int lineNumber, const char *filename) { ::operator delete(ptr); }
-	inline void operator delete[](void *ptr, int lineNumber, const char *filename) { ::operator delete[](ptr); }
+    // Required because of the placement new operator, should not be used
+    inline void operator delete  (void *ptr, int lineNumber, const char *filename) { ::operator delete(ptr); }
+    inline void operator delete[](void *ptr, int lineNumber, const char *filename) { ::operator delete[](ptr); }
 
 }; // class MemoryTrackedObject
 
