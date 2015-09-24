@@ -17,23 +17,26 @@ class FileLogger :
 {
 public:
 
-	FileLogger(const string& filename);
+    FileLogger(const string& filename);
 
-	virtual ~FileLogger();
+    virtual ~FileLogger();
 
-	virtual inline string GetClassName() const { return "File Logger"; }
+    virtual inline string GetClassName() const
+    {
+        return "File Logger";
+    }
 
-	virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor);
+    virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor);
 
 private:
 
-	static Map<string, ofstream*> s_Streams;
+    static Map<string, ofstream*> s_Streams;
 
-	static Map<string, int>	s_StreamOwners;
+    static Map<string, int>    s_StreamOwners;
 
-	string m_Filename;
+    string m_Filename;
 
-	ofstream* m_Stream;
+    ofstream* m_Stream;
 
 }; // class FileLogger
 

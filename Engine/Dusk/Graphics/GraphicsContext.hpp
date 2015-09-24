@@ -13,35 +13,39 @@ class Sprite;
 class TextBuffer;
 
 class GraphicsContext :
-	public ITrackedObject
+    public ITrackedObject
 {
 
-	friend class GraphicsSystem;
+    friend class GraphicsSystem;
 
 public:
 
-	virtual inline string GetClassName() const { return "Graphics Context"; }
+    virtual inline string GetClassName() const
+    {
+        return "Graphics Context";
+    }
 
-	void Clear();
-	void SwapBuffers();
+    void Clear();
+    void SwapBuffers();
 
-	void Draw(Sprite* sprite);
-	void Draw(TextBuffer* textBuffer);
+    void Draw(Sprite* sprite);
+    void Draw(TextBuffer* textBuffer);
 
-	static void Script_RegisterFunctions();
-	static int Script_Clear(lua_State* L);
-	static int Script_Draw(lua_State* L);
-	static int Script_SwapBuffers(lua_State* L);
+    static void Script_RegisterFunctions();
+    static int Script_Clear(lua_State* L);
+    static int Script_Draw(lua_State* L);
+    static int Script_SwapBuffers(lua_State* L);
 
 private:
 
-	inline GraphicsContext( sf::RenderWindow& pSFMLWindow ) :
-		m_SFMLWindow(pSFMLWindow)
-	{ }
+    inline GraphicsContext(sf::RenderWindow& pSFMLWindow) :
+        m_SFMLWindow(pSFMLWindow)
+    { }
 
-	virtual inline ~GraphicsContext() { }
+    virtual inline ~GraphicsContext()
+    { }
 
-	sf::RenderWindow& m_SFMLWindow;
+    sf::RenderWindow& m_SFMLWindow;
 
 }; // GraphicsContext
 

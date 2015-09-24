@@ -10,29 +10,38 @@ namespace dusk
 {
 
 class ScriptHost :
-	public ITrackedObject
+    public ITrackedObject
 {
 public:
 
-	ScriptHost( void ) :
-		mp_LuaState(nullptr)
-	{ }
+    ScriptHost(void) :
+        mp_LuaState(nullptr)
+    { }
 
-	virtual ~ScriptHost( void ) { Term(); }
+    virtual ~ScriptHost(void)
+    {
+        Term();
+    }
 
-	virtual inline string GetClassName( void ) const { return "Script Host"; }
+    virtual inline string GetClassName(void) const
+    {
+        return "Script Host";
+    }
 
-	bool Init( void );
-	void Term( void );
+    bool Init(void);
+    void Term(void);
 
-	bool RunFile( const string& filename );
-	bool RegisterFunction( const string& funcName, LuaCallback callback );
+    bool RunFile(const string& filename);
+    bool RegisterFunction(const string& funcName, LuaCallback callback);
 
-	inline lua_State* GetState( void ) { return mp_LuaState; }
+    inline lua_State* GetState(void)
+    {
+        return mp_LuaState;
+    }
 
 private:
 
-	lua_State*		mp_LuaState;
+    lua_State*        mp_LuaState;
 
 }; // class ScriptHost
 

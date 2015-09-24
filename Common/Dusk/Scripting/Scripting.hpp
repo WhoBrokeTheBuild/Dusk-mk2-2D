@@ -16,19 +16,19 @@ class Scripting
 {
 public:
 
-	static void AddScriptHost(ScriptHost* pHost);
+    static void AddScriptHost(ScriptHost* pHost);
 
-	static ScriptHost* GetScriptHost(lua_State* L);
+    static ScriptHost* GetScriptHost(lua_State* L);
 
-	static void RemoveScriptHost(ScriptHost* pHost);
+    static void RemoveScriptHost(ScriptHost* pHost);
 
-	static bool RegisterFunction(const string& funcName, LuaCallback callback);
+    static bool RegisterFunction(const string& funcName, LuaCallback callback);
 
 private:
 
-	static Map<string, LuaCallback> s_Functions;
+    static Map<string, LuaCallback> s_Functions;
 
-	static ArrayList<ScriptHost*> s_ScriptHosts;
+    static ArrayList<ScriptHost*> s_ScriptHosts;
 
 }; // class ScriptingSystem
 

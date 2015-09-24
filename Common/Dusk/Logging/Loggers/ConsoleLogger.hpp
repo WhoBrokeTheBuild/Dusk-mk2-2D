@@ -12,12 +12,18 @@ class ConsoleLogger :
 {
 public:
 
-	inline ConsoleLogger() { }
-	virtual ~ConsoleLogger() { }
+    inline ConsoleLogger()
+    { }
 
-	virtual inline string GetClassName() const { return "Console Logger"; }
+    virtual ~ConsoleLogger()
+    { }
 
-	virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor);
+    virtual inline string GetClassName() const
+    {
+        return "Console Logger";
+    }
+
+    virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor);
 
 }; // class ConsoleLogger
 

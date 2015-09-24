@@ -11,47 +11,46 @@ namespace dusk
 
 bool Texture::Init(const string& filename)
 {
-	DuskBenchStart();
-	DuskExtLog("verbose", "Loading texture %s", filename.c_str());
+    DuskBenchStart();
+    DuskExtLog("verbose", "Loading texture %s", filename.c_str());
 
-	if (!m_SFMLTexture.loadFromFile(filename))
-	{
-		DuskExtLog("error", "Failed to load texture %s", filename.c_str());
-		return false;
-	}
+    if (!m_SFMLTexture.loadFromFile(filename))
+    {
+        DuskExtLog("error", "Failed to load texture %s", filename.c_str());
+        return false;
+    }
 
-	DuskBenchEnd("Texture::Init");
-	return true;
+    DuskBenchEnd("Texture::Init");
+    return true;
 }
 
 void Texture::Term()
-{
-}
+{ }
 
 void Texture::Script_RegisterFunctions()
 {
-	Scripting::RegisterFunction("dusk_texture_new",    &Texture::Script_New);
-	Scripting::RegisterFunction("dusk_texture_delete", &Texture::Script_Delete);
+    Scripting::RegisterFunction("dusk_texture_new", &Texture::Script_New);
+    Scripting::RegisterFunction("dusk_texture_delete", &Texture::Script_Delete);
 }
 
 int Texture::Script_New(lua_State* L)
 {
-	string filename = lua_tostring(L, 1);
+    string filename = lua_tostring(L, 1);
 
-	Texture* pTexture = New Texture();
-	pTexture->Init(filename);
+    Texture* pTexture = New Texture();
+    pTexture->Init(filename);
 
-	lua_pushinteger(L, (ptrdiff_t)pTexture);
+    lua_pushinteger(L, (ptrdiff_t)pTexture);
 
-	return 1;
+    return 1;
 }
 
 int Texture::Script_Delete(lua_State* L)
 {
-	Texture* pTexture = (Texture*)lua_tointeger(L, 1);
-	delete pTexture;
+    Texture* pTexture = (Texture*)lua_tointeger(L, 1);
+    delete pTexture;
 
-	return 0;
+    return 0;
 }
 
 } // namespace dusk

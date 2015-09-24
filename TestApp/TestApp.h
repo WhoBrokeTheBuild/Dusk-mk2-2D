@@ -8,29 +8,29 @@
 #include <Dusk/Graphics/TextBuffer.hpp>
 
 class TestApp :
-	public dusk::Program
+    public dusk::Program
 {
 public:
 
-	TestApp();
-	virtual inline ~TestApp() { Term(); }
+    TestApp();
+    virtual inline ~TestApp() { Term(); }
 
-	virtual inline string GetClassName() const { return "Test App"; }
+    virtual inline string GetClassName() const { return "Test App"; }
 
 protected:
 
-	virtual bool Init() override;
+    virtual bool Init() override;
 
-	virtual void Term() override;
+    virtual void Term() override;
 
-	virtual void Update(dusk::FrameTimeInfo& timeInfo) override;
+    virtual void Update(dusk::FrameTimeInfo& timeInfo) override;
 
-	virtual void Render(dusk::GraphicsContext* ctx) override;
+    virtual void Render(dusk::GraphicsContext* ctx) override;
 
 private:
 
-	dusk::Font* mp_Font;
-	dusk::TextBuffer* mp_TextBuffer;
+    dusk::Font* mp_Font;
+    dusk::TextBuffer* mp_TextBuffer;
 
 };
 
