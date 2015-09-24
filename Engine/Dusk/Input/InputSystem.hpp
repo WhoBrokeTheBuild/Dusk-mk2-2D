@@ -28,17 +28,16 @@ public:
 		return sp_Inst;
 	}
 
-	static EventID
-		EVT_KEY_PRESS,
-		EVT_KEY_RELEASE,
+	static EventID EvtKeyPress;
+	static EventID EvtKeyRelease;
 
-		EVT_MOUSE_MOVE,
-		EVT_MOUSE_SCROLL,
-		EVT_MOUSE_BUTTON_PRESS,
-		EVT_MOUSE_BUTTON_RELEASE,
+	static EventID EvtMouseMove;
+	static EventID EvtMouseScroll;
+	static EventID EvtMouseButtonPress;
+	static EventID EvtMouseButtonRelease;
 
-		EVT_MAPPED_INPUT_PRESS,
-		EVT_MAPPED_INPUT_RELEASE;
+	static EventID EvtMappedInputPress;
+	static EventID EvtMappedInputRelease;
 
 	InputSystem() :
 		m_MouseX(0),

@@ -40,7 +40,7 @@ bool GraphicsSystem::Init(const unsigned int& width, const unsigned int& height,
 
 	CreateSFMLWindow(width, height);
 
-	Program::Inst()->AddEventListener(Program::EVT_UPDATE, this, &GraphicsSystem::OnUpdate);
+	Program::Inst()->AddEventListener(Program::EvtUpdate, this, &GraphicsSystem::OnUpdate);
 
 	DuskBenchEnd("GraphicsSystem::Init");
 	return true;
@@ -48,7 +48,7 @@ bool GraphicsSystem::Init(const unsigned int& width, const unsigned int& height,
 
 void GraphicsSystem::Term()
 {
-	Program::Inst()->RemoveEventListener(Program::EVT_UPDATE, this, &GraphicsSystem::OnUpdate);
+	Program::Inst()->RemoveEventListener(Program::EvtUpdate, this, &GraphicsSystem::OnUpdate);
 
 	delete mp_GraphicsContext;
 	mp_GraphicsContext = nullptr;

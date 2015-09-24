@@ -10,16 +10,16 @@ namespace dusk
 	
 InputSystem* InputSystem::sp_Inst = nullptr;
 
-EventID InputSystem::EVT_KEY_PRESS				= 1;
-EventID InputSystem::EVT_KEY_RELEASE			= 2;
+EventID InputSystem::EvtKeyPress				= 1;
+EventID InputSystem::EvtKeyRelease			= 2;
 
-EventID InputSystem::EVT_MOUSE_MOVE				= 10;
-EventID InputSystem::EVT_MOUSE_SCROLL           = 11;
-EventID InputSystem::EVT_MOUSE_BUTTON_PRESS		= 12;
-EventID InputSystem::EVT_MOUSE_BUTTON_RELEASE   = 13;
+EventID InputSystem::EvtMouseMove				= 10;
+EventID InputSystem::EvtMouseScroll           = 11;
+EventID InputSystem::EvtMouseButtonPress		= 12;
+EventID InputSystem::EvtMouseButtonRelease   = 13;
 
-EventID InputSystem::EVT_MAPPED_INPUT_PRESS		= 20;
-EventID InputSystem::EVT_MAPPED_INPUT_RELEASE	= 21;
+EventID InputSystem::EvtMappedInputPress		= 20;
+EventID InputSystem::EvtMappedInputRelease	= 21;
 
 bool InputSystem::Init()
 {
@@ -74,20 +74,20 @@ void InputSystem::TriggerKeyPress(const Keyboard::Key& key)
 {
 	if ( m_MappedKeys.contains_key(key) )
 	{
-		Dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedKeys[key])));
+		Dispatch(Event(EvtMappedInputPress, MappedInputEventData(m_MappedKeys[key])));
 	}
 
-	Dispatch(Event(EVT_KEY_PRESS, KeyEventData(key)));
+	Dispatch(Event(EvtKeyPress, KeyEventData(key)));
 }
 
 void InputSystem::TriggerKeyRelease(const Keyboard::Key& key)
 {
 	if ( m_MappedKeys.contains_key(key) ) 
 	{
-		Dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedKeys[key])));
+		Dispatch(Event(EvtMappedInputRelease, MappedInputEventData(m_MappedKeys[key])));
 	}
 
-	Dispatch(Event(EVT_KEY_RELEASE, KeyEventData(key)));
+	Dispatch(Event(EvtKeyRelease, KeyEventData(key)));
 }
 
 void InputSystem::TriggerMouseMoveRelative(const double& dx, const double& dy)
@@ -95,7 +95,7 @@ void InputSystem::TriggerMouseMoveRelative(const double& dx, const double& dy)
 	m_MouseX += dx;
 	m_MouseY += dy;
 
-	Dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
+	Dispatch(Event(EvtMouseMove, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
 void InputSystem::TriggerMouseMoveAbsolute(const double& x, const double& y)
@@ -106,42 +106,42 @@ void InputSystem::TriggerMouseMoveAbsolute(const double& x, const double& y)
 	m_MouseX = x;
 	m_MouseY = y;
 
-	Dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
+	Dispatch(Event(EvtMouseMove, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
 void InputSystem::TriggerMouseScroll(const double& dx, const double& dy)
 {
-	Dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(dx, dy)));
+	Dispatch(Event(EvtMouseScroll, MouseScrollEventData(dx, dy)));
 }
 
 void InputSystem::TriggerMouseButtonPress(const Mouse::Button& mouseButton)
 {
 	if ( m_MappedMouseButtons.contains_key(mouseButton) )
 	{
-		Dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
+		Dispatch(Event(EvtMappedInputPress, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
 	}
 
-	Dispatch(Event(EVT_MOUSE_BUTTON_PRESS, MouseButtonEventData(mouseButton)));
+	Dispatch(Event(EvtMouseButtonPress, MouseButtonEventData(mouseButton)));
 }
 
 void InputSystem::TriggerMouseButtonRelease(const Mouse::Button& mouseButton)
 {
 	if ( m_MappedMouseButtons.contains_key(mouseButton) )
 	{
-		Dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
+		Dispatch(Event(EvtMappedInputRelease, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
 	}
 
-	Dispatch(Event(EVT_MOUSE_BUTTON_RELEASE, MouseButtonEventData(mouseButton)));
+	Dispatch(Event(EvtMouseButtonRelease, MouseButtonEventData(mouseButton)));
 }
 
 void InputSystem::TriggerMappedInputPress(const MappedInputID& input)
 {
-	Dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(input)));
+	Dispatch(Event(EvtMappedInputPress, MappedInputEventData(input)));
 }
 
 void InputSystem::TriggerMappedInputRelease(const MappedInputID& input)
 {
-	Dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(input)));
+	Dispatch(Event(EvtMappedInputRelease, MappedInputEventData(input)));
 }
 
 void InputSystem::InitScripting( void )

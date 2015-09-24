@@ -34,9 +34,9 @@ public:
 
 	// Events
 
-	static EventID EVT_UPDATE;
-	static EventID EVT_RENDER;
-	static EventID EVT_EXIT;
+	static EventID EvtUpdate;
+	static EventID EvtRender;
+	static EventID EvtExit;
 
 	Program();
 

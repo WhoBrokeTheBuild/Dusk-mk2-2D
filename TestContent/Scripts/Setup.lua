@@ -5,19 +5,13 @@ local gs = Dusk.GetGraphicsSystem()
 local is = Dusk.GetInputSystem()
 local ctx = gs:GetContext()
 
+is:MapKey("pause", Dusk.Keys.Space)
+
 local tex = Dusk.NewTexture("Textures/test.png")
 local spr = Dusk.NewSprite(tex)
 
-is:MapKey("pause", Dusk.Keys.Space)
-
-prog:AddEventListener(prog.EVT_UPDATE, "OnUpdate")
-prog:AddEventListener(prog.EVT_RENDER, "OnRender")
-prog:AddEventListener(prog.EVT_EXIT,   "OnExit")
-is:AddEventListener(is.EVT_MAPPED_INPUT_PRESS, "OnMappedInputPressed")
-
 local xSpeed = 2
 local ySpeed = 2
-
 local moving = true
 
 function OnUpdate(timeInfo)
@@ -41,10 +35,12 @@ function OnUpdate(timeInfo)
 
     spr:SetPos(x, y)
 end
+prog:AddEventListener(prog.EvtUpdate, "OnUpdate")
 
 function OnRender()
     ctx:Draw(spr)
 end
+prog:AddEventListener(prog.EvtRender, "OnRender")
 
 function OnExit()
     Dusk.DeleteSprite(spr)
@@ -54,9 +50,11 @@ function OnExit()
     prog:RemoveEventListener(prog.EVT_RENDER, "OnRender")
     prog:RemoveEventListener(prog.EVT_EXIT, "OnExit")
 end
+prog:AddEventListener(prog.EvtExit, "OnExit")
 
 function OnMappedInputPressed(inputId)
 	if inputId == "pause" then
 		moving = not moving
 	end
 end
+is:AddEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")

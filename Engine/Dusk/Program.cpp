@@ -17,9 +17,9 @@ namespace dusk
 
 Program* Program::sp_Inst = nullptr;
 
-EventID Program::EVT_UPDATE = 1;
-EventID Program::EVT_RENDER	= 2;
-EventID Program::EVT_EXIT = 3;
+EventID Program::EvtUpdate = 1;
+EventID Program::EvtRender	= 2;
+EventID Program::EvtExit = 3;
 
 Program::Program() :
 	m_Running(),
@@ -83,7 +83,7 @@ void Program::Run()
 		}
 	}
 
-	Dispatch(Event(EVT_EXIT));
+	Dispatch(Event(EvtExit));
 	DuskLog("verbose", "Program Exiting");
 }
 
@@ -130,7 +130,7 @@ void Program::Term()
 
 void Program::Update(FrameTimeInfo& timeInfo)
 {
-	Dispatch(Event(EVT_UPDATE, UpdateEventData(&timeInfo)));
+	Dispatch(Event(EvtUpdate, UpdateEventData(&timeInfo)));
 }
 
 void Program::PreRender(GraphicsContext* ctx)
@@ -140,7 +140,7 @@ void Program::PreRender(GraphicsContext* ctx)
 
 void Program::Render(GraphicsContext* ctx)
 {
-	Dispatch(Event(EVT_RENDER, RenderEventData(ctx)));
+	Dispatch(Event(EvtRender, RenderEventData(ctx)));
 }
 
 void Program::PostRender(GraphicsContext* ctx)
