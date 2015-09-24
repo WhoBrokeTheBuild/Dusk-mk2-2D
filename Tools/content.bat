@@ -15,7 +15,7 @@ if %BUILD_ARCH% == Win32 (
 
 set BUILD_DIR=..\Build\%BUILD_CONF%\%BUILD_ARCH%
 
-set LUAC=..\Tools\Lua\%BUILD_ARCH_ALT%\luac.exe
+set LUAC=%~dp0\Lua\%BUILD_ARCH_ALT%\luac.exe
 set COPY=xcopy /s /e /y /i
 
 set SCRIPTS_DIR=Scripts
