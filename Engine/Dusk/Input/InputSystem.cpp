@@ -36,19 +36,19 @@ void InputSystem::Term()
 	
 }
 
-void InputSystem::MapKey(const MappedInputID & id, const Key & key)
+void InputSystem::MapKey(const MappedInputID & id, const Keyboard::Key & key)
 {
 	m_MappedKeys.erase_all(id);
 	m_MappedKeys.add(key, id);
 }
 
-void InputSystem::MapMouseButton(const MappedInputID& id, const MouseButton& button)
+void InputSystem::MapMouseButton(const MappedInputID& id, const Mouse::Button& button)
 {
 	m_MappedMouseButtons.erase_all(id);
 	m_MappedMouseButtons.add(button, id);
 }
 
-Key InputSystem::GetMappedKey(const MappedInputID& id)
+Keyboard::Key InputSystem::GetMappedKey(const MappedInputID& id)
 {
 	for (const auto& it : m_MappedKeys)
 	{
@@ -56,10 +56,10 @@ Key InputSystem::GetMappedKey(const MappedInputID& id)
 			return it.first;
 	}
 
-	return Key::INVALID_KEY;
+	return Keyboard::Key::Invalid;
 }
 
-MouseButton InputSystem::GetMappedMouseButton(const MappedInputID& id)
+Mouse::Button InputSystem::GetMappedMouseButton(const MappedInputID& id)
 {
 	for (const auto& it : m_MappedMouseButtons)
 	{
@@ -67,10 +67,10 @@ MouseButton InputSystem::GetMappedMouseButton(const MappedInputID& id)
 			return it.first;
 	}
 
-	return MouseButton::INVALID_MOUSE_BUTTON;
+	return Mouse::Button::Invalid;
 }
 
-void InputSystem::TriggerKeyPress(const Key& key)
+void InputSystem::TriggerKeyPress(const Keyboard::Key& key)
 {
 	if ( m_MappedKeys.contains_key(key) )
 	{
@@ -80,7 +80,7 @@ void InputSystem::TriggerKeyPress(const Key& key)
 	Dispatch(Event(EVT_KEY_PRESS, KeyEventData(key)));
 }
 
-void InputSystem::TriggerKeyRelease(const Key& key)
+void InputSystem::TriggerKeyRelease(const Keyboard::Key& key)
 {
 	if ( m_MappedKeys.contains_key(key) ) 
 	{
@@ -114,7 +114,7 @@ void InputSystem::TriggerMouseScroll(const double& dx, const double& dy)
 	Dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(dx, dy)));
 }
 
-void InputSystem::TriggerMouseButtonPress(const MouseButton& mouseButton)
+void InputSystem::TriggerMouseButtonPress(const Mouse::Button& mouseButton)
 {
 	if ( m_MappedMouseButtons.contains_key(mouseButton) )
 	{
@@ -124,7 +124,7 @@ void InputSystem::TriggerMouseButtonPress(const MouseButton& mouseButton)
 	Dispatch(Event(EVT_MOUSE_BUTTON_PRESS, MouseButtonEventData(mouseButton)));
 }
 
-void InputSystem::TriggerMouseButtonRelease(const MouseButton& mouseButton)
+void InputSystem::TriggerMouseButtonRelease(const Mouse::Button& mouseButton)
 {
 	if ( m_MappedMouseButtons.contains_key(mouseButton) )
 	{
@@ -146,10 +146,17 @@ void InputSystem::TriggerMappedInputRelease(const MappedInputID& input)
 
 void InputSystem::InitScripting( void )
 {
-	Scripting::RegisterFunction("dusk_input_system_map_key",					&InputSystem::Script_MapKey);
-	Scripting::RegisterFunction("dusk_input_system_map_mouse_button",			&InputSystem::Script_MapMouseButton);
-	Scripting::RegisterFunction("dusk_input_system_get_mapped_key",			&InputSystem::Script_GetMappedKey);
-	Scripting::RegisterFunction("dusk_input_system_get_mapped_mouse_button",	&InputSystem::Script_GetMappedMouseButton);
+	Scripting::RegisterFunction("dusk_get_input_system",					 &InputSystem::Script_Get);
+	Scripting::RegisterFunction("dusk_input_system_map_key",				 &InputSystem::Script_MapKey);
+	Scripting::RegisterFunction("dusk_input_system_map_mouse_button",		 &InputSystem::Script_MapMouseButton);
+	Scripting::RegisterFunction("dusk_input_system_get_mapped_key",			 &InputSystem::Script_GetMappedKey);
+	Scripting::RegisterFunction("dusk_input_system_get_mapped_mouse_button", &InputSystem::Script_GetMappedMouseButton);
+}
+
+int InputSystem::Script_Get(lua_State* L)
+{
+	lua_pushinteger(L, (ptrdiff_t)InputSystem::Inst());
+	return 1;
 }
 
 int InputSystem::Script_MapKey(lua_State* L)
@@ -157,7 +164,7 @@ int InputSystem::Script_MapKey(lua_State* L)
 	InputSystem* pInputSystem = (InputSystem*)lua_tointeger(L, 1);
 
 	string input = lua_tostring(L, 2);
-	Key key = (Key)lua_tointeger(L, 3);
+	Keyboard::Key key = (Keyboard::Key)lua_tointeger(L, 3);
 
 	pInputSystem->MapKey(input, key);
 
@@ -169,7 +176,7 @@ int InputSystem::Script_MapMouseButton(lua_State* L)
 	InputSystem* pInputSystem = (InputSystem*)lua_tointeger(L, 1);
 
 	string input = lua_tostring(L, 2);
-	MouseButton button = (MouseButton)lua_tointeger(L, 3);
+	Mouse::Button button = (Mouse::Button)lua_tointeger(L, 3);
 
 	pInputSystem->MapMouseButton(input, button);
 
@@ -182,7 +189,7 @@ int InputSystem::Script_GetMappedKey(lua_State* L)
 
 	string input = lua_tostring(L, 2);
 
-	Key key = pInputSystem->GetMappedKey(input);
+	Keyboard::Key key = pInputSystem->GetMappedKey(input);
 
 	lua_pushinteger(L, key);
 
@@ -195,7 +202,7 @@ int InputSystem::Script_GetMappedMouseButton(lua_State* L)
 
 	string input = lua_tostring(L, 2);
 
-	MouseButton button = pInputSystem->GetMappedMouseButton(input);
+	Mouse::Button button = pInputSystem->GetMappedMouseButton(input);
 
 	lua_pushinteger(L, button);
 

@@ -2,19 +2,29 @@ DuskLog("verbose", "Setting up the Window");
 
 local prog = Dusk.GetProgram()
 local gs = Dusk.GetGraphicsSystem()
+local is = Dusk.GetInputSystem()
 local ctx = gs:GetContext()
 
 local tex = Dusk.NewTexture("Textures/test.png")
 local spr = Dusk.NewSprite(tex)
 
+is:MapKey("pause", Dusk.Keys.Space)
+
 prog:AddEventListener(prog.EVT_UPDATE, "OnUpdate")
 prog:AddEventListener(prog.EVT_RENDER, "OnRender")
 prog:AddEventListener(prog.EVT_EXIT,   "OnExit")
+is:AddEventListener(is.EVT_MAPPED_INPUT_PRESS, "OnMappedInputPressed")
 
 local xSpeed = 2
 local ySpeed = 2
 
+local moving = true
+
 function OnUpdate(timeInfo)
+	if not moving then
+		return
+	end
+
     local x, y = spr:GetPos()
     local width, height = gs:GetWinSize()
 
@@ -43,4 +53,10 @@ function OnExit()
     prog:RemoveEventListener(prog.EVT_UPDATE, "OnUpdate")
     prog:RemoveEventListener(prog.EVT_RENDER, "OnRender")
     prog:RemoveEventListener(prog.EVT_EXIT, "OnExit")
+end
+
+function OnMappedInputPressed(inputId)
+	if inputId == "pause" then
+		moving = not moving
+	end
 end

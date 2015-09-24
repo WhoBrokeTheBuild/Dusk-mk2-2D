@@ -4,8 +4,6 @@
 #include <Dusk/Events/IEventDispatcher.hpp>
 #include <Dusk/Tracking/ITrackedObject.hpp>
 #include <Dusk/Events/Event.hpp>
-#include <Dusk/UpdateEventData.hpp>
-#include <Dusk/RenderEventData.hpp>
 
 #include <lua.hpp>
 
@@ -90,6 +88,51 @@ public:
 	static int Script_AddEventListener(lua_State* L);
 
 }; // class Program
+
+class UpdateEventData :
+	public EventData
+{
+public:
+
+	UpdateEventData(FrameTimeInfo* timeInfo) :
+		mp_TimeInfo(timeInfo)
+	{ }
+
+	virtual inline string GetClassName() const { return "Update Event Data"; }
+
+	virtual inline EventData* Clone() const { return New UpdateEventData(mp_TimeInfo); }
+
+	FrameTimeInfo* GetTimeInfo();
+
+	virtual int PushDataToLua(lua_State* L) const;
+
+private:
+
+	FrameTimeInfo* mp_TimeInfo;
+
+}; // class UpdateEventData
+
+class RenderEventData :
+	public EventData
+{
+public:
+
+	RenderEventData(GraphicsContext* ctx)
+	{ }
+
+	virtual inline string GetClassName() const { return "Render Event Data"; }
+
+	virtual inline EventData* Clone() const { return New RenderEventData(mp_Context); }
+
+	virtual int PushDataToLua(lua_State* L) const;
+
+	virtual GraphicsContext* GetContext();
+
+private:
+
+	GraphicsContext* mp_Context;
+
+}; // class RenderEventData
 
 } // namespace dusk
 

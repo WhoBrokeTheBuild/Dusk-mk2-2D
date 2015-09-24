@@ -7,6 +7,7 @@
 #include <Dusk/Utility/Benchmark.hpp>
 #include <Dusk/Logging/Logging.hpp>
 #include <Dusk/Scripting/Scripting.hpp>
+#include <Dusk/Input/InputSystem.hpp>
 
 namespace dusk
 {
@@ -58,10 +59,58 @@ void GraphicsSystem::OnUpdate(const Event& event)
 	sf::Event sfEvent;
 	while (m_SFMLWindow.pollEvent(sfEvent))
 	{
-		if (sfEvent.type == sf::Event::Closed)
+		Keyboard::Key key = Keyboard::Key::Invalid;
+		Mouse::Button button = Mouse::Button::Invalid;
+
+		switch (sfEvent.type)
 		{
+		case sf::Event::Closed:
+
 			m_SFMLWindow.close();
 			Program::Inst()->Exit();
+
+			break;
+		case sf::Event::KeyPressed:
+
+			key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
+			InputSystem::Inst()->TriggerKeyPress(key);
+
+			break;
+		case sf::Event::KeyReleased:
+
+			key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
+			InputSystem::Inst()->TriggerKeyRelease(key);
+			
+			break;
+		case sf::Event::MouseButtonPressed:
+
+			button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
+			InputSystem::Inst()->TriggerMouseButtonPress(button);
+
+			break;
+		case sf::Event::MouseButtonReleased:
+
+			button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
+			InputSystem::Inst()->TriggerMouseButtonRelease(button);
+
+			break;
+		case sf::Event::MouseMoved:
+
+			InputSystem::Inst()->TriggerMouseMoveAbsolute(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
+
+			break;
+		case sf::Event::MouseWheelScrolled:
+
+			if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel)
+			{
+				InputSystem::Inst()->TriggerMouseScroll(sfEvent.mouseWheelScroll.delta, 0.0f);
+			}
+			else if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::VerticalWheel)
+			{
+				InputSystem::Inst()->TriggerMouseScroll(0.0f, sfEvent.mouseWheelScroll.delta);
+			}
+
+			break;
 		}
 	}
 }
@@ -103,6 +152,8 @@ bool GraphicsSystem::CreateSFMLWindow(const unsigned int& width, const unsigned 
 	m_SFMLWindow.create(sf::VideoMode(width, height), m_Title, style);
 	mp_GraphicsContext = New GraphicsContext(m_SFMLWindow);
 
+	m_SFMLWindow.setKeyRepeatEnabled(false);
+
 	return m_SFMLWindow.isOpen();
 }
 
@@ -118,7 +169,6 @@ void GraphicsSystem::Script_RegisterFunctions()
 	Texture::Script_RegisterFunctions();
 	Sprite::Script_RegisterFunctions();
 }
-
 
 int GraphicsSystem::Script_Get(lua_State* L)
 {

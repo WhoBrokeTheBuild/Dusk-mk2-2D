@@ -3,18 +3,30 @@
 
 #include <Dusk/Events/Event.hpp>
 
+#include <SFML/Window/Mouse.hpp>
+
 namespace dusk
 {
 
-enum MouseButton
+class Mouse
 {
-	INVALID_MOUSE_BUTTON = -1,
+public:
 
-	MOUSE_BUTTON_LEFT	 = 1,
-	MOUSE_BUTTON_MIDDLE  = 2,
-	MOUSE_BUTTON_RIGHT   = 3,
+	enum Button
+	{
+		Invalid = -1,
 
-}; // enum MouseButton
+		Left   = 1,
+		Middle = 2,
+		Right  = 3,
+		Extra1 = 4,
+		Extra2 = 5,
+
+	}; // enum MouseButton
+
+	static Button ConvertSFMLMouseButton(sf::Mouse::Button button);
+
+}; // class Mouse
 
 class MouseButtonEventData :
 	public EventData
@@ -22,10 +34,10 @@ class MouseButtonEventData :
 public:
 
 	MouseButtonEventData() :
-		m_MouseButton(MouseButton::INVALID_MOUSE_BUTTON)
+		m_MouseButton(Mouse::Button::Invalid)
 	{ }
 
-	MouseButtonEventData(const MouseButton& button) :
+	MouseButtonEventData(const Mouse::Button& button) :
 		m_MouseButton(button)
 	{ }
 
@@ -33,13 +45,13 @@ public:
 
 	virtual inline EventData* Clone() const { return New MouseButtonEventData(m_MouseButton); }
 
-	inline MouseButton GetMouseButton() const { return m_MouseButton; }
+	inline Mouse::Button GetMouseButton() const { return m_MouseButton; }
 
 	virtual int PushDataToLua(lua_State* L) const;
 
 private:
 
-	MouseButton		m_MouseButton;
+	Mouse::Button		m_MouseButton;
 
 }; // class MouseButtonEventData
 

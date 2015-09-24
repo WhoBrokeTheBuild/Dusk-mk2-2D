@@ -31,7 +31,7 @@ void GraphicsContext::Draw(TextBuffer* textBuffer)
 
 void GraphicsContext::Script_RegisterFunctions()
 {
-	Scripting::RegisterFunction("dusk_graphics_context_clear",	    &GraphicsContext::Script_Clear);
+	Scripting::RegisterFunction("dusk_graphics_context_clear",	      &GraphicsContext::Script_Clear);
 	Scripting::RegisterFunction("dusk_graphics_context_draw",         &GraphicsContext::Script_Draw);
 	Scripting::RegisterFunction("dusk_graphics_context_swap_buffers", &GraphicsContext::Script_SwapBuffers);
 }

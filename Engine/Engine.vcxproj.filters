@@ -5,15 +5,13 @@
     <ClCompile Include="Dusk\Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Dusk\Graphics\Sprite.cpp" />
     <ClCompile Include="Dusk\Graphics\Texture.cpp" />
-    <ClCompile Include="Dusk\Input\Inputs\Key.cpp" />
-    <ClCompile Include="Dusk\Input\Inputs\Mouse.cpp" />
     <ClCompile Include="Dusk\Input\InputSystem.cpp" />
     <ClCompile Include="Dusk\Program.cpp" />
-    <ClCompile Include="Dusk\RenderEventData.cpp" />
-    <ClCompile Include="Dusk\UpdateEventData.cpp" />
-    <ClCompile Include="Dusk\Input\Inputs\Mapped.cpp" />
     <ClCompile Include="Dusk\Graphics\Font.cpp" />
     <ClCompile Include="Dusk\Graphics\TextBuffer.cpp" />
+    <ClCompile Include="Dusk\Input\Keyboard.cpp" />
+    <ClCompile Include="Dusk\Input\Mapped.cpp" />
+    <ClCompile Include="Dusk\Input\Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
@@ -22,15 +20,13 @@
     <ClInclude Include="Dusk\Graphics\GraphicsSystem.hpp" />
     <ClInclude Include="Dusk\Graphics\Sprite.hpp" />
     <ClInclude Include="Dusk\Graphics\Texture.hpp" />
-    <ClInclude Include="Dusk\Input\Inputs\Key.hpp" />
-    <ClInclude Include="Dusk\Input\Inputs\Mouse.hpp" />
     <ClInclude Include="Dusk\Input\InputSystem.hpp" />
     <ClInclude Include="Dusk\Program.hpp" />
-    <ClInclude Include="Dusk\UpdateEventData.hpp" />
-    <ClInclude Include="Dusk\RenderEventData.hpp" />
-    <ClInclude Include="Dusk\Input\Inputs\Mapped.hpp" />
     <ClInclude Include="Dusk\Graphics\TextBuffer.hpp" />
     <ClInclude Include="Dusk\Graphics\Font.hpp" />
     <ClInclude Include="Dusk\Graphics\Color.h" />
+    <ClInclude Include="Dusk\Input\Keyboard.hpp" />
+    <ClInclude Include="Dusk\Input\Mapped.hpp" />
+    <ClInclude Include="Dusk\Input\Mouse.hpp" />
   </ItemGroup>
 </Project>
