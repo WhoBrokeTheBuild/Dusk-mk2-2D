@@ -4,34 +4,55 @@ local prog = Dusk.GetProgram()
 local gs = Dusk.GetGraphicsSystem()
 local is = Dusk.GetInputSystem()
 local ctx = gs:GetContext()
+local dir = "stop"
 
-is:MapKey("pause", Dusk.Keys.Space)
+is:MapKey("left", Dusk.Keys.A)
+is:MapKey("right", Dusk.Keys.D)
+is:MapKey("up", Dusk.Keys.W)
+is:MapKey("down", Dusk.Keys.S)
 
 local tex = Dusk.NewTexture("Textures/test.png")
 local spr = Dusk.NewSprite(tex)
 
-local xSpeed = 2
-local ySpeed = 2
-local moving = true
+function OnMappedInputPressed(inputId)
+	if inputId == "left" then
+        dir = "left"
+    elseif inputId == "right" then
+        dir = "right"
+    elseif inputId == "up" then
+        dir = "up"
+    elseif inputId == "down" then
+        dir = "down"
+	end
+end
+is:AddEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")
+
+function OnMappedInputReleased(inputId)
+	if inputId == "left" and dir == "left" then
+        dir = "stop"
+    elseif inputId == "right" and dir == "right" then
+        dir = "stop"
+    elseif inputId == "up" and dir == "up" then
+        dir = "stop"
+    elseif inputId == "down" and dir == "down" then
+        dir = "stop"
+	end
+end
+is:AddEventListener(is.EvtMappedInputRelease, "OnMappedInputReleased")
 
 function OnUpdate(timeInfo)
-    if not moving then
-        return
-    end
-
     local x, y = spr:GetPos()
-    local width, height = gs:GetWinSize()
+    local speed = 2 * timeInfo.Delta
 
-    if x >= width - 100 or x <= 0 then
-        xSpeed = xSpeed * -1
+    if dir == "left" then
+        x = x - speed
+    elseif dir == "right" then
+        x = x + speed
+    elseif dir == "up" then
+        y = y - speed
+    elseif dir == "down" then
+        y = y + speed
     end
-
-    if y >= height - 100 or y <= 0 then
-        ySpeed = ySpeed * -1
-    end
-
-    x = x + (xSpeed * timeInfo.Delta)
-    y = y + (ySpeed * timeInfo.Delta)
 
     spr:SetPos(x, y)
 end
@@ -47,16 +68,10 @@ function OnExit()
     Dusk.DeleteTexture(tex)
 
     is:RemoveEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")
+    is:RemoveEventListener(is.EvtMappedInputRelease, "OnMappedInputRelease")
 
     prog:RemoveEventListener(prog.EvtUpdate, "OnUpdate")
     prog:RemoveEventListener(prog.EvtRender, "OnRender")
     prog:RemoveEventListener(prog.EvtExit, "OnExit")
 end
 prog:AddEventListener(prog.EvtExit, "OnExit")
-
-function OnMappedInputPressed(inputId)
-	if inputId == "pause" then
-		moving = not moving
-	end
-end
-is:AddEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")

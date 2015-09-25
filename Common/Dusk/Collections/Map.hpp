@@ -5,6 +5,9 @@
 
 #include <map>
 
+/// \addtogroup Collections
+/// @{
+
 namespace dusk
 {
 
@@ -119,5 +122,7 @@ public:
 }; // class Map<T, K, Sort>
 
 } // namespace dusk
+
+/// @}
 
 #endif // DUSK_COLLECTIONS_MAP_HPP

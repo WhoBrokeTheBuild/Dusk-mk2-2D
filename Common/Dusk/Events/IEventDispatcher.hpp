@@ -8,11 +8,20 @@
 
 #include <lua.hpp>
 
+/// \addtogroup Events
+/// @{
+
 namespace dusk
 {
 
 typedef Delegate<void, const Event&> EventDelegate;
 
+////////////////////////////////////////////////////////////
+/// \class IEventDispatcher IEventDispatcher.hpp <Dusk/Events/IEventDispatcher.hpp>
+///
+/// \brief The interface all classes that dispatch events implement. 
+///
+////////////////////////////////////////////////////////////
 class IEventDispatcher
 {
 public:
@@ -100,5 +109,7 @@ void IEventDispatcher::RemoveAllMethods(ObjectType* object)
 }
 
 } // namespace dusk
+
+/// @}
 
 #endif // DUSK_EVENT_DISPATCHER_HPP

@@ -1,6 +1,8 @@
 #ifndef DUSK_LOGGING_LOGGER_HPP
 #define DUSK_LOGGING_LOGGER_HPP
 
+/// \cond HIDDEN
+
 #include <Dusk/Tracking/ITrackedObject.hpp>
 #include <Dusk/Logging/LogColors.hpp>
 
@@ -24,5 +26,7 @@ public:
 }; // class Logger
 
 } // namespace dusk
+
+/// \endcond
 
 #endif // DUSK_LOGGING_LOGGER_HPP

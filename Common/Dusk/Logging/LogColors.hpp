@@ -1,9 +1,16 @@
 #ifndef DUSK_LOGGING_LOG_COLORS_HPP
 #define DUSK_LOGGING_LOG_COLORS_HPP
 
+/// \addtogroup Logging
+/// @{
+
 namespace dusk
 {
 
+////////////////////////////////////////////////////////////
+/// \brief The colors available to use as the foreground color for log events
+///
+////////////////////////////////////////////////////////////
 enum LogForegroundColor
 {
     LOG_FG_BLACK   = 30,
@@ -19,6 +26,10 @@ enum LogForegroundColor
     LOG_FG_DEFAULT = 39
 };
 
+////////////////////////////////////////////////////////////
+/// \brief The colors available to use as the background color for log events
+///
+////////////////////////////////////////////////////////////
 enum LogBackgroundColor
 {
     LOG_BG_RED     = 41,
@@ -34,5 +45,7 @@ enum LogBackgroundColor
 };
 
 } // namespace dusk
+
+/// @}
 
 #endif // DUSK_LOGGING_LOG_COLORS_HPP

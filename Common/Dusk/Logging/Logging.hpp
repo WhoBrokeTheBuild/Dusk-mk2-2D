@@ -21,6 +21,9 @@
 
 /// \endcond
 
+/// \addtogroup Logging
+/// @{
+
 namespace dusk
 {
 
@@ -235,5 +238,7 @@ Logging::Log(LVL, MSG, string(__FILE__), __LINE__)
 Logging::ExtLog(LVL, FMT, string(__FILE__), __LINE__, __VA_ARGS__)
 
 } // namespace dusk
+
+/// @}
 
 #endif // DUSK_LOGGING_LOGGING_SYSTEM_HPP

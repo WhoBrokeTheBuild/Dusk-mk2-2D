@@ -6,6 +6,9 @@
 #include <vector>
 #include <algorithm>
 
+/// \addtogroup Collections
+/// @{
+
 namespace dusk
 {
 
@@ -144,5 +147,7 @@ public:
 }; // class ArrayList
 
 } // namespace dusk
+
+/// @}
 
 #endif // DUSK_COLLECTIONS_ARRAY_LIST_HPP
