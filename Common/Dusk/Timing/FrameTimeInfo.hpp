@@ -4,12 +4,10 @@
 namespace dusk
 {
 
-/// A collection of timing related information.
-/**
-* Contains the Total Seconds and Milliseconds that have elapsed since the
-* program started running, as well as the seconds and milliseconds that have
-* elapsed since the last update and the Delta Time.
-*/
+////////////////////////////////////////////////////////////
+/// \brief Timing and Frame Speed Information
+///
+////////////////////////////////////////////////////////////
 class FrameTimeInfo
 {
 public:
@@ -24,24 +22,50 @@ public:
         Delta(0.0)
     { }
 
+    ////////////////////////////////////////////////////////////
+    /// \brief The Frames Per Second rate that is being targeted
+    ///
+    ////////////////////////////////////////////////////////////
     double TargetFPS;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief The Current Frames Per Second rate
+    ///
+    ////////////////////////////////////////////////////////////
     double CurrentFPS;
 
-    /// The total seconds that have elapsed since the program started
+    ////////////////////////////////////////////////////////////
+    /// \brief The total seconds that have elapsed since the program started
+    ///
+    ////////////////////////////////////////////////////////////
     double TotalSeconds;
-    /// The total milliseconds that have elapsed since the program started
-    double TotalMilliseconds;
-    /// The seconds that have elapsed since the last update
-    double ElapsedSeconds;
-    /// The milliseconds that have elapsed since the last update
-    double ElapsedMilliseconds;
-    /// The measurement of time relative to the desired frame rate.
 
-    /**
-    * The value will be at 1.0 when the program is running normally, > 1.0
-    * when the program is running slowly, and < 1.0 when the program is
-    * running fast
-    */
+    ////////////////////////////////////////////////////////////
+    /// \brief The total milliseconds that have elapsed since the program started
+    ///
+    ////////////////////////////////////////////////////////////
+    double TotalMilliseconds;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief The seconds that have elapsed since the last update
+    ///
+    ////////////////////////////////////////////////////////////
+    double ElapsedSeconds;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief The milliseconds that have elapsed since the last update
+    ///
+    ////////////////////////////////////////////////////////////
+    double ElapsedMilliseconds;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief The measurement of time relative to the desired frame rate.
+    ///
+    /// The value will be at 1.0 when the program is running normally, > 1.0
+    /// when the program is running slowly, and < 1.0 when the program is
+    /// running fast.
+    ///
+    ////////////////////////////////////////////////////////////
     double Delta;
 
 }; // class TimeInfo
