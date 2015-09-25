@@ -197,7 +197,7 @@ private:
 
     static Map<string, ArrayList<ILogger*>> s_Loggers;
 
-private:
+public:
 
     /// \cond SCRIPTING
 

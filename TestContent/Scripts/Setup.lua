@@ -15,9 +15,9 @@ local ySpeed = 2
 local moving = true
 
 function OnUpdate(timeInfo)
-	if not moving then
-		return
-	end
+    if not moving then
+        return
+    end
 
     local x, y = spr:GetPos()
     local width, height = gs:GetWinSize()
@@ -46,9 +46,11 @@ function OnExit()
     Dusk.DeleteSprite(spr)
     Dusk.DeleteTexture(tex)
 
-    prog:RemoveEventListener(prog.EVT_UPDATE, "OnUpdate")
-    prog:RemoveEventListener(prog.EVT_RENDER, "OnRender")
-    prog:RemoveEventListener(prog.EVT_EXIT, "OnExit")
+    is:RemoveEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")
+
+    prog:RemoveEventListener(prog.EvtUpdate, "OnUpdate")
+    prog:RemoveEventListener(prog.EvtRender, "OnRender")
+    prog:RemoveEventListener(prog.EvtExit, "OnExit")
 end
 prog:AddEventListener(prog.EvtExit, "OnExit")
 

@@ -29,9 +29,6 @@ protected:
 
 private:
 
-    dusk::Font* mp_Font;
-    dusk::TextBuffer* mp_TextBuffer;
-
 };
 
 #endif // TEST_APP_H
