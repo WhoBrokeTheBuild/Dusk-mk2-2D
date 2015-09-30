@@ -1,4 +1,4 @@
-.PHONY: all Common Engine Content TestApp TestContent
+.PHONY: all Common Engine Content TestApp
 
 CONF = Debug
 
@@ -14,7 +14,6 @@ clean:
 	cd Engine; make clean $(ARGS)
 	cd Content; make clean $(ARGS)
 	cd TestApp; make clean $(ARGS)
-	cd TestContent; make clean $(ARGS)
 
 Common:
 	cd Common; make $(ARGS)
@@ -27,6 +26,3 @@ Content:
 
 TestApp:
 	cd TestApp; make $(ARGS)
-
-TestContent:
-	cd TestContent; make $(ARGS)

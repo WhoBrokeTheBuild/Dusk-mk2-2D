@@ -45,7 +45,6 @@ all: deps $(OUT)
 
 deps:
 	cd ../Engine; make $(ARGS)
-	cd ../TestContent; make $(ARGS)
 
 clean:
 	rm -f $(OUT)
