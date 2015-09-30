@@ -1,3 +1,5 @@
+require "Dusk/Events"
+
 if not Dusk then Dusk = { } end
 
 Dusk.GetProgram = function()

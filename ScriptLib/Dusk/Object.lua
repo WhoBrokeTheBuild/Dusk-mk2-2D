@@ -1,3 +1,5 @@
+require "Dusk/Class"
+
 if not Dusk then Dusk = { } end
 
 local Object = Dusk.Class(function(self, ptr)

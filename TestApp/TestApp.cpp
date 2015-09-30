@@ -16,7 +16,7 @@ bool TestApp::Init()
         return false;
     }
 
-    GetScriptHost()->RunFile("Scripts/Setup");
+    GetScriptHost()->RunFile("Content/Scripts/Setup.lua");
 
     DuskLog("info", "Starting Up");
     return true;

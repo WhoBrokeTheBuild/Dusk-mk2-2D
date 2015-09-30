@@ -1,12 +1,18 @@
-#ifndef LOGGING_H
-#define LOGGING_H
+#ifndef DUSK_MAIN_HPP
+#define DUSK_MAIN_HPP
 
 #include <Dusk/Logging/Logging.hpp>
+#include <Dusk/Tracking/MemoryTracker.hpp>
+#include <Dusk/Utility/Console.hpp>
+#include <Dusk/Utility/Platform.hpp>
 
+using dusk::MemoryTracker;
 using dusk::Logging;
 
-void LoggingSetup() 
+template <class T>
+int DuskMain(int argc, char* argv[])
 {
+    MemoryTracker::Init();
     Logging::Init();
 
     Logging::AddLevel(4, "error");
@@ -37,6 +43,26 @@ void LoggingSetup()
     Logging::SetLoggingLevel("verbose");
 
     Logging::Script_RegisterFunctions();
+
+    T* app = New T();
+    app->Run(argc, argv);
+    delete app;
+
+    Logging::CloseAllLoggers();
+
+#ifdef DUSK_DEBUG_BUILD
+
+    if (MemoryTracker::GetAllocationCount() > 0)
+    {
+        MemoryTracker::PrintAllocations();
+        dusk::ConsolePause();
+    }
+
+#endif // DUSK_DEBUG_BUILD
+
+    MemoryTracker::Term();
+
+    return 0;
 }
 
-#endif // LOGGING_H
+#endif // DUSK_MAIN_HPP

@@ -242,6 +242,7 @@
     <ClInclude Include="Dusk\Graphics\Texture.hpp" />
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
     <ClInclude Include="Dusk\Input\Mapped.hpp" />
+    <ClInclude Include="Dusk\Main.hpp" />
     <ClInclude Include="Dusk\Program.hpp" />
     <ClInclude Include="Dusk\Graphics\Font.hpp" />
     <ClInclude Include="Dusk\Graphics\TextBuffer.hpp" />

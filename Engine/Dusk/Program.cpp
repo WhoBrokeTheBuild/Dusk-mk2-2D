@@ -31,7 +31,7 @@ Program::Program() :
     sp_Inst = this;
 }
 
-void Program::Run()
+void Program::Run(int argc, char* argv[])
 {
     DuskLog("verbose", "Program running");
 
@@ -112,8 +112,6 @@ bool Program::Init()
 
     mp_ScriptHost = New ScriptHost();
     mp_ScriptHost->Init();
-
-    mp_ScriptHost->RunFile("Scripts/Dusk");
 
     DuskBenchEnd("Program::Init");
     return true;

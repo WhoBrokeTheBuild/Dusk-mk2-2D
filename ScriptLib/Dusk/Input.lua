@@ -1,4 +1,4 @@
-if not Dusk then Dusk = { } end
+require "Dusk/Events"
 
 Dusk.GetInputSystem = function(inputId, key)
 	return Dusk.InputSystem( dusk_get_input_system() )

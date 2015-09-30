@@ -18,10 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Dusk\Class.lua" />
+    <None Include="Dusk\Events.lua" />
+    <None Include="Dusk\Graphics.lua" />
+    <None Include="Dusk\Input.lua" />
+    <None Include="Dusk\Object.lua" />
+    <None Include="Dusk\Program.lua" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DE9F277C-6763-47F3-91AD-D7E742F1FDB6}</ProjectGuid>
+    <ProjectGuid>{5E4B5176-3910-477F-B895-31ADF91B71B0}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -35,12 +42,12 @@
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
@@ -63,40 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeOutput>
-    </NMakeOutput>
-    <NMakePreprocessorDefinitions>
-    </NMakePreprocessorDefinitions>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
-    <NMakeBuildCommandLine>call $(SolutionDir)Tools\content.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\content.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>call $(SolutionDir)Tools\content.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
+    <NMakeOutput>ScriptLib.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <NMakeOutput>
-    </NMakeOutput>
-    <NMakePreprocessorDefinitions>
-    </NMakePreprocessorDefinitions>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
-    <NMakeBuildCommandLine>call $(SolutionDir)Tools\content.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\content.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>call $(SolutionDir)Tools\content.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
-    <NMakeBuildCommandLine>call $(SolutionDir)Tools\content.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\content.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>call $(SolutionDir)Tools\content.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(Configuration)\$(Platform)\</IntDir>
-    <NMakeBuildCommandLine>call $(SolutionDir)Tools\content.bat build $(Configuration) $(Platform)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>call $(SolutionDir)Tools\content.bat rebuild $(Configuration) $(Platform)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>call $(SolutionDir)Tools\content.bat clean $(Configuration) $(Platform)</NMakeCleanCommandLine>
+    <NMakeOutput>ScriptLib.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>

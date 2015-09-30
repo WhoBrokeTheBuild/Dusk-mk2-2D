@@ -40,12 +40,12 @@ if not exist %OUT_TEXTURES_DIR% (
 if %ACTION% == build (
 	if exist %SCRIPTS_DIR% (
 		for /d %%f in (%SCRIPTS_DIR%\*) do (
-			echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf %SCRIPTS_DIR%\%%~nxf\*.lua
-			%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf %SCRIPTS_DIR%\%%~nxf\*.lua || exit /b 1
+			echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf.luac %SCRIPTS_DIR%\%%~nxf\*.lua
+			%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nxf.luac %SCRIPTS_DIR%\%%~nxf\*.lua || exit /b 1
 		)
 		for %%f in (%SCRIPTS_DIR%\*.lua) do (
-			echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf %SCRIPTS_DIR%\%%~nf.lua
-			%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf %SCRIPTS_DIR%\%%~nf.lua || exit /b 1
+			echo %LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf.luac %SCRIPTS_DIR%\%%~nf.lua
+			%LUAC% -o %OUT_SCRIPTS_DIR%\%%~nf.luac %SCRIPTS_DIR%\%%~nf.lua || exit /b 1
 		)
 	)
 

@@ -23,11 +23,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Logging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Content\Fonts\Roboto.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Scripts\Setup.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Content\Textures\test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

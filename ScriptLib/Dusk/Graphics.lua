@@ -1,4 +1,4 @@
-if not Dusk then Dusk = { } end
+require "Dusk/Object"
 
 -- Dusk.GraphicsSystem
 

@@ -51,7 +51,7 @@ public:
         return "Program";
     }
 
-    void Run();
+    void Run(int argc, char* argv[]);
 
     double GetCurrentFPS() const
     {

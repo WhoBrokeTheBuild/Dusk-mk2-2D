@@ -14,4 +14,12 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Dusk\Program.lua" />
+    <None Include="Dusk\Class.lua" />
+    <None Include="Dusk\Events.lua" />
+    <None Include="Dusk\Graphics.lua" />
+    <None Include="Dusk\Input.lua" />
+    <None Include="Dusk\Object.lua" />
+  </ItemGroup>
 </Project>

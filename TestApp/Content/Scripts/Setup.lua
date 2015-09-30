@@ -1,3 +1,7 @@
+require "Dusk/Program"
+require "Dusk/Graphics"
+require "Dusk/Input"
+
 DuskLog("verbose", "Setting up the Window");
 
 local prog = Dusk.GetProgram()
@@ -11,7 +15,7 @@ is:MapKey("right", Dusk.Keys.D)
 is:MapKey("up", Dusk.Keys.W)
 is:MapKey("down", Dusk.Keys.S)
 
-local tex = Dusk.NewTexture("Textures/test.png")
+local tex = Dusk.NewTexture("Content/Textures/test.png")
 local spr = Dusk.NewSprite(tex)
 
 function OnMappedInputPressed(inputId)
