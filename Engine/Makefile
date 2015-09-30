@@ -46,7 +46,6 @@ all: deps $(OUT)
 
 deps:
 	cd ../Common; make $(ARGS)
-	cd ../Content; make $(ARGS)
 
 clean:
 	rm -f $(OUT)

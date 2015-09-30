@@ -7,12 +7,11 @@ ARGS = CONF=$(CONF)
 all: TestApp
 
 run:
-	cd Build/$(CONF)/; ./TestApp
+	cd TestApp; export LUA_PATH="../ScriptLib/?.lua;"; ../Build/$(CONF)/TestApp
 
 clean:
 	cd Common; make clean $(ARGS)
 	cd Engine; make clean $(ARGS)
-	cd Content; make clean $(ARGS)
 	cd TestApp; make clean $(ARGS)
 
 Common:
@@ -20,9 +19,6 @@ Common:
 
 Engine:
 	cd Engine; make $(ARGS)
-
-Content:
-	cd Content; make $(ARGS)
 
 TestApp:
 	cd TestApp; make $(ARGS)

@@ -9,6 +9,8 @@
 #include <Dusk/Scripting/Scripting.hpp>
 #include <Dusk/Input/InputSystem.hpp>
 
+#include <SFML/Window/Event.hpp>
+
 namespace dusk
 {
 
@@ -62,45 +64,38 @@ void GraphicsSystem::OnUpdate(const Event& event)
         Keyboard::Key key = Keyboard::Key::Invalid;
         Mouse::Button button = Mouse::Button::Invalid;
 
-        switch (sfEvent.type)
+        if (sfEvent.type == sf::Event::Closed)
         {
-        case sf::Event::Closed:
-
             m_SFMLWindow.close();
             Program::Inst()->Exit();
-
-            break;
-        case sf::Event::KeyPressed:
-
+        }
+        else if (sfEvent.type == sf::Event::KeyPressed)
+        {
             key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
             InputSystem::Inst()->TriggerKeyPress(key);
-
-            break;
-        case sf::Event::KeyReleased:
-
+        }
+        else if (sfEvent.type == sf::Event::KeyReleased)
+        {
             key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
             InputSystem::Inst()->TriggerKeyRelease(key);
-
-            break;
-        case sf::Event::MouseButtonPressed:
-
+        }
+        else if (sfEvent.type == sf::Event::MouseButtonPressed)
+        {
             button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
             InputSystem::Inst()->TriggerMouseButtonPress(button);
-
-            break;
-        case sf::Event::MouseButtonReleased:
-
+        }
+        else if (sfEvent.type == sf::Event::MouseButtonReleased)
+        {
             button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
             InputSystem::Inst()->TriggerMouseButtonRelease(button);
-
-            break;
-        case sf::Event::MouseMoved:
-
+        }
+        else if (sfEvent.type == sf::Event::MouseMoved)
+        {
             InputSystem::Inst()->TriggerMouseMoveAbsolute(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
-
-            break;
-        case sf::Event::MouseWheelScrolled:
-
+        }
+        // TODO: Fix disparite versions of SFML on Win/Linux
+        /*else if (sfEvent.type == sf::Event::MouseWheelScrolled)
+        {
             if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel)
             {
                 InputSystem::Inst()->TriggerMouseScroll(sfEvent.mouseWheelScroll.delta, 0.0f);
@@ -109,9 +104,7 @@ void GraphicsSystem::OnUpdate(const Event& event)
             {
                 InputSystem::Inst()->TriggerMouseScroll(0.0f, sfEvent.mouseWheelScroll.delta);
             }
-
-            break;
-        }
+        }*/
     }
 }
 
