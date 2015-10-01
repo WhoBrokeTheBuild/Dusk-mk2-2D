@@ -9,7 +9,7 @@
 using dusk::MemoryTracker;
 using dusk::Logging;
 
-template <class T>
+template <class ProgramType>
 int DuskMain(int argc, char* argv[])
 {
     MemoryTracker::Init();
@@ -44,9 +44,7 @@ int DuskMain(int argc, char* argv[])
 
     Logging::Script_RegisterFunctions();
 
-    T* app = New T();
-    app->Run(argc, argv);
-    delete app;
+    ProgramType::CreateInst()->Run(argc, argv)->DestroyInst();
 
     Logging::CloseAllLoggers();
 

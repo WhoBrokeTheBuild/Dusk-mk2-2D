@@ -14,11 +14,11 @@
 namespace dusk
 {
 
+DUSK_SINGLETON_IMPL(GraphicsSystem);
+
 Flag GraphicsSystem::Fullscreen = 1;
 Flag GraphicsSystem::Resizable = 2;
 Flag GraphicsSystem::Decorated = 4;
-
-GraphicsSystem* GraphicsSystem::sp_Inst = nullptr;
 
 GraphicsSystem::GraphicsSystem() :
     m_Title(),

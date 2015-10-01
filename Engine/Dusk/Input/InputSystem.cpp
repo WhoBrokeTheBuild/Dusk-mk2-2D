@@ -8,7 +8,7 @@
 namespace dusk
 {
 
-InputSystem* InputSystem::sp_Inst = nullptr;
+DUSK_SINGLETON_IMPL(InputSystem);
 
 EventID InputSystem::EvtKeyPress = 1;
 EventID InputSystem::EvtKeyRelease = 2;

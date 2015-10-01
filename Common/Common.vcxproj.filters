@@ -35,5 +35,6 @@
     <ClInclude Include="Dusk\Utility\Platform.hpp" />
     <ClInclude Include="Dusk\Utility\Strings.hpp" />
     <ClInclude Include="Dusk\Utility\Types.hpp" />
+    <ClInclude Include="Dusk\Utility\Singleton.hpp" />
   </ItemGroup>
 </Project>

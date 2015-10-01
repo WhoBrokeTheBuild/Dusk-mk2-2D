@@ -2,6 +2,7 @@
 #define DUSK_GRAPHICS_GRAPHICS_SYSTEM_HPP
 
 #include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Utility/Singleton.hpp>
 #include <Dusk/Utility/Types.hpp>
 #include <Dusk/Events/Event.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
@@ -20,6 +21,8 @@ class GraphicsSystem :
     public ITrackedObject
 {
 
+    DUSK_SINGLETON(GraphicsSystem);
+
     friend class Program;
 
 public:
@@ -27,18 +30,6 @@ public:
     static Flag Fullscreen;
     static Flag Resizable;
     static Flag Decorated;
-
-    static inline GraphicsSystem* Inst()
-    {
-        return sp_Inst;
-    }
-
-    GraphicsSystem();
-
-    virtual ~GraphicsSystem()
-    {
-        Term();
-    }
 
     virtual inline string GetClassName() const
     {
@@ -75,18 +66,11 @@ public:
 
 private:
 
-    static GraphicsSystem* sp_Inst;
+    GraphicsSystem();
 
-    static inline GraphicsSystem* CreateInst()
+    virtual ~GraphicsSystem()
     {
-        sp_Inst = New GraphicsSystem();
-        return sp_Inst;
-    }
-
-    static inline void DestroyInst()
-    {
-        delete sp_Inst;
-        sp_Inst = nullptr;
+        Term();
     }
 
     bool CreateSFMLWindow(const unsigned int& width, const unsigned int& height);

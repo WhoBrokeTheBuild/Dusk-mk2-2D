@@ -3,6 +3,7 @@
 
 #include <Dusk/Tracking/ITrackedObject.hpp>
 #include <Dusk/Events/IEventDispatcher.hpp>
+#include <Dusk/Utility/Singleton.hpp>
 #include <Dusk/Input/Keyboard.hpp>
 #include <Dusk/Input/Mouse.hpp>
 #include <Dusk/Input/Mapped.hpp>
@@ -19,14 +20,11 @@ class InputSystem :
     public ITrackedObject
 {
 
+    DUSK_SINGLETON(InputSystem);
+
     friend class Program;
 
 public:
-
-    static inline InputSystem* Inst()
-    {
-        return sp_Inst;
-    }
 
     static EventID EvtKeyPress;
     static EventID EvtKeyRelease;
@@ -85,20 +83,6 @@ public:
     static int Script_GetMappedMouseButton(lua_State* L);
 
 private:
-
-    static InputSystem* sp_Inst;
-
-    static inline InputSystem* CreateInst()
-    {
-        sp_Inst = New InputSystem();
-        return sp_Inst;
-    }
-
-    static inline void DestroyInst()
-    {
-        delete sp_Inst;
-        sp_Inst = nullptr;
-    }
 
     double m_MouseX;
 

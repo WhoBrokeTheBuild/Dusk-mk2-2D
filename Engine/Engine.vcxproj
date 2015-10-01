@@ -231,6 +231,7 @@
     <ClCompile Include="Dusk\Graphics\TextBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dusk\Audio\AudioSystem.hpp" />
     <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
     <ClInclude Include="Dusk\Graphics\Color.h" />
     <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />

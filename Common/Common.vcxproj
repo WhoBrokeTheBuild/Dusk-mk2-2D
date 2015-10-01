@@ -193,6 +193,7 @@
     <ClInclude Include="Dusk\Tracking\MemoryTracker.hpp" />
     <ClInclude Include="Dusk\Tracking\ITrackedObject.hpp" />
     <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
+    <ClInclude Include="Dusk\Utility\Singleton.hpp" />
     <ClInclude Include="Dusk\Utility\Types.hpp" />
     <ClInclude Include="Dusk\Utility\Console.hpp" />
     <ClInclude Include="Dusk\Utility\Platform.hpp" />

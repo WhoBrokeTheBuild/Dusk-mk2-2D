@@ -29,5 +29,6 @@
     <ClInclude Include="Dusk\Input\Mapped.hpp" />
     <ClInclude Include="Dusk\Input\Mouse.hpp" />
     <ClInclude Include="Dusk\Main.hpp" />
+    <ClInclude Include="Dusk\Audio\AudioSystem.hpp" />
   </ItemGroup>
 </Project>

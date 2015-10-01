@@ -3,6 +3,7 @@
 
 #include <Dusk/Events/IEventDispatcher.hpp>
 #include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Utility/Singleton.hpp>
 #include <Dusk/Events/Event.hpp>
 
 #include <lua.hpp>
@@ -24,14 +25,10 @@ class Program :
     public IEventDispatcher,
     public ITrackedObject
 {
+
+    DUSK_SINGLETON(Program);
+
 public:
-
-    // Singleton Instance
-
-    static inline Program* Inst()
-    {
-        return sp_Inst;
-    }
 
     // Events
 
@@ -51,7 +48,7 @@ public:
         return "Program";
     }
 
-    void Run(int argc, char* argv[]);
+    Program* Run(int argc, char* argv[]);
 
     double GetCurrentFPS() const
     {
@@ -80,8 +77,6 @@ protected:
     virtual void PostRender(GraphicsContext* ctx);
 
 private:
-
-    static Program* sp_Inst;
 
     Program(Program const&);
     void operator=(Program const&);
