@@ -33,14 +33,14 @@ Program::Program() :
     sp_Inst = this;
 }
 
-void Program::Run(int argc, char* argv[])
+Program* Program::Run(int argc, char* argv[])
 {
     DuskLog("verbose", "Program running");
 
     if (!Init())
     {
         DuskLog("error", "Failed to start program");
-        return;
+        return sp_Inst;
     }
 
     FrameTimeInfo timeInfo;
@@ -87,6 +87,8 @@ void Program::Run(int argc, char* argv[])
 
     Dispatch(Event(EvtExit));
     DuskLog("verbose", "Program Exiting");
+
+    return sp_Inst;
 }
 
 void Program::SetTargetFPS(double fps)

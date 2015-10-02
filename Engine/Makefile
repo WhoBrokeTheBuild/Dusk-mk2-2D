@@ -32,10 +32,10 @@ Dusk/Graphics/Sprite.cpp \
 Dusk/Graphics/Texture.cpp \
 Dusk/Graphics/Font.cpp \
 Dusk/Graphics/TextBuffer.cpp \
-Dusk/Input/Inputs/Key.cpp \
-Dusk/Input/Inputs/Mouse.cpp \
-Dusk/Input/Inputs/Mapped.cpp \
 Dusk/Input/InputSystem.cpp \
+Dusk/Input/Keyboard.cpp \
+Dusk/Input/Mouse.cpp \
+Dusk/Input/Mapped.cpp \
 Dusk/UpdateEventData.cpp \
 Dusk/RenderEventData.cpp \
 Dusk/Program.cpp
@@ -46,7 +46,6 @@ all: deps $(OUT)
 
 deps:
 	cd ../Common; make $(ARGS)
-	cd ../Content; make $(ARGS)
 
 clean:
 	rm -f $(OUT)

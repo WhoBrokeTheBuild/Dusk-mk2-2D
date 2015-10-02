@@ -24,6 +24,7 @@ class Program :
     public IEventDispatcher,
     public ITrackedObject
 {
+
 public:
 
     // Singleton Instance
@@ -51,7 +52,7 @@ public:
         return "Program";
     }
 
-    void Run(int argc, char* argv[]);
+    Program* Run(int argc, char* argv[]);
     inline void Exit() { m_Running = false; }
 
     inline double GetCurrentFPS() const { return m_CurrentFPS; }

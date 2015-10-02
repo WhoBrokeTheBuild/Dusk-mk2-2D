@@ -33,11 +33,6 @@ class GraphicsSystem :
 
 public:
 
-    virtual ~GraphicsSystem()
-    {
-        Term();
-    }
-
     virtual inline string GetClassName() const
     {
         return "Graphics System";

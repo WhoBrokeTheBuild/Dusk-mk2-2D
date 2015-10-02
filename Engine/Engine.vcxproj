@@ -94,7 +94,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -113,10 +113,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x86\;..\Libraries\lua\lib\x86\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,7 +124,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -143,10 +143,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x64\;..\Libraries\lua\lib\x64\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -156,7 +156,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -177,10 +177,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x86\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x86\;..\Libraries\lua\lib\x86\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -190,7 +190,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Common\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -211,10 +211,10 @@
       </Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
+      <AdditionalDependencies>lua53.lib;flac.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;gdi32.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-system-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x64\;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;..\Libraries\SFML\lib\x64\;..\Libraries\lua\lib\x64\;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

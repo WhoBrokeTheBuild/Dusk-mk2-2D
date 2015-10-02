@@ -9,7 +9,7 @@
 namespace dusk
 {
 
-template <class T>
+template <class ProgramType>
 int DuskMain(int argc, char* argv[])
 {
     MemoryTracker::Init();
@@ -44,9 +44,9 @@ int DuskMain(int argc, char* argv[])
 
     Logging::Script_RegisterFunctions();
 
-    T* app = New T();
-    app->Run(argc, argv);
-    delete app;
+    ProgramType* pInst = New ProgramType();
+    pInst->Run(argc, argv);
+    delete pInst;
 
     Logging::CloseAllLoggers();
 

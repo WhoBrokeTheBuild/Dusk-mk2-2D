@@ -7,25 +7,25 @@ Keyboard::Key Keyboard::ConvertSFMLKey(sf::Keyboard::Key key)
 {
     for (unsigned int i = 0; i < 26; ++i)
     {
-        if (key == (sf::Keyboard::Key::A + i))
+        if (key == (int)(sf::Keyboard::Key::A + i))
             return (Key)(Key::A + i);
     }
 
     for (unsigned int i = 0; i < 10; ++i)
     {
-        if (key == (sf::Keyboard::Key::Num0 + i))
+        if (key == (int)(sf::Keyboard::Key::Num0 + i))
             return (Key)(Key::N0 + i);
     }
 
     for (unsigned int i = 0; i < 10; ++i)
     {
-        if (key == (sf::Keyboard::Key::Numpad0 + i))
+        if (key == (int)(sf::Keyboard::Key::Numpad0 + i))
             return (Key)(Key::Pad0 + i);
     }
 
     for (unsigned int i = 0; i < 15; ++i)
     {
-        if (key == (sf::Keyboard::Key::F1 + i))
+        if (key == (int)(sf::Keyboard::Key::F1 + i))
             return (Key)(Key::F1 + i);
     }
 
@@ -147,9 +147,10 @@ Keyboard::Key Keyboard::ConvertSFMLKey(sf::Keyboard::Key key)
 
     case sf::Keyboard::Key::Divide:
         return Key::Divide;
-    }
 
-    return Key::Invalid;
+    default:
+        return Key::Invalid;
+    }
 }
 
 int KeyEventData::PushDataToLua(lua_State* L) const

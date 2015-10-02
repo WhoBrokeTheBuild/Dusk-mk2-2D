@@ -7,7 +7,7 @@ ARGS = CONF=$(CONF)
 all: TestApp
 
 run:
-	cd Build/$(CONF)/; ./TestApp
+	cd TestApp; export LUA_PATH="../ScriptLib/?.lua;"; ../Build/$(CONF)/TestApp
 
 clean:
 	cd Engine; make clean $(ARGS)

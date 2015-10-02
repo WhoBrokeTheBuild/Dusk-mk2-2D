@@ -9,6 +9,8 @@
 #include <Dusk/Scripting/Scripting.hpp>
 #include <Dusk/Input/InputSystem.hpp>
 
+#include <SFML/Window/Event.hpp>
+
 namespace dusk
 {
 
@@ -53,56 +55,47 @@ void GraphicsSystem::OnUpdate(const Event& event)
         Keyboard::Key key = Keyboard::Key::Invalid;
         Mouse::Button button = Mouse::Button::Invalid;
 
-        switch (sfEvent.type)
+        if (sfEvent.type == sf::Event::Closed)
         {
-        case sf::Event::Closed:
-
             m_SFMLWindow.close();
             Program::Inst()->Exit();
-
-            break;
-        case sf::Event::KeyPressed:
-
+        }
+        else if (sfEvent.type == sf::Event::KeyPressed)
+        {
             key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
             pIS->TriggerKeyPress(key);
-
-            break;
-        case sf::Event::KeyReleased:
-
+        }
+        else if (sfEvent.type == sf::Event::KeyReleased)
+        {
             key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
             pIS->TriggerKeyRelease(key);
-
-            break;
-        case sf::Event::MouseButtonPressed:
-
+        }
+        else if (sfEvent.type == sf::Event::MouseButtonPressed)
+        {
             button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
             pIS->TriggerMouseButtonPress(button);
-
-            break;
-        case sf::Event::MouseButtonReleased:
-
+        }
+        else if (sfEvent.type == sf::Event::MouseButtonReleased)
+        {
             button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
             pIS->TriggerMouseButtonRelease(button);
-
-            break;
-        case sf::Event::MouseMoved:
-
-            pIS->TriggerMouseMoveAbsolute(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
-
-            break;
-        case sf::Event::MouseWheelScrolled:
-
-            if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel)
-            {
-                pIS->TriggerMouseScroll(sfEvent.mouseWheelScroll.delta, 0.0f);
-            }
-            else if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::VerticalWheel)
-            {
-                pIS->TriggerMouseScroll(0.0f, sfEvent.mouseWheelScroll.delta);
-            }
-
-            break;
         }
+        else if (sfEvent.type == sf::Event::MouseMoved)
+        {
+            pIS->TriggerMouseMoveAbsolute(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
+        }
+        // TODO: Fix disparite versions of SFML on Win/Linux
+        /*else if (sfEvent.type == sf::Event::MouseWheelScrolled)
+        {
+        if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel)
+        {
+            pIS->TriggerMouseScroll(sfEvent.mouseWheelScroll.delta, 0.0f);
+        }
+        else if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::VerticalWheel)
+        {
+            pIS->TriggerMouseScroll(0.0f, sfEvent.mouseWheelScroll.delta);
+        }
+        }*/
     }
 }
 
