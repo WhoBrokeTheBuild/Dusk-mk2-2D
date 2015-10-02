@@ -21,7 +21,6 @@ OUTDIR = ../Build/$(CONF)
 OUT = $(OUTDIR)/TestApp
 
 INC_PATH = \
--I../Common/ \
 -I../Engine/ \
 `pkg-config --cflags lua5.2` \
 `pkg-config --cflags sfml-all`
@@ -30,7 +29,6 @@ LIB_PATH = \
 -L$(OUTDIR)
 
 LIBS = \
--ldusk-common \
 -ldusk-engine \
 `pkg-config --libs lua5.2` \
 `pkg-config --libs sfml-all`

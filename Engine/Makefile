@@ -21,7 +21,6 @@ OUT = $(OUTDIR)/libdusk-engine.a
 
 INC_PATH = \
 -I. \
--I../Common \
 `pkg-config --cflags lua5.2` \
 `pkg-config --cflags sfml-all`
 
@@ -45,7 +44,6 @@ OBJECTS=$(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))
 all: deps $(OUT)
 
 deps:
-	cd ../Common; make $(ARGS)
 
 clean:
 	rm -f $(OUT)
