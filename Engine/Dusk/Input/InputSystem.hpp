@@ -23,11 +23,6 @@ class InputSystem :
 
 public:
 
-    static inline InputSystem* Inst()
-    {
-        return sp_Inst;
-    }
-
     static EventID EvtKeyPress;
     static EventID EvtKeyRelease;
 
@@ -85,20 +80,6 @@ public:
     static int Script_GetMappedMouseButton(lua_State* L);
 
 private:
-
-    static InputSystem* sp_Inst;
-
-    static inline InputSystem* CreateInst()
-    {
-        sp_Inst = New InputSystem();
-        return sp_Inst;
-    }
-
-    static inline void DestroyInst()
-    {
-        delete sp_Inst;
-        sp_Inst = nullptr;
-    }
 
     double m_MouseX;
 

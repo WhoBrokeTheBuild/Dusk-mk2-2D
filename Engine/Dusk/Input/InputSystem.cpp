@@ -8,8 +8,6 @@
 namespace dusk
 {
 
-InputSystem* InputSystem::sp_Inst = nullptr;
-
 EventID InputSystem::EvtKeyPress = 1;
 EventID InputSystem::EvtKeyRelease = 2;
 
@@ -155,7 +153,7 @@ void InputSystem::InitScripting(void)
 
 int InputSystem::Script_Get(lua_State* L)
 {
-    lua_pushinteger(L, (ptrdiff_t)InputSystem::Inst());
+    lua_pushinteger(L, (ptrdiff_t)Program::Inst()->GetInputSystem());
     return 1;
 }
 

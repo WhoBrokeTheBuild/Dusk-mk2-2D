@@ -52,21 +52,17 @@ public:
     }
 
     void Run(int argc, char* argv[]);
+    inline void Exit() { m_Running = false; }
 
-    double GetCurrentFPS() const
-    {
-        return m_CurrentFPS;
-    }
-    double GetTargetFPS() const
-    {
-        return m_TargetFPS;
-    }
-    void   SetTargetFPS(double fps);
+    inline double GetCurrentFPS() const { return m_CurrentFPS; }
 
-    inline void Exit()
-    {
-        m_Running = false;
-    }
+    inline double GetTargetFPS() const { return m_TargetFPS; }
+
+    void SetTargetFPS(double fps);
+
+    GraphicsSystem* GetGraphicsSystem() const;
+    InputSystem* GetInputSystem() const;
+    //AudioSystem* GetAudioSystem() const;
 
 protected:
 
@@ -85,6 +81,10 @@ private:
 
     Program(Program const&);
     void operator=(Program const&);
+
+    GraphicsSystem* mp_GraphicsSystem;
+    InputSystem* mp_InputSystem;
+    //AudioSystem* mp_AudioSystem;
 
     bool m_Running;
 

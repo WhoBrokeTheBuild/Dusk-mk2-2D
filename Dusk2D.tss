@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Input\Keyboard.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Input\InputSystem.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Input\Mapped.cpp</string>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Input\Mapped.hpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Program.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Graphics\GraphicsSystem.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Repositories\Dusk2D\Engine\Dusk\Input\Keyboard.hpp</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

@@ -12,6 +12,17 @@
     <ClCompile Include="Dusk\Input\Keyboard.cpp" />
     <ClCompile Include="Dusk\Input\Mapped.cpp" />
     <ClCompile Include="Dusk\Input\Mouse.cpp" />
+    <ClCompile Include="Dusk\Events\Callbacks.cpp" />
+    <ClCompile Include="Dusk\Events\Event.cpp" />
+    <ClCompile Include="Dusk\Events\IEventDispatcher.cpp" />
+    <ClCompile Include="Dusk\Logging\Loggers\ConsoleLogger.cpp" />
+    <ClCompile Include="Dusk\Logging\Loggers\FileLogger.cpp" />
+    <ClCompile Include="Dusk\Logging\Logging.cpp" />
+    <ClCompile Include="Dusk\Scripting\ScriptHost.cpp" />
+    <ClCompile Include="Dusk\Scripting\Scripting.cpp" />
+    <ClCompile Include="Dusk\Tracking\ITrackedObject.cpp" />
+    <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
+    <ClCompile Include="Dusk\Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
@@ -29,5 +40,26 @@
     <ClInclude Include="Dusk\Input\Mapped.hpp" />
     <ClInclude Include="Dusk\Input\Mouse.hpp" />
     <ClInclude Include="Dusk\Main.hpp" />
+    <ClInclude Include="Dusk\Collections\ArrayList.hpp" />
+    <ClInclude Include="Dusk\Collections\Map.hpp" />
+    <ClInclude Include="Dusk\Events\Callbacks.hpp" />
+    <ClInclude Include="Dusk\Events\Delegate.hpp" />
+    <ClInclude Include="Dusk\Events\Event.hpp" />
+    <ClInclude Include="Dusk\Events\IEventDispatcher.hpp" />
+    <ClInclude Include="Dusk\Logging\Loggers\ConsoleLogger.hpp" />
+    <ClInclude Include="Dusk\Logging\Loggers\FileLogger.hpp" />
+    <ClInclude Include="Dusk\Logging\ILogger.hpp" />
+    <ClInclude Include="Dusk\Logging\LogColors.hpp" />
+    <ClInclude Include="Dusk\Logging\Logging.hpp" />
+    <ClInclude Include="Dusk\Scripting\ScriptHost.hpp" />
+    <ClInclude Include="Dusk\Scripting\Scripting.hpp" />
+    <ClInclude Include="Dusk\Timing\FrameTimeInfo.hpp" />
+    <ClInclude Include="Dusk\Tracking\ITrackedObject.hpp" />
+    <ClInclude Include="Dusk\Tracking\MemoryTracker.hpp" />
+    <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
+    <ClInclude Include="Dusk\Utility\Console.hpp" />
+    <ClInclude Include="Dusk\Utility\Platform.hpp" />
+    <ClInclude Include="Dusk\Utility\Strings.hpp" />
+    <ClInclude Include="Dusk\Utility\Types.hpp" />
   </ItemGroup>
 </Project>

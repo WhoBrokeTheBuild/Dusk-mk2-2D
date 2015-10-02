@@ -16,6 +16,15 @@ class Program;
 class Window;
 class GraphicsContext;
 
+enum WindowStyle
+{
+    Fullscreen = 1,
+    Resizable  = 2,
+    Decorated  = 4,
+
+    Default = Resizable | Decorated
+};
+
 class GraphicsSystem :
     public ITrackedObject
 {
@@ -23,17 +32,6 @@ class GraphicsSystem :
     friend class Program;
 
 public:
-
-    static Flag Fullscreen;
-    static Flag Resizable;
-    static Flag Decorated;
-
-    static inline GraphicsSystem* Inst()
-    {
-        return sp_Inst;
-    }
-
-    GraphicsSystem();
 
     virtual ~GraphicsSystem()
     {
@@ -45,57 +43,42 @@ public:
         return "Graphics System";
     }
 
-    bool Init(const unsigned int& width, const unsigned int& height, const string& title, const Flag& flags);
+    bool Init();
     void Term();
 
     void OnUpdate(const Event& evt);
 
+    inline unsigned int GetWindowWidth() const { return m_Width; }
+    inline unsigned int GetWindowHeight() const { return m_Height; }
     Vector2u GetWindowSize() const;
 
-    inline string GetWindowTitle() const
-    {
-        return m_Title;
-    }
+    void SetWindowWidth(const unsigned int& width);
+    void SetWindowHeight(const unsigned int& height);
+    void SetWindowSize(const unsigned int& width, const unsigned int& height);
+
+    void SetWindowStyle(const int& styleFlags);
+
+    void ApplyWindowChanges();
+
+    inline string GetWindowTitle() const { return m_Title; }
     void SetWindowTitle(const string& title);
 
-    inline bool IsFullscreen() const
-    {
-        return m_Fullscreen;
-    }
-    inline bool IsDecorated() const
-    {
-        return m_Decorated;
-    }
-    inline bool IsResizable() const
-    {
-        return m_Resizable;
-    }
+    bool IsFullscreen() const;
+    bool IsDecorated() const;
+    bool IsResizable() const;
 
     GraphicsContext* GetContext() const;
 
 private:
 
-    static GraphicsSystem* sp_Inst;
+    GraphicsSystem();
 
-    static inline GraphicsSystem* CreateInst()
-    {
-        sp_Inst = New GraphicsSystem();
-        return sp_Inst;
-    }
+    bool CreateSFMLWindow();
 
-    static inline void DestroyInst()
-    {
-        delete sp_Inst;
-        sp_Inst = nullptr;
-    }
-
-    bool CreateSFMLWindow(const unsigned int& width, const unsigned int& height);
-
+    unsigned int m_Width;
+    unsigned int m_Height;
     string m_Title;
-
-    bool m_Fullscreen;
-    bool m_Decorated;
-    bool m_Resizable;
+    int m_Style;
 
     sf::RenderWindow m_SFMLWindow;
 

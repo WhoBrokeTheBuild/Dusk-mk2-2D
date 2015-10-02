@@ -218,6 +218,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dusk\Events\Callbacks.cpp" />
+    <ClCompile Include="Dusk\Events\Event.cpp" />
+    <ClCompile Include="Dusk\Events\IEventDispatcher.cpp" />
     <ClCompile Include="Dusk\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Dusk\Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Dusk\Input\InputSystem.cpp" />
@@ -226,11 +229,25 @@
     <ClCompile Include="Dusk\Input\Mouse.cpp" />
     <ClCompile Include="Dusk\Graphics\Sprite.cpp" />
     <ClCompile Include="Dusk\Graphics\Texture.cpp" />
+    <ClCompile Include="Dusk\Logging\Loggers\ConsoleLogger.cpp" />
+    <ClCompile Include="Dusk\Logging\Loggers\FileLogger.cpp" />
+    <ClCompile Include="Dusk\Logging\Logging.cpp" />
     <ClCompile Include="Dusk\Program.cpp" />
     <ClCompile Include="Dusk\Graphics\Font.cpp" />
     <ClCompile Include="Dusk\Graphics\TextBuffer.cpp" />
+    <ClCompile Include="Dusk\Scripting\ScriptHost.cpp" />
+    <ClCompile Include="Dusk\Scripting\Scripting.cpp" />
+    <ClCompile Include="Dusk\Tracking\ITrackedObject.cpp" />
+    <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
+    <ClCompile Include="Dusk\Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dusk\Collections\ArrayList.hpp" />
+    <ClInclude Include="Dusk\Collections\Map.hpp" />
+    <ClInclude Include="Dusk\Events\Callbacks.hpp" />
+    <ClInclude Include="Dusk\Events\Delegate.hpp" />
+    <ClInclude Include="Dusk\Events\Event.hpp" />
+    <ClInclude Include="Dusk\Events\IEventDispatcher.hpp" />
     <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
     <ClInclude Include="Dusk\Graphics\Color.h" />
     <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
@@ -242,10 +259,25 @@
     <ClInclude Include="Dusk\Graphics\Texture.hpp" />
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
     <ClInclude Include="Dusk\Input\Mapped.hpp" />
+    <ClInclude Include="Dusk\Logging\ILogger.hpp" />
+    <ClInclude Include="Dusk\Logging\LogColors.hpp" />
+    <ClInclude Include="Dusk\Logging\Loggers\ConsoleLogger.hpp" />
+    <ClInclude Include="Dusk\Logging\Loggers\FileLogger.hpp" />
+    <ClInclude Include="Dusk\Logging\Logging.hpp" />
     <ClInclude Include="Dusk\Main.hpp" />
     <ClInclude Include="Dusk\Program.hpp" />
     <ClInclude Include="Dusk\Graphics\Font.hpp" />
     <ClInclude Include="Dusk\Graphics\TextBuffer.hpp" />
+    <ClInclude Include="Dusk\Scripting\ScriptHost.hpp" />
+    <ClInclude Include="Dusk\Scripting\Scripting.hpp" />
+    <ClInclude Include="Dusk\Timing\FrameTimeInfo.hpp" />
+    <ClInclude Include="Dusk\Tracking\ITrackedObject.hpp" />
+    <ClInclude Include="Dusk\Tracking\MemoryTracker.hpp" />
+    <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
+    <ClInclude Include="Dusk\Utility\Console.hpp" />
+    <ClInclude Include="Dusk\Utility\Platform.hpp" />
+    <ClInclude Include="Dusk\Utility\Strings.hpp" />
+    <ClInclude Include="Dusk\Utility\Types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

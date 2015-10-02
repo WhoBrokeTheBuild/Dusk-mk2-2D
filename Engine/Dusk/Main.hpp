@@ -6,8 +6,8 @@
 #include <Dusk/Utility/Console.hpp>
 #include <Dusk/Utility/Platform.hpp>
 
-using dusk::MemoryTracker;
-using dusk::Logging;
+namespace dusk
+{
 
 template <class T>
 int DuskMain(int argc, char* argv[])
@@ -64,5 +64,7 @@ int DuskMain(int argc, char* argv[])
 
     return 0;
 }
+
+} // namespace dusk
 
 #endif // DUSK_MAIN_HPP

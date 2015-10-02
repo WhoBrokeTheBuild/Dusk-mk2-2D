@@ -4,16 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{AF9DA779-5498-42AF-BB8D-7C2133A48952}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42} = {8586F1CE-676E-4FDE-816F-AD44A0B29E42}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestApp", "TestApp\TestApp.vcxproj", "{BE401874-1F34-4D9F-A4D9-379222E579A9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AF9DA779-5498-42AF-BB8D-7C2133A48952} = {AF9DA779-5498-42AF-BB8D-7C2133A48952}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{8586F1CE-676E-4FDE-816F-AD44A0B29E42}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScriptLib", "ScriptLib\ScriptLib.vcxproj", "{5E4B5176-3910-477F-B895-31ADF91B71B0}"
 EndProject
@@ -41,14 +36,6 @@ Global
 		{BE401874-1F34-4D9F-A4D9-379222E579A9}.Release|x64.Build.0 = Release|x64
 		{BE401874-1F34-4D9F-A4D9-379222E579A9}.Release|x86.ActiveCfg = Release|Win32
 		{BE401874-1F34-4D9F-A4D9-379222E579A9}.Release|x86.Build.0 = Release|Win32
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Debug|x64.ActiveCfg = Debug|x64
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Debug|x64.Build.0 = Debug|x64
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Debug|x86.ActiveCfg = Debug|Win32
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Debug|x86.Build.0 = Debug|Win32
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Release|x64.ActiveCfg = Release|x64
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Release|x64.Build.0 = Release|x64
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Release|x86.ActiveCfg = Release|Win32
-		{8586F1CE-676E-4FDE-816F-AD44A0B29E42}.Release|x86.Build.0 = Release|Win32
 		{5E4B5176-3910-477F-B895-31ADF91B71B0}.Debug|x64.ActiveCfg = Debug|x64
 		{5E4B5176-3910-477F-B895-31ADF91B71B0}.Debug|x64.Build.0 = Debug|x64
 		{5E4B5176-3910-477F-B895-31ADF91B71B0}.Debug|x86.ActiveCfg = Debug|Win32

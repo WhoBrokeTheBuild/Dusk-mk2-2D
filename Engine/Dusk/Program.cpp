@@ -26,6 +26,8 @@ Program::Program() :
     m_TargetFPS(),
     m_CurrentFPS(),
     m_UpdateInterval(),
+    mp_GraphicsSystem(nullptr),
+    mp_InputSystem(nullptr),
     mp_ScriptHost(nullptr)
 {
     sp_Inst = this;
@@ -71,7 +73,7 @@ void Program::Run(int argc, char* argv[])
 
         if (secsSinceLastFrame >= m_UpdateInterval)
         {
-            GraphicsContext* ctx = GraphicsSystem::Inst()->GetContext();
+            GraphicsContext* ctx = GetGraphicsSystem()->GetContext();
             PreRender(ctx);
             Render(ctx);
             PostRender(ctx);
@@ -93,6 +95,16 @@ void Program::SetTargetFPS(double fps)
     m_UpdateInterval = (1.0 / m_TargetFPS);
 }
 
+GraphicsSystem* Program::GetGraphicsSystem() const
+{
+    return mp_GraphicsSystem;
+}
+
+InputSystem* Program::GetInputSystem() const
+{
+    return mp_InputSystem;
+}
+
 ScriptHost* Program::GetScriptHost()
 {
     return mp_ScriptHost;
@@ -103,8 +115,14 @@ bool Program::Init()
     DuskLog("verbose", "Program initializing");
     DuskBenchStart();
 
-    GraphicsSystem::CreateInst()->Init(1024, 768, "Dusk 2D", GraphicsSystem::Decorated);
-    InputSystem::CreateInst()->Init();
+    mp_GraphicsSystem = New GraphicsSystem();
+    mp_GraphicsSystem->Init();
+
+    mp_InputSystem = New InputSystem();
+    mp_InputSystem->Init();
+
+    //mp_AudioSystem = New AudioSystem();
+    //mp_AudioSystem->Init();
 
     Script_RegisterFunctions();
 
@@ -122,8 +140,14 @@ void Program::Term()
     delete mp_ScriptHost;
     mp_ScriptHost = nullptr;
 
-    GraphicsSystem::DestroyInst();
-    InputSystem::DestroyInst();
+    //delete mp_AudioSystem;
+    //mp_AudioSystem = nullptr;
+
+    delete mp_InputSystem;
+    mp_InputSystem = nullptr;
+
+    delete mp_GraphicsSystem;
+    mp_GraphicsSystem = nullptr;
 }
 
 void Program::Update(FrameTimeInfo& timeInfo)
