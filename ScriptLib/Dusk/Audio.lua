@@ -30,16 +30,48 @@ Dusk.AudioSystem = AudioSystem
 
 -- Dusk.Music
 
+Dusk.NewMusic = function(filename)
+	return Dusk.Music( dusk_music_new(filename) );
+end
+
+Dusk.DeleteMusic = function(music)
+	return Dusk.Music( dusk_music_delete(music.dusk_ptr) );
+end
+
 local Music = Dusk.Class(Dusk.Object, function(self, ptr)
   Dusk.Object.init(self, ptr)
 end)
 
 function Music:Play()
-
+	dusk_music_play( self.dusk_ptr );
 end
 
 function Music:Stop()
+	dusk_music_stop( self.dusk_ptr );
+end
 
+function Music:Pause()
+	dusk_music_pause( self.dusk_ptr );
+end
+
+function Music:SetLooping(isLooping)
+	dusk_music_set_looping( self.dusk_ptr, isLooping );
+end
+
+function Music:IsPlaying()
+	return dusk_music_is_playing( self.dusk_ptr );
+end
+
+function Music:IsPaused()
+	return dusk_music_is_paused( self.dusk_ptr );
+end
+
+function Music:IsStopped()
+	return dusk_music_is_stopped( self.dusk_ptr );
+end
+
+function Music:IsLooping()
+	return dusk_music_is_looping( self.dusk_ptr );
 end
 
 Dusk.Music = Music

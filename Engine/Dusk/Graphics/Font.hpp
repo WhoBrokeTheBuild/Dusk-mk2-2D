@@ -33,7 +33,7 @@ public:
         return "Font";
     }
 
-    bool Init(const string& filename);
+    bool Load(const string& filename);
     void Term();
 
 private:

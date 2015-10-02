@@ -9,7 +9,7 @@
 namespace dusk
 {
 
-bool Texture::Init(const string& filename)
+bool Texture::Load(const string& filename)
 {
     DuskBenchStart();
     DuskExtLog("verbose", "Loading texture %s", filename.c_str());
@@ -38,7 +38,7 @@ int Texture::Script_New(lua_State* L)
     string filename = lua_tostring(L, 1);
 
     Texture* pTexture = New Texture();
-    pTexture->Init(filename);
+    pTexture->Load(filename);
 
     lua_pushinteger(L, (ptrdiff_t)pTexture);
 

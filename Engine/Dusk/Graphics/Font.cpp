@@ -6,7 +6,7 @@
 namespace dusk
 {
 
-bool Font::Init(const string& filename)
+bool Font::Load(const string& filename)
 {
     m_Filename = filename;
     return m_SfFont.loadFromFile(filename);
@@ -26,7 +26,7 @@ int Font::Script_New(lua_State* L)
     string filename = lua_tostring(L, 1);
 
     Font* pFont = New Font();
-    pFont->Init(filename);
+    pFont->Load(filename);
 
     lua_pushinteger(L, (ptrdiff_t)pFont);
 

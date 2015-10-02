@@ -22,7 +22,7 @@ bool TestApp::Init()
     GraphicsSystem* pGS = GetGraphicsSystem();
     pGS->SetWindowSize(640, 480);
     pGS->SetWindowTitle("Test");
-    pGS->SetWindowStyle(WindowStyle::Decorated | WindowStyle::Resizable);
+    pGS->SetWindowStyle(WindowStyle::Decorated);
     pGS->ApplyWindowChanges();
 
     GetScriptHost()->RunFile("Content/Scripts/Setup.lua");
