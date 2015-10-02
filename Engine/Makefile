@@ -25,6 +25,17 @@ INC_PATH = \
 `pkg-config --cflags sfml-all`
 
 SOURCES = \
+Dusk/Events/Callbacks.cpp \
+Dusk/Events/Event.cpp \
+Dusk/Events/IEventDispatcher.cpp \
+Dusk/Logging/Loggers/ConsoleLogger.cpp \
+Dusk/Logging/Loggers/FileLogger.cpp \
+Dusk/Logging/Logging.cpp \
+Dusk/Scripting/ScriptHost.cpp \
+Dusk/Scripting/Scripting.cpp \
+Dusk/Tracking/ITrackedObject.cpp \
+Dusk/Tracking/MemoryTracker.cpp \
+Dusk/Utility/Strings.cpp \
 Dusk/Graphics/GraphicsContext.cpp \
 Dusk/Graphics/GraphicsSystem.cpp \
 Dusk/Graphics/Sprite.cpp \
