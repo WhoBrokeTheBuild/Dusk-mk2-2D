@@ -21,7 +21,7 @@ class Texture :
 public:
 
     inline Texture() :
-        m_SFMLTexture()
+        m_SfTexture()
     { }
 
     virtual inline ~Texture()
@@ -46,10 +46,10 @@ private:
 
     inline const sf::Texture& GetSFMLTexture() const
     {
-        return m_SFMLTexture;
+        return m_SfTexture;
     }
 
-    sf::Texture m_SFMLTexture;
+    sf::Texture m_SfTexture;
 
 }; // class Texture
 

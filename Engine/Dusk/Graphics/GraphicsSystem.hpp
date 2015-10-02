@@ -37,12 +37,7 @@ public:
 
     static EventID EvtWindowResize;
 
-    virtual inline ~GraphicsSystem() { Term(); }
-
-    virtual inline string GetClassName() const
-    {
-        return "Graphics System";
-    }
+    virtual inline string GetClassName() const { return "Graphics System"; }
 
     bool Init();
     void Term();
@@ -74,6 +69,8 @@ private:
 
     GraphicsSystem();
 
+    virtual inline ~GraphicsSystem() { Term(); }
+
     bool CreateSFMLWindow();
 
     unsigned int m_Width;
@@ -81,7 +78,7 @@ private:
     string m_Title;
     int m_Style;
 
-    sf::RenderWindow m_SFMLWindow;
+    sf::RenderWindow m_SfWindow;
 
     GraphicsContext* mp_GraphicsContext;
 

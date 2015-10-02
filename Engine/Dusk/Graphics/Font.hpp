@@ -20,7 +20,7 @@ class Font :
 public:
 
     inline Font() :
-        m_SFMLFont()
+        m_SfFont()
     { }
 
     virtual inline ~Font()
@@ -40,12 +40,12 @@ private:
 
     inline const sf::Font& GetSFMLFont() const
     {
-        return m_SFMLFont;
+        return m_SfFont;
     }
 
     string m_Filename;
 
-    sf::Font m_SFMLFont;
+    sf::Font m_SfFont;
 
 public:
 

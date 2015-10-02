@@ -11,27 +11,27 @@ namespace dusk
 
 void GraphicsContext::Clear()
 {
-    m_SFMLWindow.clear();
+    m_SfWindow.clear();
 }
 
 void GraphicsContext::SwapBuffers()
 {
-    m_SFMLWindow.display();
+    m_SfWindow.display();
 }
 
 void GraphicsContext::Draw(Sprite* sprite)
 {
-    m_SFMLWindow.draw(sprite->GetSFMLSprite());
+    m_SfWindow.draw(sprite->GetSFMLSprite());
 }
 
 void GraphicsContext::Draw(TextBuffer* textBuffer)
 {
-    m_SFMLWindow.draw(textBuffer->GetSFMLText());
+    m_SfWindow.draw(textBuffer->GetSFMLText());
 }
 
 void GraphicsContext::Draw(const sf::Drawable& drawable)
 {
-    m_SFMLWindow.draw(drawable);
+    m_SfWindow.draw(drawable);
 }
 
 void GraphicsContext::Script_RegisterFunctions()

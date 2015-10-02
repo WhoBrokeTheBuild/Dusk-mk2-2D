@@ -25,17 +25,10 @@ INC_PATH = \
 `pkg-config --cflags sfml-all`
 
 SOURCES = \
+Dusk/Audio/AudioSystem.cpp \
 Dusk/Events/Callbacks.cpp \
 Dusk/Events/Event.cpp \
 Dusk/Events/IEventDispatcher.cpp \
-Dusk/Logging/Loggers/ConsoleLogger.cpp \
-Dusk/Logging/Loggers/FileLogger.cpp \
-Dusk/Logging/Logging.cpp \
-Dusk/Scripting/ScriptHost.cpp \
-Dusk/Scripting/Scripting.cpp \
-Dusk/Tracking/ITrackedObject.cpp \
-Dusk/Tracking/MemoryTracker.cpp \
-Dusk/Utility/Strings.cpp \
 Dusk/Graphics/GraphicsContext.cpp \
 Dusk/Graphics/GraphicsSystem.cpp \
 Dusk/Graphics/Sprite.cpp \
@@ -46,8 +39,14 @@ Dusk/Input/InputSystem.cpp \
 Dusk/Input/Keyboard.cpp \
 Dusk/Input/Mouse.cpp \
 Dusk/Input/Mapped.cpp \
-Dusk/UpdateEventData.cpp \
-Dusk/RenderEventData.cpp \
+Dusk/Logging/Loggers/ConsoleLogger.cpp \
+Dusk/Logging/Loggers/FileLogger.cpp \
+Dusk/Logging/Logging.cpp \
+Dusk/Scripting/ScriptHost.cpp \
+Dusk/Scripting/Scripting.cpp \
+Dusk/Tracking/ITrackedObject.cpp \
+Dusk/Tracking/MemoryTracker.cpp \
+Dusk/Utility/Strings.cpp \
 Dusk/Program.cpp
 
 OBJECTS=$(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))

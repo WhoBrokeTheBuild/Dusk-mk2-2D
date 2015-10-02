@@ -29,26 +29,26 @@ void TextBuffer::SetFont(Font* pFont)
     mp_Font = pFont;
     if (mp_Font)
     {
-        m_SFMLText.setFont(mp_Font->GetSFMLFont());
+        m_SfText.setFont(mp_Font->GetSFMLFont());
     }
 }
 
 void TextBuffer::SetText(const string& text)
 {
     m_Text = text;
-    m_SFMLText.setString(m_Text);
+    m_SfText.setString(m_Text);
 }
 
 void TextBuffer::SetSize(const unsigned int& size)
 {
     m_Size = size;
-    m_SFMLText.setCharacterSize(size);
+    m_SfText.setCharacterSize(size);
 }
 
 void TextBuffer::SetColor(const Color& color)
 {
     m_Color = color;
-    m_SFMLText.setColor(color);
+    m_SfText.setColor(color);
 }
 
 void TextBuffer::Script_RegisterFunctions()

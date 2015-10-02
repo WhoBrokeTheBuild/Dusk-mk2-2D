@@ -34,22 +34,7 @@ public:
     static EventID EvtMappedInputPress;
     static EventID EvtMappedInputRelease;
 
-    InputSystem() :
-        m_MouseX(0),
-        m_MouseY(0),
-        m_MappedKeys(),
-        m_MappedMouseButtons()
-    { }
-
-    ~InputSystem()
-    {
-        Term();
-    }
-
-    virtual inline string GetClassName() const
-    {
-        return "Input System";
-    }
+    virtual inline string GetClassName() const { return "Input System"; }
 
     bool Init();
     void Term();
@@ -80,6 +65,10 @@ public:
     static int Script_GetMappedMouseButton(lua_State* L);
 
 private:
+
+    InputSystem();
+
+    virtual inline ~InputSystem() { Term(); }
 
     double m_MouseX;
 

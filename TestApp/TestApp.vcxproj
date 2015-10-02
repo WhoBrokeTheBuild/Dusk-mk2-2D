@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Scripts\Setup.lua" />
+    <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Content\Textures\test.png" />

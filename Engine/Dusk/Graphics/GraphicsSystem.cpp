@@ -21,7 +21,7 @@ GraphicsSystem::GraphicsSystem() :
     m_Width(1024),
     m_Height(768),
     m_Style(WindowStyle::Default),
-    m_SFMLWindow(),
+    m_SfWindow(),
     mp_GraphicsContext(nullptr)
 { }
 
@@ -31,7 +31,7 @@ bool GraphicsSystem::Init()
     DuskBenchStart();
 
     CreateSFMLWindow();
-    mp_GraphicsContext = New GraphicsContext(m_SFMLWindow);
+    mp_GraphicsContext = New GraphicsContext(m_SfWindow);
 
     Program::Inst()->AddEventListener(Program::EvtUpdate, this, &GraphicsSystem::OnUpdate);
 
@@ -52,14 +52,14 @@ void GraphicsSystem::OnUpdate(const Event& event)
     InputSystem* pIS = Program::Inst()->GetInputSystem();
 
     sf::Event sfEvent;
-    while (m_SFMLWindow.pollEvent(sfEvent))
+    while (m_SfWindow.pollEvent(sfEvent))
     {
         Keyboard::Key key = Keyboard::Key::Invalid;
         Mouse::Button button = Mouse::Button::Invalid;
 
         if (sfEvent.type == sf::Event::Closed)
         {
-            m_SFMLWindow.close();
+            m_SfWindow.close();
             Program::Inst()->Exit();
         }
         else if (sfEvent.type == sf::Event::Resized)
@@ -110,7 +110,7 @@ void GraphicsSystem::OnUpdate(const Event& event)
 
 Vector2u GraphicsSystem::GetWindowSize() const
 {
-    return m_SFMLWindow.getSize();
+    return m_SfWindow.getSize();
 }
 
 void GraphicsSystem::SetWindowWidth(const unsigned int& width)
@@ -142,7 +142,7 @@ void GraphicsSystem::ApplyWindowChanges()
 void GraphicsSystem::SetWindowTitle(const string& title)
 {
     m_Title = title;
-    m_SFMLWindow.setTitle(title);
+    m_SfWindow.setTitle(title);
 }
 
 bool GraphicsSystem::IsFullscreen() const
@@ -184,11 +184,11 @@ bool GraphicsSystem::CreateSFMLWindow()
             style |= sf::Style::Titlebar;
     }
 
-    m_SFMLWindow.create(sf::VideoMode(m_Width, m_Height), m_Title, style);
+    m_SfWindow.create(sf::VideoMode(m_Width, m_Height), m_Title, style);
 
-    m_SFMLWindow.setKeyRepeatEnabled(false);
+    m_SfWindow.setKeyRepeatEnabled(false);
 
-    return m_SFMLWindow.isOpen();
+    return m_SfWindow.isOpen();
 }
 
 void GraphicsSystem::Script_RegisterFunctions()

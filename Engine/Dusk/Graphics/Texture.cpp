@@ -14,7 +14,7 @@ bool Texture::Init(const string& filename)
     DuskBenchStart();
     DuskExtLog("verbose", "Loading texture %s", filename.c_str());
 
-    if (!m_SFMLTexture.loadFromFile(filename))
+    if (!m_SfTexture.loadFromFile(filename))
     {
         DuskExtLog("error", "Failed to load texture %s", filename.c_str());
         return false;

@@ -9,7 +9,7 @@ namespace dusk
 bool Font::Init(const string& filename)
 {
     m_Filename = filename;
-    return m_SFMLFont.loadFromFile(filename);
+    return m_SfFont.loadFromFile(filename);
 }
 
 void Font::Term()

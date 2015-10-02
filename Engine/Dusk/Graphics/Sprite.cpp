@@ -11,11 +11,11 @@ namespace dusk
 bool Sprite::Init(Texture* pTexture, IntRect rect /*= IntRect(0, 0, 0, 0)*/)
 {
     mp_Texture = pTexture;
-    m_SFMLSprite.setTexture(pTexture->GetSFMLTexture());
+    m_SfSprite.setTexture(pTexture->GetSFMLTexture());
 
     if (rect != IntRect(0, 0, 0, 0))
     {
-        m_SFMLSprite.setTextureRect(rect);
+        m_SfSprite.setTextureRect(rect);
     }
 
     return true;

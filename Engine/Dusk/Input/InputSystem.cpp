@@ -19,6 +19,13 @@ EventID InputSystem::EvtMouseButtonRelease = 13;
 EventID InputSystem::EvtMappedInputPress = 20;
 EventID InputSystem::EvtMappedInputRelease = 21;
 
+InputSystem::InputSystem() :
+    m_MouseX(0),
+    m_MouseY(0),
+    m_MappedKeys(),
+    m_MappedMouseButtons()
+{ }
+
 bool InputSystem::Init()
 {
     DuskLog("verbose", "Input System initializing");

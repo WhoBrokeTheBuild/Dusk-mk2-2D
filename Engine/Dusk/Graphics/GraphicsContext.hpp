@@ -37,18 +37,18 @@ public:
     static int Script_Draw(lua_State* L);
     static int Script_SwapBuffers(lua_State* L);
 
-    inline sf::RenderWindow& GetSFMLWindow() { return m_SFMLWindow; }
+    inline sf::RenderWindow& GetSFMLWindow() { return m_SfWindow; }
 
 private:
 
     inline GraphicsContext(sf::RenderWindow& pSFMLWindow) :
-        m_SFMLWindow(pSFMLWindow)
+        m_SfWindow(pSFMLWindow)
     { }
 
     virtual inline ~GraphicsContext()
     { }
 
-    sf::RenderWindow& m_SFMLWindow;
+    sf::RenderWindow& m_SfWindow;
 
 }; // GraphicsContext
 

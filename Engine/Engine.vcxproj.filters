@@ -23,6 +23,9 @@
     <ClCompile Include="Dusk\Tracking\ITrackedObject.cpp" />
     <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Dusk\Utility\Strings.cpp" />
+    <ClCompile Include="Dusk\Audio\AudioSystem.cpp" />
+    <ClCompile Include="Dusk\Audio\Music.cpp" />
+    <ClCompile Include="Dusk\Audio\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
@@ -61,5 +64,11 @@
     <ClInclude Include="Dusk\Utility\Platform.hpp" />
     <ClInclude Include="Dusk\Utility\Strings.hpp" />
     <ClInclude Include="Dusk\Utility\Types.hpp" />
+    <ClInclude Include="Dusk\Audio\AudioSystem.hpp" />
+    <ClInclude Include="Dusk\Audio\Music.hpp" />
+    <ClInclude Include="Dusk\Audio\Sound.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
   </ItemGroup>
 </Project>

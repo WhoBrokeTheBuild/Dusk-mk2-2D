@@ -218,6 +218,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dusk\Audio\AudioSystem.cpp" />
+    <ClCompile Include="Dusk\Audio\Music.cpp" />
+    <ClCompile Include="Dusk\Audio\Sound.cpp" />
     <ClCompile Include="Dusk\Events\Callbacks.cpp" />
     <ClCompile Include="Dusk\Events\Event.cpp" />
     <ClCompile Include="Dusk\Events\IEventDispatcher.cpp" />
@@ -242,6 +245,9 @@
     <ClCompile Include="Dusk\Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dusk\Audio\AudioSystem.hpp" />
+    <ClInclude Include="Dusk\Audio\Music.hpp" />
+    <ClInclude Include="Dusk\Audio\Sound.hpp" />
     <ClInclude Include="Dusk\Collections\ArrayList.hpp" />
     <ClInclude Include="Dusk\Collections\Map.hpp" />
     <ClInclude Include="Dusk\Events\Callbacks.hpp" />
@@ -278,6 +284,9 @@
     <ClInclude Include="Dusk\Utility\Platform.hpp" />
     <ClInclude Include="Dusk\Utility\Strings.hpp" />
     <ClInclude Include="Dusk\Utility\Types.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

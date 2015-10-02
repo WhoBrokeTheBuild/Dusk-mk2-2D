@@ -3,27 +3,24 @@
 
 #include <Dusk/Tracking/ITrackedObject.hpp>
 #include <Dusk/Events/IEventDispatcher.hpp>
-#include <Dusk/Utility/Singleton.hpp>
 
 namespace dusk
 {
+
+class Program;
 
 class AudioSystem :
     public ITrackedObject,
     public IEventDispatcher
 {
 
-    DUSK_SINGLETON(AudioSystem)
+    friend class Program;
 
 public:
 
-    virtual inline string GetClassName() const
-    {
-        return "Audio System";
-    }
+    virtual inline string GetClassName() const { return "Audio System"; }
 
     bool Init();
-
     void Term();
 
 private:

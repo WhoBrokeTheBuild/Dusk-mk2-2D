@@ -26,7 +26,7 @@ public:
     inline Sprite() :
         mp_Texture(nullptr),
         m_Rect(),
-        m_SFMLSprite()
+        m_SfSprite()
     { }
 
     virtual inline ~Sprite()
@@ -45,26 +45,26 @@ public:
 
     inline Vector2f GetPos() const
     {
-        return m_SFMLSprite.getPosition();
+        return m_SfSprite.getPosition();
     }
 
     inline void SetPos(const float& x, const float& y)
     {
-        m_SFMLSprite.setPosition(sf::Vector2f(x, y));
+        m_SfSprite.setPosition(sf::Vector2f(x, y));
     }
 
 private:
 
     inline const sf::Sprite& GetSFMLSprite() const
     {
-        return m_SFMLSprite;
+        return m_SfSprite;
     }
 
     Texture* mp_Texture;
 
     IntRect m_Rect;
 
-    sf::Sprite m_SFMLSprite;
+    sf::Sprite m_SfSprite;
 
 public:
 

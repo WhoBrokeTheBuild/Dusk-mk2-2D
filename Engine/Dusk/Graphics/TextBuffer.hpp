@@ -25,7 +25,7 @@ public:
         m_Text(),
         m_Size(),
         m_Color(),
-        m_SFMLText()
+        m_SfText()
     { }
 
     virtual inline ~TextBuffer()
@@ -65,7 +65,7 @@ private:
 
     inline const sf::Text& GetSFMLText() const
     {
-        return m_SFMLText;
+        return m_SfText;
     }
 
     Font* mp_Font;
@@ -76,7 +76,7 @@ private:
 
     Color m_Color;
 
-    sf::Text m_SFMLText;
+    sf::Text m_SfText;
 
 public:
 
