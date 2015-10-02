@@ -14,6 +14,8 @@
 namespace dusk
 {
 
+dusk::EventID GraphicsSystem::EvtWindowResize = 1;
+
 GraphicsSystem::GraphicsSystem() :
     m_Title(),
     m_Width(1024),
@@ -59,6 +61,13 @@ void GraphicsSystem::OnUpdate(const Event& event)
         {
             m_SFMLWindow.close();
             Program::Inst()->Exit();
+        }
+        else if (sfEvent.type == sf::Event::Resized)
+        {
+            m_Width = sfEvent.size.width;
+            m_Height = sfEvent.size.height;
+
+            Dispatch(Event(EvtWindowResize, WindowResizeEventData(m_Width, m_Height)));
         }
         else if (sfEvent.type == sf::Event::KeyPressed)
         {
@@ -230,6 +239,13 @@ int GraphicsSystem::Script_SetWindowTitle(lua_State* L)
     string title = lua_tostring(L, 1);
     pGS->SetWindowTitle(title);
     return 0;
+}
+
+int WindowResizeEventData::PushDataToLua(lua_State* L) const
+{
+    lua_pushinteger(L, m_Width);
+    lua_pushinteger(L, m_Height);
+    return 2;
 }
 
 } // namespace dusk

@@ -2,6 +2,7 @@
 #define DUSK_GRAPHICS_GRAPHICS_SYSTEM_HPP
 
 #include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Events/IEventDispatcher.hpp>
 #include <Dusk/Utility/Types.hpp>
 #include <Dusk/Events/Event.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
@@ -26,12 +27,15 @@ enum WindowStyle
 };
 
 class GraphicsSystem :
-    public ITrackedObject
+    public ITrackedObject,
+    public IEventDispatcher
 {
 
     friend class Program;
 
 public:
+
+    static EventID EvtWindowResize;
 
     virtual inline ~GraphicsSystem() { Term(); }
 
@@ -91,6 +95,38 @@ public:
     static int Script_SetWindowTitle(lua_State* L);
 
 }; // class GraphicsSystem
+
+class WindowResizeEventData :
+    public EventData
+{
+public:
+
+    WindowResizeEventData(const unsigned int& width, const unsigned int& height) :
+        m_Width(width),
+        m_Height(height)
+    { }
+
+    virtual inline string GetClassName() const
+    {
+        return "Window Resize Event Data";
+    }
+
+    virtual inline EventData* Clone() const
+    {
+        return New WindowResizeEventData(m_Width, m_Height);
+    }
+
+    inline unsigned int GetWidth() const { return m_Width; }
+    inline unsigned int GetHeight() const { return m_Height; }
+
+    virtual int PushDataToLua(lua_State* L) const;
+
+private:
+
+    unsigned int m_Width;
+    unsigned int m_Height;
+
+}; // class UpdateEventData
 
 } // namespace dusk
 

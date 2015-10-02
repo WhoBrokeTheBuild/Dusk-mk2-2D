@@ -2,6 +2,7 @@
 #define DUSK_INPUT_MOUSE_BUTTON_HPP
 
 #include <Dusk/Events/Event.hpp>
+#include <Dusk/Geometry/Vector2.hpp>
 
 #include <SFML/Window/Mouse.hpp>
 
@@ -37,8 +38,10 @@ public:
         m_MouseButton(Mouse::Button::Invalid)
     { }
 
-    MouseButtonEventData(const Mouse::Button& button) :
-        m_MouseButton(button)
+    MouseButtonEventData(const Mouse::Button& button, const double& x, const double& y) :
+        m_MouseButton(button),
+        m_MouseX(x),
+        m_MouseY(y)
     { }
 
     virtual inline string GetClassName() const
@@ -48,19 +51,23 @@ public:
 
     virtual inline EventData* Clone() const
     {
-        return New MouseButtonEventData(m_MouseButton);
+        return New MouseButtonEventData(m_MouseButton, m_MouseX, m_MouseY);
     }
 
-    inline Mouse::Button GetMouseButton() const
-    {
-        return m_MouseButton;
-    }
+    inline Mouse::Button GetMouseButton() const { return m_MouseButton; }
+
+    inline double GetMouseX() const { return m_MouseX; }
+    inline double GetMouseY() const { return m_MouseY; }
+    inline Vector2f GetMousePos() const { return Vector2f((float)m_MouseX, (float)m_MouseY); }
 
     virtual int PushDataToLua(lua_State* L) const;
 
 private:
 
-    Mouse::Button        m_MouseButton;
+    Mouse::Button m_MouseButton;
+
+    double m_MouseX;
+    double m_MouseY;
 
 }; // class MouseButtonEventData
 

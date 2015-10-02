@@ -28,6 +28,7 @@ public:
     void Clear();
     void SwapBuffers();
 
+    void Draw(const sf::Drawable& drawable);
     void Draw(Sprite* sprite);
     void Draw(TextBuffer* textBuffer);
 
@@ -35,6 +36,8 @@ public:
     static int Script_Clear(lua_State* L);
     static int Script_Draw(lua_State* L);
     static int Script_SwapBuffers(lua_State* L);
+
+    inline sf::RenderWindow& GetSFMLWindow() { return m_SFMLWindow; }
 
 private:
 

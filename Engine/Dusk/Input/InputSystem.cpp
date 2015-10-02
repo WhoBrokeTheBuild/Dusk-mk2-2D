@@ -119,7 +119,7 @@ void InputSystem::TriggerMouseButtonPress(const Mouse::Button& mouseButton)
         Dispatch(Event(EvtMappedInputPress, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
     }
 
-    Dispatch(Event(EvtMouseButtonPress, MouseButtonEventData(mouseButton)));
+    Dispatch(Event(EvtMouseButtonPress, MouseButtonEventData(mouseButton, m_MouseX, m_MouseY)));
 }
 
 void InputSystem::TriggerMouseButtonRelease(const Mouse::Button& mouseButton)
@@ -129,7 +129,7 @@ void InputSystem::TriggerMouseButtonRelease(const Mouse::Button& mouseButton)
         Dispatch(Event(EvtMappedInputRelease, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
     }
 
-    Dispatch(Event(EvtMouseButtonRelease, MouseButtonEventData(mouseButton)));
+    Dispatch(Event(EvtMouseButtonRelease, MouseButtonEventData(mouseButton, m_MouseX, m_MouseY)));
 }
 
 void InputSystem::TriggerMappedInputPress(const MappedInputID& input)

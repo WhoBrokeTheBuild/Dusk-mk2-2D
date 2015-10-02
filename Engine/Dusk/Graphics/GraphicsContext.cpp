@@ -29,6 +29,11 @@ void GraphicsContext::Draw(TextBuffer* textBuffer)
     m_SFMLWindow.draw(textBuffer->GetSFMLText());
 }
 
+void GraphicsContext::Draw(const sf::Drawable& drawable)
+{
+    m_SFMLWindow.draw(drawable);
+}
+
 void GraphicsContext::Script_RegisterFunctions()
 {
     Scripting::RegisterFunction("dusk_graphics_context_clear", &GraphicsContext::Script_Clear);
