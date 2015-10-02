@@ -72,7 +72,7 @@ function OnExit()
     Dusk.DeleteTexture(tex)
 
     is:RemoveEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")
-    is:RemoveEventListener(is.EvtMappedInputRelease, "OnMappedInputRelease")
+    is:RemoveEventListener(is.EvtMappedInputRelease, "OnMappedInputReleased")
 
     prog:RemoveEventListener(prog.EvtUpdate, "OnUpdate")
     prog:RemoveEventListener(prog.EvtRender, "OnRender")
