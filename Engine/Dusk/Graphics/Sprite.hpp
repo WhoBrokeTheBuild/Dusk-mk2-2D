@@ -53,12 +53,12 @@ public:
         m_SfSprite.setPosition(sf::Vector2f(x, y));
     }
 
-private:
-
     inline const sf::Sprite& GetSFMLSprite() const
     {
         return m_SfSprite;
     }
+
+private:
 
     Texture* mp_Texture;
 
