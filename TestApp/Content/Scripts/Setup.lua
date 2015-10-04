@@ -70,12 +70,5 @@ prog:AddEventListener(prog.EvtRender, "OnRender")
 function OnExit()
     Dusk.DeleteSprite(spr)
     Dusk.DeleteTexture(tex)
-
-    is:RemoveEventListener(is.EvtMappedInputPress, "OnMappedInputPressed")
-    is:RemoveEventListener(is.EvtMappedInputRelease, "OnMappedInputReleased")
-
-    prog:RemoveEventListener(prog.EvtUpdate, "OnUpdate")
-    prog:RemoveEventListener(prog.EvtRender, "OnRender")
-    prog:RemoveEventListener(prog.EvtExit, "OnExit")
 end
 prog:AddEventListener(prog.EvtExit, "OnExit")

@@ -41,7 +41,7 @@ bool GraphicsSystem::Init()
 
 void GraphicsSystem::Term()
 {
-    Program::Inst()->RemoveEventListener(Program::EvtUpdate, this, &GraphicsSystem::OnUpdate);
+    RemoveAllListeners();
 
     delete mp_GraphicsContext;
     mp_GraphicsContext = nullptr;

@@ -2,7 +2,8 @@
 #define DUSK_GRAPHICS_TEXT_BUFFER_HPP
 
 #include <Dusk/Tracking/ITrackedObject.hpp>
-#include <Dusk/Graphics/Color.h>
+#include <Dusk/Graphics/Color.hpp>
+#include <Dusk/Geometry/Vector2.hpp>
 
 #include <lua.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -23,56 +24,43 @@ public:
     inline TextBuffer() :
         mp_Font(nullptr),
         m_Text(),
-        m_Size(),
+        m_FontSize(),
         m_Color(),
         m_SfText()
     { }
 
-    virtual inline ~TextBuffer()
-    {
-        Term();
-    }
+    virtual inline ~TextBuffer() { Term(); }
 
-    virtual inline string GetClassName() const
-    {
-        return "Text Buffer";
-    }
+    virtual inline string GetClassName() const { return "Text Buffer"; }
 
-    bool Init(Font* pFont, const string& text, const unsigned int& size, const Color& color);
+    bool Init(Font* pFont, const string& text, const unsigned int& fontSize, const Color& color);
     void Term();
 
     void SetFont(Font* pFont);
 
-    inline string GetText() const
-    {
-        return m_Text;
-    }
+    inline string GetText() const { return m_Text; }
     void SetText(const string& text);
 
-    inline unsigned int GetSize() const
-    {
-        return m_Size;
-    }
-    void SetSize(const unsigned int& size);
+    inline unsigned int GetFontSize() const { return m_FontSize; }
+    void SetFontSize(const unsigned int& fontSize);
 
-    inline Color GetColor() const
-    {
-        return m_Color;
-    }
+    inline Color GetColor() const { return m_Color; }
     void SetColor(const Color& color);
 
-private:
+    void SetPos(const Vector2f& pos);
 
-    inline const sf::Text& GetSFMLText() const
-    {
-        return m_SfText;
-    }
+    Vector2f GetPos() const;
+    Vector2f GetSize() const;
+
+    inline const sf::Text& GetSFMLText() const { return m_SfText; }
+
+private:
 
     Font* mp_Font;
 
     string m_Text;
 
-    unsigned int m_Size;
+    unsigned int m_FontSize;
 
     Color m_Color;
 

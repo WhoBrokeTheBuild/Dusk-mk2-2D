@@ -26,6 +26,10 @@
     <ClCompile Include="Dusk\Audio\AudioSystem.cpp" />
     <ClCompile Include="Dusk\Audio\Music.cpp" />
     <ClCompile Include="Dusk\Audio\Sound.cpp" />
+    <ClCompile Include="Dusk\UI\IUIElement.cpp" />
+    <ClCompile Include="Dusk\UI\TextButton.cpp" />
+    <ClCompile Include="Dusk\UI\Label.cpp" />
+    <ClCompile Include="Dusk\UI\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
@@ -38,7 +42,6 @@
     <ClInclude Include="Dusk\Program.hpp" />
     <ClInclude Include="Dusk\Graphics\TextBuffer.hpp" />
     <ClInclude Include="Dusk\Graphics\Font.hpp" />
-    <ClInclude Include="Dusk\Graphics\Color.h" />
     <ClInclude Include="Dusk\Input\Keyboard.hpp" />
     <ClInclude Include="Dusk\Input\Mapped.hpp" />
     <ClInclude Include="Dusk\Input\Mouse.hpp" />
@@ -67,6 +70,11 @@
     <ClInclude Include="Dusk\Audio\AudioSystem.hpp" />
     <ClInclude Include="Dusk\Audio\Music.hpp" />
     <ClInclude Include="Dusk\Audio\Sound.hpp" />
+    <ClInclude Include="Dusk\UI\IUIElement.hpp" />
+    <ClInclude Include="Dusk\UI\TextButton.hpp" />
+    <ClInclude Include="Dusk\Graphics\Color.hpp" />
+    <ClInclude Include="Dusk\UI\Label.hpp" />
+    <ClInclude Include="Dusk\UI\TextBox.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

@@ -139,6 +139,8 @@ bool Program::Init()
 
 void Program::Term()
 {
+    RemoveAllListeners();
+
     delete mp_ScriptHost;
     mp_ScriptHost = nullptr;
 

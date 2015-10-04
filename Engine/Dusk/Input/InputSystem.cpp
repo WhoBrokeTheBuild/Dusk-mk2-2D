@@ -38,7 +38,7 @@ bool InputSystem::Init()
 
 void InputSystem::Term()
 {
-
+    RemoveAllListeners();
 }
 
 void InputSystem::MapKey(const MappedInputID & id, const Keyboard::Key & key)

@@ -242,6 +242,10 @@
     <ClCompile Include="Dusk\Scripting\Scripting.cpp" />
     <ClCompile Include="Dusk\Tracking\ITrackedObject.cpp" />
     <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
+    <ClCompile Include="Dusk\UI\Label.cpp" />
+    <ClCompile Include="Dusk\UI\TextBox.cpp" />
+    <ClCompile Include="Dusk\UI\TextButton.cpp" />
+    <ClCompile Include="Dusk\UI\IUIElement.cpp" />
     <ClCompile Include="Dusk\Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -255,7 +259,7 @@
     <ClInclude Include="Dusk\Events\Event.hpp" />
     <ClInclude Include="Dusk\Events\IEventDispatcher.hpp" />
     <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
-    <ClInclude Include="Dusk\Graphics\Color.h" />
+    <ClInclude Include="Dusk\Graphics\Color.hpp" />
     <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
     <ClInclude Include="Dusk\Graphics\GraphicsSystem.hpp" />
     <ClInclude Include="Dusk\Input\InputSystem.hpp" />
@@ -279,6 +283,10 @@
     <ClInclude Include="Dusk\Timing\FrameTimeInfo.hpp" />
     <ClInclude Include="Dusk\Tracking\ITrackedObject.hpp" />
     <ClInclude Include="Dusk\Tracking\MemoryTracker.hpp" />
+    <ClInclude Include="Dusk\UI\Label.hpp" />
+    <ClInclude Include="Dusk\UI\TextBox.hpp" />
+    <ClInclude Include="Dusk\UI\TextButton.hpp" />
+    <ClInclude Include="Dusk\UI\IUIElement.hpp" />
     <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
     <ClInclude Include="Dusk\Utility\Console.hpp" />
     <ClInclude Include="Dusk\Utility\Platform.hpp" />

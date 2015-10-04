@@ -73,7 +73,11 @@ void IEventDispatcher::RemoveAllListeners()
 {
     for (auto mapIt : m_EventMap)
     {
-        // TODO: Replace
+        for (auto listener : mapIt.second)
+        {
+            delete listener;
+        }
+        mapIt.second.clear();
     }
 
     m_EventMap.clear();

@@ -15,7 +15,7 @@ bool TextBuffer::Init(Font* pFont, const string& text, const unsigned int& size,
 
     SetFont(pFont);
     SetText(text);
-    SetSize(size);
+    SetFontSize(size);
     SetColor(color);
 
     return true;
@@ -39,9 +39,9 @@ void TextBuffer::SetText(const string& text)
     m_SfText.setString(m_Text);
 }
 
-void TextBuffer::SetSize(const unsigned int& size)
+void TextBuffer::SetFontSize(const unsigned int& size)
 {
-    m_Size = size;
+    m_FontSize = size;
     m_SfText.setCharacterSize(size);
 }
 
@@ -49,6 +49,21 @@ void TextBuffer::SetColor(const Color& color)
 {
     m_Color = color;
     m_SfText.setColor(color);
+}
+
+void TextBuffer::SetPos(const Vector2f& pos)
+{
+    m_SfText.setPosition(pos);
+}
+
+Vector2f TextBuffer::GetPos() const
+{
+    return m_SfText.getPosition();
+}
+
+Vector2f TextBuffer::GetSize() const
+{
+    return Vector2f(m_SfText.getLocalBounds().width, m_SfText.getLocalBounds().height);
 }
 
 void TextBuffer::Script_RegisterFunctions()
