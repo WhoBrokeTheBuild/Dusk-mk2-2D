@@ -2,7 +2,7 @@
 #define DUSK_SCRIPTING_SCRIPT_HOST_HPP
 
 #include <Dusk/Utility/Types.hpp>
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 #include <lua.hpp>
 
@@ -10,7 +10,7 @@ namespace dusk
 {
 
 class ScriptHost :
-    public ITrackedObject
+    public TrackedObject
 {
 public:
 

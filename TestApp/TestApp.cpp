@@ -27,6 +27,9 @@ bool TestApp::Init()
 
     GetScriptHost()->RunFile("Content/Scripts/Setup.lua");
 
+    m_UIManager.Init();
+    m_UIManager.LoadFile("Content/Interface/EditorFrame.xml");
+
     DuskLog("info", "Starting Up");
     return true;
 }
@@ -34,6 +37,7 @@ bool TestApp::Init()
 void TestApp::Term()
 {
     DuskLog("info", "Shutting Down");
+    m_UIManager.Term();
 
     Program::Term();
 }

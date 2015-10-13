@@ -1,7 +1,7 @@
 #ifndef DUSK_GRAPHICS_SPRITE_HPP
 #define DUSK_GRAPHICS_SPRITE_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Geometry/Rect.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
 
@@ -16,7 +16,7 @@ class Texture;
 class GraphicsContext;
 
 class Sprite :
-    public ITrackedObject
+    public TrackedObject
 {
 
     friend class GraphicsContext;

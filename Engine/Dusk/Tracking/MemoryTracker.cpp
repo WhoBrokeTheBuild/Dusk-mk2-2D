@@ -1,11 +1,11 @@
 #include "MemoryTracker.hpp"
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 namespace dusk
 {
 
-Map<ITrackedObject*, MemoryTracker::AllocationRecord> MemoryTracker::s_Allocations = Map<ITrackedObject*, MemoryTracker::AllocationRecord>();
+Map<TrackedObject*, MemoryTracker::AllocationRecord> MemoryTracker::s_Allocations = Map<TrackedObject*, MemoryTracker::AllocationRecord>();
 
 unsigned int MemoryTracker::s_AllocationIndex = 0;
 
@@ -22,7 +22,7 @@ void MemoryTracker::Term()
     s_Allocations.clear();
 }
 
-bool MemoryTracker::AddAllocation(ITrackedObject* pObject, size_t size, unsigned int lineNumber, string filename)
+bool MemoryTracker::AddAllocation(TrackedObject* pObject, size_t size, unsigned int lineNumber, string filename)
 {
     if (s_Allocations.contains_key(pObject))
         return false;
@@ -34,7 +34,7 @@ bool MemoryTracker::AddAllocation(ITrackedObject* pObject, size_t size, unsigned
 }
 
 bool MemoryTracker::
-RemoveAllocation(ITrackedObject* pObject)
+RemoveAllocation(TrackedObject* pObject)
 {
     if (!s_Allocations.contains_key(pObject))
         return false;

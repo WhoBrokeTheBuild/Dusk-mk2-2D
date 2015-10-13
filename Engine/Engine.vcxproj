@@ -94,7 +94,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;..\Libraries\RapidXML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -124,7 +124,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;..\Libraries\RapidXML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -156,7 +156,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;..\Libraries\RapidXML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -190,7 +190,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Libraries\lua\include\;..\Libraries\SFML\include\;..\Libraries\RapidXML\include\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -223,7 +223,7 @@
     <ClCompile Include="Dusk\Audio\Sound.cpp" />
     <ClCompile Include="Dusk\Events\Callbacks.cpp" />
     <ClCompile Include="Dusk\Events\Event.cpp" />
-    <ClCompile Include="Dusk\Events\IEventDispatcher.cpp" />
+    <ClCompile Include="Dusk\Events\EventDispatcher.cpp" />
     <ClCompile Include="Dusk\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Dusk\Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Dusk\Input\InputSystem.cpp" />
@@ -240,12 +240,15 @@
     <ClCompile Include="Dusk\Graphics\TextBuffer.cpp" />
     <ClCompile Include="Dusk\Scripting\ScriptHost.cpp" />
     <ClCompile Include="Dusk\Scripting\Scripting.cpp" />
-    <ClCompile Include="Dusk\Tracking\ITrackedObject.cpp" />
+    <ClCompile Include="Dusk\Tracking\TrackedObject.cpp" />
     <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
-    <ClCompile Include="Dusk\UI\Label.cpp" />
-    <ClCompile Include="Dusk\UI\TextBox.cpp" />
-    <ClCompile Include="Dusk\UI\TextButton.cpp" />
-    <ClCompile Include="Dusk\UI\IUIElement.cpp" />
+    <ClCompile Include="Dusk\UI\UIButton.cpp" />
+    <ClCompile Include="Dusk\UI\UIFont.cpp" />
+    <ClCompile Include="Dusk\UI\UIElement.cpp" />
+    <ClCompile Include="Dusk\UI\UIFrame.cpp" />
+    <ClCompile Include="Dusk\UI\UIInput.cpp" />
+    <ClCompile Include="Dusk\UI\UILabel.cpp" />
+    <ClCompile Include="Dusk\UI\UIManager.cpp" />
     <ClCompile Include="Dusk\Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -257,7 +260,7 @@
     <ClInclude Include="Dusk\Events\Callbacks.hpp" />
     <ClInclude Include="Dusk\Events\Delegate.hpp" />
     <ClInclude Include="Dusk\Events\Event.hpp" />
-    <ClInclude Include="Dusk\Events\IEventDispatcher.hpp" />
+    <ClInclude Include="Dusk\Events\EventDispatcher.hpp" />
     <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
     <ClInclude Include="Dusk\Graphics\Color.hpp" />
     <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
@@ -281,12 +284,15 @@
     <ClInclude Include="Dusk\Scripting\ScriptHost.hpp" />
     <ClInclude Include="Dusk\Scripting\Scripting.hpp" />
     <ClInclude Include="Dusk\Timing\FrameTimeInfo.hpp" />
-    <ClInclude Include="Dusk\Tracking\ITrackedObject.hpp" />
+    <ClInclude Include="Dusk\Tracking\TrackedObject.hpp" />
     <ClInclude Include="Dusk\Tracking\MemoryTracker.hpp" />
-    <ClInclude Include="Dusk\UI\Label.hpp" />
-    <ClInclude Include="Dusk\UI\TextBox.hpp" />
-    <ClInclude Include="Dusk\UI\TextButton.hpp" />
-    <ClInclude Include="Dusk\UI\IUIElement.hpp" />
+    <ClInclude Include="Dusk\UI\UIButton.hpp" />
+    <ClInclude Include="Dusk\UI\UIFont.hpp" />
+    <ClInclude Include="Dusk\UI\UIElement.hpp" />
+    <ClInclude Include="Dusk\UI\UIFrame.hpp" />
+    <ClInclude Include="Dusk\UI\UIInput.hpp" />
+    <ClInclude Include="Dusk\UI\UILabel.hpp" />
+    <ClInclude Include="Dusk\UI\UIManager.hpp" />
     <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
     <ClInclude Include="Dusk\Utility\Console.hpp" />
     <ClInclude Include="Dusk\Utility\Platform.hpp" />

@@ -1,26 +1,26 @@
-#include "IEventDispatcher.hpp"
+#include "EventDispatcher.hpp"
 
 #include <Dusk/Scripting/Scripting.hpp>
 
 namespace dusk
 {
 
-ArrayList<IEventDispatcher*> IEventDispatcher::s_Dispatchers = ArrayList<IEventDispatcher*>();
+ArrayList<EventDispatcher*> EventDispatcher::s_Dispatchers = ArrayList<EventDispatcher*>();
 
-dusk::IEventDispatcher::IEventDispatcher() :
+dusk::EventDispatcher::EventDispatcher() :
     m_EventMap(),
     m_Changed(false)
 {
     s_Dispatchers.add(this);
 }
 
-IEventDispatcher::~IEventDispatcher()
+EventDispatcher::~EventDispatcher()
 {
     s_Dispatchers.erase_all(this);
     RemoveAllListeners();
 }
 
-void IEventDispatcher::AddEventListener(const EventID& eventId, const EventDelegate& functionDelegate)
+void EventDispatcher::AddEventListener(const EventID& eventId, const EventDelegate& functionDelegate)
 {
     if (!m_EventMap.contains_key(eventId))
         m_EventMap.add(eventId, ArrayList<EventDelegate*>());
@@ -38,7 +38,7 @@ void IEventDispatcher::AddEventListener(const EventID& eventId, const EventDeleg
     m_EventMap[eventId].add(New EventDelegate(functionDelegate));
 }
 
-void IEventDispatcher::RemoveEventListener(const EventID& eventId, const EventDelegate& functionDelegate)
+void EventDispatcher::RemoveEventListener(const EventID& eventId, const EventDelegate& functionDelegate)
 {
     if (!m_EventMap.contains_key(eventId))
         return;
@@ -59,17 +59,17 @@ void IEventDispatcher::RemoveEventListener(const EventID& eventId, const EventDe
     }
 }
 
-void IEventDispatcher::RemoveEventListener(const EventID& eventId, void(*function)(const Event&))
+void EventDispatcher::RemoveEventListener(const EventID& eventId, void(*function)(const Event&))
 {
     RemoveEventListener(eventId, EventDelegate(function));
 }
 
-void IEventDispatcher::AddEventListener(const EventID& eventId, void(*function)(const Event&))
+void EventDispatcher::AddEventListener(const EventID& eventId, void(*function)(const Event&))
 {
     AddEventListener(eventId, EventDelegate(function));
 }
 
-void IEventDispatcher::RemoveAllListeners()
+void EventDispatcher::RemoveAllListeners()
 {
     for (auto mapIt : m_EventMap)
     {
@@ -83,7 +83,7 @@ void IEventDispatcher::RemoveAllListeners()
     m_EventMap.clear();
 }
 
-void IEventDispatcher::RemoveAllListeners(const EventID& eventId)
+void EventDispatcher::RemoveAllListeners(const EventID& eventId)
 {
     if (!m_EventMap.contains_key(eventId))
         return;
@@ -102,7 +102,7 @@ void IEventDispatcher::RemoveAllListeners(const EventID& eventId)
     m_Changed = true;
 }
 
-void IEventDispatcher::Dispatch(const Event& event)
+void EventDispatcher::Dispatch(const Event& event)
 {
     EventID id = event.GetID();
 
@@ -121,7 +121,7 @@ void IEventDispatcher::Dispatch(const Event& event)
     }
 }
 
-void IEventDispatcher::CleanMap()
+void EventDispatcher::CleanMap()
 {
     if (!m_Changed)
         return;
@@ -150,15 +150,15 @@ void IEventDispatcher::CleanMap()
     m_Changed = false;
 }
 
-void IEventDispatcher::Script_RegisterFunctions()
+void EventDispatcher::Script_RegisterFunctions()
 {
-    Scripting::RegisterFunction("dusk_ievent_dispatcher_add_event_listener", &IEventDispatcher::Script_AddEventListener);
-    Scripting::RegisterFunction("dusk_ievent_dispatcher_remove_event_listener", &IEventDispatcher::Script_RemoveEventListener);
+    Scripting::RegisterFunction("dusk_ievent_dispatcher_add_event_listener", &EventDispatcher::Script_AddEventListener);
+    Scripting::RegisterFunction("dusk_ievent_dispatcher_remove_event_listener", &EventDispatcher::Script_RemoveEventListener);
 }
 
-int IEventDispatcher::Script_AddEventListener(lua_State* L)
+int EventDispatcher::Script_AddEventListener(lua_State* L)
 {
-    IEventDispatcher* pEventDispatcher = (IEventDispatcher*)lua_tointeger(L, 1);
+    EventDispatcher* pEventDispatcher = (EventDispatcher*)lua_tointeger(L, 1);
 
     EventID eventId = (EventID)lua_tointeger(L, 2);
     string callback = lua_tostring(L, 3);
@@ -183,9 +183,9 @@ int IEventDispatcher::Script_AddEventListener(lua_State* L)
     return 0;
 }
 
-int IEventDispatcher::Script_RemoveEventListener(lua_State* L)
+int EventDispatcher::Script_RemoveEventListener(lua_State* L)
 {
-    IEventDispatcher* pEventDispatcher = (IEventDispatcher*)lua_tointeger(L, 1);
+    EventDispatcher* pEventDispatcher = (EventDispatcher*)lua_tointeger(L, 1);
 
     EventID eventId = (EventID)lua_tointeger(L, 2);
     string callback = lua_tostring(L, 3);

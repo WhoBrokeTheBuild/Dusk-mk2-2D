@@ -1,0 +1,95 @@
+<DuskUI>
+    <Script file="ToolboxFrame.lua" />
+
+    <!-- Templates -->
+    <Label name="ToolboxFrame_HeadingTemplate"
+        inherits="DefaultElementTemplate"
+        virtual="true">
+        <Size x="$min" y="$min" />
+        <UseFont name="HeadingFont" />
+    </Label>
+
+    <Label name="ToolboxFrame_LabelTemplate"
+        inherits="DefaultElementTemplate"
+        virtual="true">
+        <Size x="$min" y="$min" />
+    </Label>
+
+    <Input name="ToolboxFrame_InputTemplate"
+        inherits="DefaultElementTemplate"
+        virtual="true"
+        maxLength="5">
+        <Size x="$min" y="$min" />
+        <Border size="1">
+            <Color r="0" g="0" b="0" />
+        </Border>
+        <Border size="1" state="disabled">
+            <Color r="128" g="128" b="128" />
+        </Border>
+    </Input>
+
+    <Label name="ToolboxFrame_ButtonTemplate"
+        inherits="DefaultElementTemplate"
+        virtual="true">
+        <Size x="$min" y="$min" />
+        <Border size="1">
+            <Color r="0" g="0" b="0" />
+        </Border>
+        <Border size="1" state="disabled">
+            <Color r="128" g="128" b="128" />
+        </Border>
+    </Label>
+
+    <Frame name="ToolboxFrame">
+        <Size x="250" y="$max" />
+        <Position x="0" y="0" relTo="$parent" relPoint="TopLeft" />
+        <Children>
+
+            <Label name="$parent_MapSizeLabel"
+                inherits="ToolboxFrame_HeadingTemplate"
+                text="Map Size">
+                <Position x="10" y="10" relTo="$parent" relPoint="TopLeft" />
+            </Label>
+
+            <Label name="$parent_WidthLabel"
+                inherits="ToolboxFrame_LabelTemplate"
+                text="Width:"
+                target="$parent_WidthInput">
+                <Position x="0" y="10" relTo="$parent_MapSizeLabel" relPoint="BottomLeft" />
+            </Label>
+            <Label name="$parent_HeightLabel"
+                inherits="ToolboxFrame_LabelTemplate"
+                text="Height:"
+                target="$parent_HeightInput">
+                <Position x="0" y="10" relTo="$parent_WidthLabel" relPoint="BottomLeft" />
+            </Label>
+
+            <Input name="$parent_WidthInput"
+                inherits="ToolboxFrame_InputTemplate"
+                type="int">
+                <Position x="40" y="0" relTo="$parent_WidthLabel" relPoint="TopRight" />
+            </Input>
+            <Input name="$parent_HeightLabel"
+                inherits="ToolboxFrame_InputTemplate"
+                type="int">
+                <Position x="0" y="10" relTo="$parent_HeightInput" relPoint="BottomLeft" />
+            </Input>
+
+            <Button name="$parent_UpdateSizeButton"
+                inherits="ToolboxFrame_ButtonTemplate"
+                text="Update Size"
+                target="$parent_WidthInput">
+                <Position x="10" y="10" relTo="$parent" relPoint="TopLeft" />
+                <Bindings>
+                    <OnClick func="ToolboxFrame_UpdateSizeButton_OnClick" />
+                </Bindings>
+            </Button>
+
+        </Children>
+        <Bindings>
+            <OnShow func="ToolboxFrame_OnShow" />
+            <OnHide func="ToolboxFrame_OnHide" />
+            <OnUpdate func="ToolboxFrame_OnUpdate" />
+        </Bindings>
+    </Frame>
+</DuskUI>

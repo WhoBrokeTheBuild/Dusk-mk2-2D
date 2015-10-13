@@ -1,7 +1,7 @@
 #ifndef DUSK_DELEGATE_HPP
 #define DUSK_DELEGATE_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Events/Callbacks.hpp>
 
 namespace dusk
@@ -11,7 +11,7 @@ class ScriptHost;
 
 template <typename ReturnType, typename Param = void>
 class Delegate :
-    public ITrackedObject
+    public TrackedObject
 {
 public:
 

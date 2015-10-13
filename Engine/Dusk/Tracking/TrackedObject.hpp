@@ -1,5 +1,5 @@
-#ifndef DUSK_TRACKING_MEMORY_TRACKED_OBJECT_HPP
-#define DUSK_TRACKING_MEMORY_TRACKED_OBJECT_HPP
+#ifndef DUSK_TRACKING_TRACKED_OBJECT_HPP
+#define DUSK_TRACKING_TRACKED_OBJECT_HPP
 
 #include <Dusk/Utility/Platform.hpp>
 #include <Dusk/Utility/Types.hpp>
@@ -7,7 +7,7 @@
 namespace dusk
 {
 
-class ITrackedObject
+class TrackedObject
 {
 public:
 
@@ -43,4 +43,4 @@ public:
 
 } // namespace Tracking
 
-#endif // DUSK_TRACKING_MEMORY_TRACKED_OBJECT_HPP
+#endif // DUSK_TRACKING_TRACKED_OBJECT_HPP

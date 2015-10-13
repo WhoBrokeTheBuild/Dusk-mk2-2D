@@ -17,17 +17,17 @@ namespace dusk
 typedef Delegate<void, const Event&> EventDelegate;
 
 ////////////////////////////////////////////////////////////
-/// \class IEventDispatcher IEventDispatcher.hpp <Dusk/Events/IEventDispatcher.hpp>
+/// \class EventDispatcher EventDispatcher.hpp <Dusk/Events/EventDispatcher.hpp>
 ///
 /// \brief The interface all classes that dispatch events implement. 
 ///
 ////////////////////////////////////////////////////////////
-class IEventDispatcher
+class EventDispatcher
 {
 public:
 
-    IEventDispatcher();
-    virtual ~IEventDispatcher();
+    EventDispatcher();
+    virtual ~EventDispatcher();
 
     virtual inline string GetClassName() const
     {
@@ -75,7 +75,7 @@ private:
 
     void CleanMap();
 
-    static ArrayList<IEventDispatcher*>         s_Dispatchers;
+    static ArrayList<EventDispatcher*>         s_Dispatchers;
     Map<EventID, ArrayList<EventDelegate*>>     m_EventMap;
 
     bool    m_Changed;
@@ -84,7 +84,7 @@ private:
 }; // class EventDispatcher
 
 template <typename ObjectType>
-void IEventDispatcher::RemoveAllMethods(ObjectType* object)
+void EventDispatcher::RemoveAllMethods(ObjectType* object)
 {
     bool needRepeat = true;
     while (needRepeat)

@@ -1,7 +1,7 @@
 #ifndef DUSK_COLLECTIONS_MAP_HPP
 #define DUSK_COLLECTIONS_MAP_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 #include <map>
 
@@ -19,7 +19,7 @@ namespace dusk
 ////////////////////////////////////////////////////////////
 template <class K, class T, typename Sort = std::less<K>>
 class Map :
-    public ITrackedObject,
+    public TrackedObject,
     public std::map<K, T, Sort>
 {
 public:

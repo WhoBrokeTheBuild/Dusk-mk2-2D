@@ -1,8 +1,8 @@
 #ifndef DUSK_AUDIO_AUDIO_SYSTEM_HPP
 #define DUSK_AUDIO_AUDIO_SYSTEM_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
-#include <Dusk/Events/IEventDispatcher.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
+#include <Dusk/Events/EventDispatcher.hpp>
 
 namespace dusk
 {
@@ -10,8 +10,8 @@ namespace dusk
 class Program;
 
 class AudioSystem :
-    public ITrackedObject,
-    public IEventDispatcher
+    public TrackedObject,
+    public EventDispatcher
 {
 
     friend class Program;

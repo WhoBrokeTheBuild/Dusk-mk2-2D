@@ -1,8 +1,8 @@
 #ifndef DUSK_GRAPHICS_GRAPHICS_SYSTEM_HPP
 #define DUSK_GRAPHICS_GRAPHICS_SYSTEM_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
-#include <Dusk/Events/IEventDispatcher.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
+#include <Dusk/Events/EventDispatcher.hpp>
 #include <Dusk/Utility/Types.hpp>
 #include <Dusk/Events/Event.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
@@ -27,8 +27,8 @@ enum WindowStyle
 };
 
 class GraphicsSystem :
-    public ITrackedObject,
-    public IEventDispatcher
+    public TrackedObject,
+    public EventDispatcher
 {
 
     friend class Program;

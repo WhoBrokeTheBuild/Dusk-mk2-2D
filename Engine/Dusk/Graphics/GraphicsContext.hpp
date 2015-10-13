@@ -1,7 +1,7 @@
 #ifndef DUSK_GRAPHICS_CONTEXT_HPP
 #define DUSK_GRAPHICS_CONTEXT_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 #include <SFML/Graphics.hpp>
 
@@ -13,7 +13,7 @@ class Sprite;
 class TextBuffer;
 
 class GraphicsContext :
-    public ITrackedObject
+    public TrackedObject
 {
 
     friend class GraphicsSystem;

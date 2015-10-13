@@ -1,8 +1,8 @@
 #ifndef DUSK_AUDIO_MUSIC_HPP
 #define DUSK_AUDIO_MUSIC_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
-#include <Dusk/Events/IEventDispatcher.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
+#include <Dusk/Events/EventDispatcher.hpp>
 
 #include <SFML/Audio/Music.hpp>
 
@@ -10,8 +10,8 @@ namespace dusk
 {
 
 class Music :
-    public ITrackedObject,
-    public IEventDispatcher
+    public TrackedObject,
+    public EventDispatcher
 {
 public:
 

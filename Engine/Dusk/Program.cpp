@@ -179,7 +179,7 @@ void Program::Script_RegisterFunctions()
     Scripting::RegisterFunction("dusk_get_program", &Program::Script_GetProgram);
     Scripting::RegisterFunction("dusk_program_exit", &Program::Script_Exit);
 
-    IEventDispatcher::Script_RegisterFunctions();
+    EventDispatcher::Script_RegisterFunctions();
     GraphicsSystem::Script_RegisterFunctions();
     InputSystem::InitScripting();
 }

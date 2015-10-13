@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<DuskUI>
+
+    <!-- Fonts -->
+    <Font name="MainFont"
+          file="Content/Fonts/Roboto.ttf"
+          size="14">
+        <Color r="0" g="0" b="0" />
+    </Font>
+    <Font name="MainFont_Hover"
+          inherits="MainFont">
+        <Color r="32" g="32" b="32" />
+    </Font>
+    <Font name="MainFont_Active"
+          inherits="MainFont"
+          underline="true">
+        <Color r="64" g="64" b="64" />
+    </Font>
+    <Font name="MainFont_Error"
+          inherits="MainFont"
+          underline="true">
+        <Color r="128" g="0" b="0" />
+    </Font>
+    <Font name="MainFont_Disabled"
+          inherits="MainFont"
+          underline="true">
+        <Color r="128" g="128" b="128" />
+    </Font>
+
+    <Font name="HeadingFont"
+          file="Content/Fonts/Roboto.ttf"
+          size="18">
+        <Color r="0" g="0" b="0" />
+    </Font>
+
+    <Element name="DefaultElementTemplate"
+        virtual="true">
+        <UseFont name="MainFont" />
+        <UseFont name="MainFont_Hover" state="Hover" />
+        <UseFont name="MainFont_Active" state="Active" />
+        <UseFont name="MainFont_Error" state="Error" />
+        <UseFont name="MainFont_Disabled" state="Disabled" />
+    </Element>
+
+    <!-- Elements -->
+    <Frame name="EditorFrame">
+        <Size x="$max" y="$max" />
+        <Position x="0" y="0"
+                  relTo="$parent"
+                  relPoint="TopLeft" />
+        <Children>
+            <Include file="ToolboxFrame.xml" />
+            <Include file="MapFrame.xml" />
+        </Children>
+    </Frame>
+</DuskUI>

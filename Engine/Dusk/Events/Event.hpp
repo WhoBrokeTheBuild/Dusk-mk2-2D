@@ -1,7 +1,7 @@
 #ifndef DUSK_EVENT_HPP
 #define DUSK_EVENT_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 #include <lua.hpp>
 #include <string>
@@ -13,10 +13,10 @@ namespace dusk
 
 typedef unsigned int EventID;
 
-class IEventDispatcher;
+class EventDispatcher;
 
 class EventData :
-    public ITrackedObject
+    public TrackedObject
 {
 public:
 
@@ -46,7 +46,7 @@ public:
 }; // class EventData
 
 class Event :
-    public ITrackedObject
+    public TrackedObject
 {
 public:
 
@@ -83,7 +83,7 @@ public:
         return m_ID;
     }
 
-    inline IEventDispatcher* GetTarget() const
+    inline EventDispatcher* GetTarget() const
     {
         return mp_EventTarget;
     }
@@ -93,7 +93,7 @@ public:
         return dynamic_cast<T*>(mp_EventTarget);
     }
 
-    inline void setTarget(IEventDispatcher* pTarget)
+    inline void setTarget(EventDispatcher* pTarget)
     {
         mp_EventTarget = pTarget;
     }
@@ -112,7 +112,7 @@ protected:
 
     EventID             m_ID;
     EventData*          mp_Data;
-    IEventDispatcher*   mp_EventTarget;
+    EventDispatcher*   mp_EventTarget;
 
 }; // class Event
 

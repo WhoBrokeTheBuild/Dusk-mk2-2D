@@ -1,7 +1,7 @@
 #ifndef DUSK_GRAPHICS_FONT_HPP
 #define DUSK_GRAPHICS_FONT_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 #include <lua.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -12,7 +12,7 @@ namespace dusk
 class TextBuffer;
 
 class Font :
-    public ITrackedObject
+    public TrackedObject
 {
 
     friend class TextBuffer;

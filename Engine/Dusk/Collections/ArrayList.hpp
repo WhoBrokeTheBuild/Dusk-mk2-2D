@@ -1,7 +1,7 @@
 #ifndef DUSK_COLLECTIONS_ARRAY_LIST_HPP
 #define DUSK_COLLECTIONS_ARRAY_LIST_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 
 #include <vector>
 #include <algorithm>
@@ -20,7 +20,7 @@ namespace dusk
 ////////////////////////////////////////////////////////////
 template <class T>
 class ArrayList :
-    public ITrackedObject,
+    public TrackedObject,
     public std::vector<T>
 {
 public:

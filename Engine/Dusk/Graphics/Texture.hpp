@@ -1,7 +1,7 @@
 #ifndef DUSK_GRAPHICS_TEXTURE_HPP
 #define DUSK_GRAPHICS_TEXTURE_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Utility/Types.hpp>
 
 #include <lua.hpp>
@@ -13,7 +13,7 @@ namespace dusk
 class Sprite;
 
 class Texture :
-    public ITrackedObject
+    public TrackedObject
 {
 
     friend class Sprite;

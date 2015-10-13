@@ -6,6 +6,7 @@
 #include <Dusk/Graphics/GraphicsContext.hpp>
 #include <Dusk/Graphics/Font.hpp>
 #include <Dusk/Graphics/TextBuffer.hpp>
+#include <Dusk/UI/UIManager.hpp>
 
 class TestApp :
     public dusk::Program
@@ -28,6 +29,8 @@ protected:
     virtual void Render(dusk::GraphicsContext* ctx) override;
 
 private:
+
+    dusk::UIManager m_UIManager;
 
 };
 

@@ -7,21 +7,21 @@
 namespace dusk
 {
 
-class ITrackedObject;
+class TrackedObject;
 
 class MemoryTracker
 {
 
-    friend class ITrackedObject;
+    friend class TrackedObject;
 
 public:
 
     static bool Init();
     static void Term();
 
-    static bool AddAllocation(ITrackedObject* pObject, size_t size,
+    static bool AddAllocation(TrackedObject* pObject, size_t size,
                               unsigned int lineNumber, string filename);
-    static bool RemoveAllocation(ITrackedObject* pObject);
+    static bool RemoveAllocation(TrackedObject* pObject);
 
     static inline unsigned int GetAllocationCount()
     {
@@ -50,7 +50,7 @@ private:
 
     }; // struct AllocationRecord
 
-    static Map<ITrackedObject*, AllocationRecord> s_Allocations;
+    static Map<TrackedObject*, AllocationRecord> s_Allocations;
 
     static unsigned int    s_AllocationIndex;
 

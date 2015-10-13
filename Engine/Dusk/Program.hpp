@@ -1,8 +1,8 @@
 #ifndef DUSK_PROGRAM_H
 #define DUSK_PROGRAM_H
 
-#include <Dusk/Events/IEventDispatcher.hpp>
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Events/EventDispatcher.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Events/Event.hpp>
 
 #include <lua.hpp>
@@ -21,8 +21,8 @@ class ScriptHost;
 class FrameTimeInfo;
 
 class Program :
-    public IEventDispatcher,
-    public ITrackedObject
+    public EventDispatcher,
+    public TrackedObject
 {
 
 public:
@@ -140,7 +140,8 @@ class RenderEventData :
 {
 public:
 
-    RenderEventData(GraphicsContext* ctx)
+    RenderEventData(GraphicsContext* ctx) :
+        mp_Context(ctx)
     { }
 
     virtual inline string GetClassName() const

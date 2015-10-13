@@ -1,8 +1,8 @@
 #ifndef DUSK_INPUT_INPUT_SYSTEM_HPP
 #define DUSK_INPUT_INPUT_SYSTEM_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
-#include <Dusk/Events/IEventDispatcher.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
+#include <Dusk/Events/EventDispatcher.hpp>
 #include <Dusk/Input/Keyboard.hpp>
 #include <Dusk/Input/Mouse.hpp>
 #include <Dusk/Input/Mapped.hpp>
@@ -15,8 +15,8 @@ namespace dusk
 class Program;
 
 class InputSystem :
-    public IEventDispatcher,
-    public ITrackedObject
+    public EventDispatcher,
+    public TrackedObject
 {
 
     friend class Program;

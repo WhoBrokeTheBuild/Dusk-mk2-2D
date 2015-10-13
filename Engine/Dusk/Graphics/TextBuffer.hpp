@@ -1,7 +1,7 @@
 #ifndef DUSK_GRAPHICS_TEXT_BUFFER_HPP
 #define DUSK_GRAPHICS_TEXT_BUFFER_HPP
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Graphics/Color.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
 
@@ -14,7 +14,7 @@ namespace dusk
 class Font;
 
 class TextBuffer :
-    public ITrackedObject
+    public TrackedObject
 {
 
     friend class GraphicsContext;

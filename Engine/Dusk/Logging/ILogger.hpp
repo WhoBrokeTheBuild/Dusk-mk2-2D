@@ -3,7 +3,7 @@
 
 /// \cond HIDDEN
 
-#include <Dusk/Tracking/ITrackedObject.hpp>
+#include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Logging/LogColors.hpp>
 
 #include <string>
@@ -14,7 +14,7 @@ namespace dusk
 {
 
 class ILogger :
-    public ITrackedObject
+    public TrackedObject
 {
 public:
 
