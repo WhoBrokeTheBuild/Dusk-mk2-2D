@@ -43,6 +43,7 @@ private:
 
     Color ParseColor(rapidxml::xml_node<>* node);
     Vector2f ParseVector2(rapidxml::xml_node<>* node);
+    UIState ParseState(const string& state);
 
     template <typename ElementType>
     shared_ptr<ElementType> ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& dirname);
@@ -50,10 +51,18 @@ private:
     void ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& dirname);
 
     shared_ptr<UIFont> ParseFont(rapidxml::xml_node<>* node);
-    shared_ptr<UIFrame> ParseFrame(rapidxml::xml_node<>* node);
-    shared_ptr<UILabel> ParseLabel(rapidxml::xml_node<>* node);
-    shared_ptr<UIInput> ParseInput(rapidxml::xml_node<>* node);
-    shared_ptr<UIButton> ParseButton(rapidxml::xml_node<>* node);
+    void ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIFrame>& pElement);
+    void ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UILabel>& pElement);
+    void ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pElement);
+    void ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pElement);
+
+    void ParseElementName(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementVirtual(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementSize(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementPosition(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementText(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementFont(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementBorder(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
 
     unique_ptr<ScriptHost> m_ScriptHost;
 
@@ -69,14 +78,10 @@ private:
 };
 
 template <typename ElementType>
-shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& dirname)
+shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
 {
-    xml_attribute<>* nameAttr = node->first_attribute("name");
-    xml_attribute<>* virtualAttr = node->first_attribute("virtual");
     xml_attribute<>* inheritsAttr = node->first_attribute("inherits");
 
-    xml_node<>* sizeNode = node->first_node("Size");
-    xml_node<>* posNode = node->first_node("Position");
     xml_node<>* childrenNode = node->first_node("Children");
 
     shared_ptr<ElementType> pElement(New ElementType());
@@ -99,86 +104,17 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
             return nullptr;
     }
 
-    bool isVirtual = false;
-    if (virtualAttr)
-    {
-        const string& virtualVal = virtualAttr->value();
-        isVirtual = (virtualVal == "true" ? true : false);
-    }
-
-    if (!isVirtual && pParentElement)
-    {
-        pElement->SetParent(pParentElement);
-        pParentElement->AddChild(pGenericElement);
-    }
-
-    if (nameAttr)
-    {
-        const string& nameVal = nameAttr->value();
-        pElement->SetName(nameVal);
-        m_UIElements.add(nameVal, pElement);
-    }
-
-    if (posNode)
-    {
-        Vector2f offset = ParseVector2(posNode);
-        pElement->SetOffset(offset);
-
-        xml_attribute<>* relToAttr = posNode->first_attribute("relTo");
-        xml_attribute<>* relPointAttr = posNode->first_attribute("relPoint");
-
-        if (relToAttr)
-        {
-            const string& relToVal = relToAttr->value();
-            if (!relToVal.empty())
-            {
-                if (relToVal[0] == '$')
-                {
-                    if (relToVal == "$parent")
-                        pElement->SetRelativeTo(pParentElement);
-                }
-                else
-                {
-                    if (m_UIElements.contains_key(relToVal))
-                        pElement->SetRelativeTo(m_UIElements[relToVal]);
-                }
-            }
-        }
-
-        if (relPointAttr)
-        {
-            const string& relPointVal = relPointAttr->value();
-
-            UIRelPoint relPoint;
-            if (relPointVal == "TopLeft")
-            {
-                relPoint = TopLeft;
-            }
-            else if (relPointVal == "TopRight")
-            {
-                relPoint = TopRight;
-            }
-            else if (relPointVal == "BottomLeft")
-            {
-                relPoint = BottomLeft;
-            }
-            else if (relPointVal == "BottomRight")
-            {
-                relPoint = BottomRight;
-            }
-            pElement->SetRelativePoint(relPoint);
-        }
-    }
-
-    if (sizeNode)
-    {
-        Vector2f size = ParseVector2(sizeNode);
-        pElement->SetSize(size);
-    }
+    ParseElementName(node, pGenericElement, pParentElement, currentDir);
+    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
+    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
+    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
+    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
+    ParseElementText(node, pGenericElement, pParentElement, currentDir);
+    ParseElementFont(node, pGenericElement, pParentElement, currentDir);
 
     if (childrenNode)
     {
-        ParseElementNodes(childrenNode, pParentElement, dirname);
+        ParseElementNodes(childrenNode, pParentElement, currentDir);
     }
 
     return pElement;

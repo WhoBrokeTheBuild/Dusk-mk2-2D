@@ -2,6 +2,7 @@
 
 #include <Dusk/Graphics/Font.hpp>
 #include <Dusk/Scripting/Scripting.hpp>
+#include <Dusk/Geometry/Rect.hpp>
 
 namespace dusk
 {
@@ -63,7 +64,8 @@ Vector2f TextBuffer::GetPos() const
 
 Vector2f TextBuffer::GetSize() const
 {
-    return Vector2f(m_SfText.getLocalBounds().width, m_SfText.getLocalBounds().height);
+    FloatRect bounds = m_SfText.getLocalBounds();
+    return Vector2f(bounds.left + bounds.left + bounds.width, bounds.top + bounds.top + bounds.height);
 }
 
 void TextBuffer::Script_RegisterFunctions()

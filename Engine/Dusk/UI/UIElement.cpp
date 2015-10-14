@@ -30,6 +30,8 @@ UIElement::UIElement() :
 
 bool UIElement::Init(shared_ptr<UIElement> inheritFrom)
 {
+    m_Name = "";
+    m_State = StateDefault;
     m_RelativeTo = inheritFrom->m_RelativeTo;
     m_RelativePoint = inheritFrom->m_RelativePoint;
     m_Offset = inheritFrom->m_Offset;
@@ -37,6 +39,7 @@ bool UIElement::Init(shared_ptr<UIElement> inheritFrom)
     m_BorderColor = inheritFrom->m_BorderColor;
     m_Font = inheritFrom->m_Font;
     m_TargetSize = inheritFrom->m_TargetSize;
+    m_TextBuffer = inheritFrom->m_TextBuffer;
 
     m_Active = true;
     m_Visible = true;
@@ -48,6 +51,8 @@ bool UIElement::Init(shared_ptr<UIElement> inheritFrom)
 
 bool UIElement::Init()
 {
+    m_Name = "";
+    m_State = StateDefault;
     m_RelativeTo = nullptr;
     m_RelativePoint = TopLeft;
     m_Offset = Vector2f();
@@ -94,11 +99,21 @@ void UIElement::OnRender(const Event& evt)
     sf::RectangleShape rect(m_Size);
     rect.setPosition(m_Pos);
     rect.setFillColor(Color::White);
-    rect.setOutlineColor(Color::Black);
-    rect.setOutlineThickness(1.0f);
-
-    DuskExtLog("info", "%s (%f %f) (%f %f)", m_Name.c_str(), m_Pos.x, m_Pos.y, m_Size.x, m_Size.y);
     pData->GetContext()->Draw(rect);
+
+    size_t borderSize = m_BorderSize.GetValue(m_State);
+    if (borderSize > 0)
+    {
+        sf::RectangleShape borderRect(m_Size);
+        borderRect.setPosition(m_Pos);
+        borderRect.setFillColor(Color::Transparent);
+        borderRect.setOutlineThickness(borderSize);
+        borderRect.setOutlineColor(m_BorderColor.GetValue(m_State));
+        pData->GetContext()->Draw(borderRect);
+    }
+
+    m_TextBuffer.SetPos(m_Pos);
+    pData->GetContext()->Draw(&m_TextBuffer);
     
     for (auto& child : m_Children)
         child->OnRender(evt);
@@ -154,9 +169,31 @@ void UIElement::SetOffset(const Vector2f& offset)
     Dispatch(Event(EvtLayoutChanged));
 }
 
+void UIElement::SetFont(shared_ptr<UIFont> font, const UIState& state /*= UIState::StateDefault*/)
+{
+    m_Font.SetValue(state, font);
+    UpdateState();
+}
+
+void UIElement::SetText(const string& text)
+{
+    m_TextBuffer.SetText(text);
+    UpdateLayout();
+}
+
 void UIElement::AddChild(shared_ptr<UIElement>& pChild)
 {
     m_Children.add(pChild);
+}
+
+void UIElement::UpdateState()
+{
+    shared_ptr<UIFont> pUIFont = m_Font.GetValue(m_State);
+    m_TextBuffer.SetFont(pUIFont->GetFont().get());
+    m_TextBuffer.SetFontSize(pUIFont->GetFontSize());
+    m_TextBuffer.SetColor(pUIFont->GetColor());
+
+    UpdateLayout();
 }
 
 void UIElement::UpdateLayout()
@@ -164,11 +201,11 @@ void UIElement::UpdateLayout()
     Vector2f parentSize;
     if (m_Parent)
         parentSize = m_Parent->GetSize();
+    Vector2f textSize = m_TextBuffer.GetSize();
 
     if (m_TargetSize.x == FLT_MIN)
     {
-        m_Size.x = 10.0f;
-        // TODO
+        m_Size.x = textSize.x;
     }
     else if (m_TargetSize.x == FLT_MAX)
     {
@@ -181,8 +218,7 @@ void UIElement::UpdateLayout()
 
     if (m_TargetSize.y == FLT_MIN)
     {
-        m_Size.y = 10.0f;
-        // TODO
+        m_Size.y = textSize.y;
     }
     else if (m_TargetSize.y == FLT_MAX)
     {
@@ -196,36 +232,37 @@ void UIElement::UpdateLayout()
     if (m_RelativeTo == nullptr)
     {
         m_Pos = m_Offset;
-        return;
     }
-
-    Vector2f relPos = m_RelativeTo->GetPos();
-    switch (m_RelativePoint)
+    else
     {
-    case TopLeft:
+        Vector2f relPos = m_RelativeTo->GetPos();
+        switch (m_RelativePoint)
+        {
+        case TopLeft:
 
-        m_Pos.x = relPos.x + m_Offset.x;
-        m_Pos.y = relPos.y + m_Offset.y;
+            m_Pos.x = relPos.x + m_Offset.x;
+            m_Pos.y = relPos.y + m_Offset.y;
 
-        break;
-    case TopRight:
+            break;
+        case TopRight:
 
-        m_Pos.x = relPos.x + m_Size.x + m_Offset.x;
-        m_Pos.y = relPos.y + m_Offset.y;
+            m_Pos.x = relPos.x + m_Size.x + m_Offset.x;
+            m_Pos.y = relPos.y + m_Offset.y;
 
-        break;
-    case BottomLeft:
+            break;
+        case BottomLeft:
 
-        m_Pos.x = relPos.x + m_Offset.x;
-        m_Pos.y = relPos.y + m_Size.y + m_Offset.y;
+            m_Pos.x = relPos.x + m_Offset.x;
+            m_Pos.y = relPos.y + m_Size.y + m_Offset.y;
 
-        break;
-    case BottomRight:
+            break;
+        case BottomRight:
 
-        m_Pos.x = relPos.x + m_Size.x + m_Offset.x;
-        m_Pos.y = relPos.y + m_Size.y + m_Offset.y;
+            m_Pos.x = relPos.x + m_Size.x + m_Offset.x;
+            m_Pos.y = relPos.y + m_Size.y + m_Offset.y;
 
-        break;
+            break;
+        }
     }
 }
 

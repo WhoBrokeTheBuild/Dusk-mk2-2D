@@ -5,6 +5,7 @@
 #include <Dusk/Events/EventDispatcher.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
 #include <Dusk/Graphics/Color.hpp>
+#include <Dusk/Graphics/TextBuffer.hpp>
 #include <Dusk/Collections/Map.hpp>
 #include <Dusk/Collections/ArrayList.hpp>
 #include <Dusk/UI/UIFont.hpp>
@@ -115,15 +116,20 @@ public:
     void SetBorderColor(const Color& color, const UIState& state = UIState::StateDefault) { m_BorderColor.SetValue(state, color); }
 
     shared_ptr<UIFont> GetFont(const UIState& state = UIState::StateDefault) const { return m_Font.GetValue(state); }
-    void SetFont(shared_ptr<UIFont> font, const UIState& state = UIState::StateDefault) { m_Font.SetValue(state, font); }
+    void SetFont(shared_ptr<UIFont> font, const UIState& state = UIState::StateDefault);
+
+    string GetText() const { return m_TextBuffer.GetText(); }
+    void SetText(const string& text);
 
     void AddChild(shared_ptr<UIElement>& pChild);
 
 protected:
-
+    
+    void UpdateState();
     void UpdateLayout();
 
     string m_Name;
+    UIState m_State;
 
     bool m_Active;
     bool m_Visible;
@@ -139,6 +145,8 @@ protected:
     StateProp<size_t> m_BorderSize;
     StateProp<Color> m_BorderColor;
     StateProp<shared_ptr<UIFont>> m_Font;
+
+    TextBuffer m_TextBuffer;
 
     shared_ptr<UIElement> m_Parent;
     ArrayList<shared_ptr<UIElement>> m_Children;

@@ -180,6 +180,24 @@ dusk::Vector2f UIManager::ParseVector2(rapidxml::xml_node<>* node)
     return value;
 }
 
+dusk::UIState UIManager::ParseState(const string& state)
+{
+    if (state == "active")
+    {
+        return StateActive;
+    }
+    else if (state == "hover")
+    {
+        return StateHover;
+    }
+    else if (state == "disabled")
+    {
+        return StateDisabled;
+    }
+
+    return StateDefault;
+}
+
 void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& dirname)
 {
     for (xml_node<>* node = root->first_node(); node; node = node->next_sibling())
@@ -200,19 +218,23 @@ void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIEleme
         }
         else if (nodeName == "Frame")
         {
-            ParseElement<UIFrame>(node, pParentElement, dirname);
+            shared_ptr<UIFrame> pElement = ParseElement<UIFrame>(node, pParentElement, dirname);
+            ParseFrame(node, pElement);
         }
         else if (nodeName == "Label")
         {
-            ParseElement<UILabel>(node, pParentElement, dirname);
+            shared_ptr<UILabel> pElement = ParseElement<UILabel>(node, pParentElement, dirname);
+            ParseLabel(node, pElement);
         }
         else if (nodeName == "Button")
         {
-            ParseElement<UIButton>(node, pParentElement, dirname);
+            shared_ptr<UIButton> pElement = ParseElement<UIButton>(node, pParentElement, dirname);
+            ParseButton(node, pElement);
         }
         else if (nodeName == "Input")
         {
-            ParseElement<UIInput>(node, pParentElement, dirname);
+            shared_ptr<UIInput> pElement = ParseElement<UIInput>(node, pParentElement, dirname);
+            ParseInput(node, pElement);
         }
     }
 }
@@ -286,6 +308,210 @@ shared_ptr<UIFont> UIManager::ParseFont(xml_node<>* node)
     }
 
     return nullptr;
+}
+
+void UIManager::ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIFrame>& pElement)
+{
+
+}
+
+void UIManager::ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UILabel>& pElement)
+{
+}
+
+void UIManager::ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pElement)
+{
+    pElement->SetText("100");
+}
+
+void UIManager::ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pElement)
+{
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+}
+
+void UIManager::ParseElementName(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    xml_attribute<>* nameAttr = node->first_attribute("name");
+
+    if (nameAttr)
+    {
+        const string& nameVal = nameAttr->value();
+        pElement->SetName(nameVal);
+        m_UIElements.add(nameVal, pElement);
+    }
+}
+
+void UIManager::ParseElementVirtual(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    xml_attribute<>* virtualAttr = node->first_attribute("virtual");
+
+    bool isVirtual = false;
+    if (virtualAttr)
+    {
+        const string& virtualVal = virtualAttr->value();
+        isVirtual = (virtualVal == "true" ? true : false);
+    }
+
+    if (!isVirtual && pParentElement)
+    {
+        pElement->SetParent(pParentElement);
+        pParentElement->AddChild(pElement);
+    }
+}
+
+void UIManager::ParseElementSize(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    xml_node<>* sizeNode = node->first_node("Size");
+
+    if (sizeNode)
+    {
+        Vector2f size = ParseVector2(sizeNode);
+        pElement->SetSize(size);
+    }
+}
+
+void UIManager::ParseElementPosition(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    xml_node<>* posNode = node->first_node("Position");
+
+    if (posNode)
+    {
+        Vector2f offset = ParseVector2(posNode);
+        pElement->SetOffset(offset);
+
+        xml_attribute<>* relToAttr = posNode->first_attribute("relTo");
+        xml_attribute<>* relPointAttr = posNode->first_attribute("relPoint");
+
+        if (relToAttr)
+        {
+            const string& relToVal = relToAttr->value();
+            if (!relToVal.empty())
+            {
+                if (relToVal[0] == '$')
+                {
+                    if (relToVal == "$parent")
+                        pElement->SetRelativeTo(pParentElement);
+                }
+                else
+                {
+                    if (m_UIElements.contains_key(relToVal))
+                        pElement->SetRelativeTo(m_UIElements[relToVal]);
+                }
+            }
+        }
+
+        if (relPointAttr)
+        {
+            const string& relPointVal = relPointAttr->value();
+
+            UIRelPoint relPoint;
+            if (relPointVal == "TopLeft")
+            {
+                relPoint = TopLeft;
+            }
+            else if (relPointVal == "TopRight")
+            {
+                relPoint = TopRight;
+            }
+            else if (relPointVal == "BottomLeft")
+            {
+                relPoint = BottomLeft;
+            }
+            else if (relPointVal == "BottomRight")
+            {
+                relPoint = BottomRight;
+            }
+            pElement->SetRelativePoint(relPoint);
+        }
+    }
+}
+
+void UIManager::ParseElementText(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    xml_attribute<>* textAttr = node->first_attribute("text");
+
+    if (textAttr)
+    {
+        const string& textVal = textAttr->value();
+        pElement->SetText(textVal);
+    }
+}
+
+void UIManager::ParseElementFont(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    for (xml_node<>* fontNode = node->first_node("UseFont"); fontNode; fontNode = fontNode->next_sibling("UseFont"))
+    {
+        xml_attribute<>* nameAttr = fontNode->first_attribute("name");
+        xml_attribute<>* stateAttr = fontNode->first_attribute("state");
+
+        if (!nameAttr)
+            continue;
+
+        const string& nameVal = nameAttr->value();
+        if (!m_UIFonts.contains_key(nameVal))
+            continue;
+
+        shared_ptr<UIFont> font = m_UIFonts[nameVal];
+
+        UIState state = StateDefault;
+        if (stateAttr)
+        {
+            const string& stateVal = stateAttr->value();
+            state = ParseState(stateVal);
+        }
+
+        pElement->SetFont(font, state);
+    }
+}
+
+void UIManager::ParseElementBorder(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)
+{
+    for (xml_node<>* borderNode = node->first_node("Border"); borderNode; borderNode = borderNode->next_sibling("Border"))
+    {
+        xml_attribute<>* stateAttr = borderNode->first_attribute("state");
+
+        UIState state = StateDefault;
+        if (stateAttr)
+        {
+            const string& stateVal = stateAttr->value();
+
+            if (stateVal == "default")
+            {
+                state = StateDefault;
+            }
+            else if (stateVal == "active")
+            {
+                state = StateActive;
+            }
+            else if (stateVal == "hover")
+            {
+                state = StateHover;
+            }
+            else if (stateVal == "disabled")
+            {
+                state = StateDisabled;
+            }
+        }
+
+        xml_attribute<>* sizeAttr = borderNode->first_attribute("size");
+
+        size_t size = 1;
+        if (sizeAttr)
+        {
+            const string& sizeVal = sizeAttr->value();
+            size = std::stoi(sizeVal);
+        }
+        pElement->SetBorderSize(size, state);
+
+        xml_node<>* colorNode = borderNode->first_node("Color");
+        Color color = Color::Black;
+        if (colorNode)
+        {
+            color = ParseColor(colorNode);
+        }
+
+        pElement->SetBorderColor(color, state);
+    }
 }
 
 } // namespace dusk

@@ -46,6 +46,13 @@ Dusk/Scripting/ScriptHost.cpp \
 Dusk/Scripting/Scripting.cpp \
 Dusk/Tracking/ITrackedObject.cpp \
 Dusk/Tracking/MemoryTracker.cpp \
+Dusk/UI/UIButton.cpp \
+Dusk/UI/UIElement.cpp \
+Dusk/UI/UIFont.cpp \
+Dusk/UI/UIFrame.cpp \
+Dusk/UI/UIInput.cpp \
+Dusk/UI/UILabel.cpp \
+Dusk/UI/UIManager.cpp \
 Dusk/Utility/Strings.cpp \
 Dusk/Program.cpp
 

@@ -20,7 +20,7 @@ bool TestApp::Init()
     }
 
     GraphicsSystem* pGS = GetGraphicsSystem();
-    pGS->SetWindowSize(640, 480);
+    pGS->SetWindowSize(1600, 900);
     pGS->SetWindowTitle("Test");
     pGS->SetWindowStyle(WindowStyle::Decorated);
     pGS->ApplyWindowChanges();
