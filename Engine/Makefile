@@ -5,7 +5,7 @@ ARGS = CONF=$(CONF)
 CC = g++
 AR = ar
 
-CCFLAGS = -pedantic-errors -pedantic -std=c++11 -Wall
+CCFLAGS = -pedantic-errors -pedantic -std=c++14 -Wall
 ARFLAGS = rvs
 
 ifeq ($(CONF), 'Debug')
@@ -21,6 +21,7 @@ OUT = $(OUTDIR)/libdusk-engine.a
 
 INC_PATH = \
 -I. \
+-I../Libraries/RapidXML/include/ \
 `pkg-config --cflags lua5.2` \
 `pkg-config --cflags sfml-all`
 
@@ -28,7 +29,7 @@ SOURCES = \
 Dusk/Audio/AudioSystem.cpp \
 Dusk/Events/Callbacks.cpp \
 Dusk/Events/Event.cpp \
-Dusk/Events/IEventDispatcher.cpp \
+Dusk/Events/EventDispatcher.cpp \
 Dusk/Graphics/GraphicsContext.cpp \
 Dusk/Graphics/GraphicsSystem.cpp \
 Dusk/Graphics/Sprite.cpp \
@@ -44,7 +45,7 @@ Dusk/Logging/Loggers/FileLogger.cpp \
 Dusk/Logging/Logging.cpp \
 Dusk/Scripting/ScriptHost.cpp \
 Dusk/Scripting/Scripting.cpp \
-Dusk/Tracking/ITrackedObject.cpp \
+Dusk/Tracking/TrackedObject.cpp \
 Dusk/Tracking/MemoryTracker.cpp \
 Dusk/UI/UIButton.cpp \
 Dusk/UI/UIElement.cpp \

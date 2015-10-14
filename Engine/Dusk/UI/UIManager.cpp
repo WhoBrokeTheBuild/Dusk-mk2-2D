@@ -5,6 +5,8 @@
 #include <Dusk/Logging/Logging.hpp>
 #include <Dusk/Utility/Strings.hpp>
 
+#include <cfloat>
+
 using namespace rapidxml;
 
 namespace dusk

@@ -4,6 +4,7 @@
 #include <Dusk/Graphics/GraphicsContext.hpp>
 #include <Dusk/Logging/Logging.hpp>
 
+#include <cfloat>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 namespace dusk
@@ -114,7 +115,7 @@ void UIElement::OnRender(const Event& evt)
 
     m_TextBuffer.SetPos(m_Pos);
     pData->GetContext()->Draw(&m_TextBuffer);
-    
+
     for (auto& child : m_Children)
         child->OnRender(evt);
 }

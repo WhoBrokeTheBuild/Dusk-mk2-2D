@@ -6,7 +6,7 @@ ARGS = CONF=$(CONF)
 CC = g++
 LD = g++
 
-CCFLAGS = -pedantic-errors -pedantic -std=c++11 -Wall
+CCFLAGS = -pedantic-errors -pedantic -std=c++14 -Wall
 LDFLAGS =
 
 ifeq ($(CONF), Debug)
@@ -22,6 +22,7 @@ OUT = $(OUTDIR)/TestApp
 
 INC_PATH = \
 -I../Engine/ \
+-I../Libraries/RapidXML/include/ \
 `pkg-config --cflags lua5.2` \
 `pkg-config --cflags sfml-all`
 
