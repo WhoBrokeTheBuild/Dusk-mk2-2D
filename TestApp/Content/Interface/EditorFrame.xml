@@ -3,7 +3,7 @@
 
     <!-- Fonts -->
     <Font name="MainFont"
-          file="Content/Fonts/Test.ttf"
+          file="Content/Fonts/Roboto.ttf"
           size="14">
         <Color r="0" g="0" b="0" />
     </Font>
@@ -28,7 +28,7 @@
     </Font>
 
     <Font name="HeadingFont"
-          file="Content/Fonts/Test.ttf"
+          file="Content/Fonts/Roboto.ttf"
           size="18">
         <Color r="0" g="0" b="0" />
     </Font>

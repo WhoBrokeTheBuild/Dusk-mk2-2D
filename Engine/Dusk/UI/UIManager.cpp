@@ -200,7 +200,7 @@ dusk::UIState UIManager::ParseState(const string& state)
     return StateDefault;
 }
 
-void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& dirname)
+void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& currentDir)
 {
     for (xml_node<>* node = root->first_node(); node; node = node->next_sibling())
     {
@@ -212,31 +212,27 @@ void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIEleme
                 continue;
 
             const string& fileVal = fileAttr->value();
-            LoadFile(dirname + fileVal, pParentElement);
+            LoadFile(currentDir + fileVal, pParentElement);
         }
         else if (nodeName == "Element")
         {
-            ParseElement<UIElement>(node, pParentElement, dirname);
+            ParseElement(node, pParentElement, currentDir);
         }
         else if (nodeName == "Frame")
         {
-            shared_ptr<UIFrame> pElement = ParseElement<UIFrame>(node, pParentElement, dirname);
-            ParseFrame(node, pElement);
+            ParseFrame(node, pParentElement, currentDir);
         }
         else if (nodeName == "Label")
         {
-            shared_ptr<UILabel> pElement = ParseElement<UILabel>(node, pParentElement, dirname);
-            ParseLabel(node, pElement);
+            ParseLabel(node, pParentElement, currentDir);
         }
         else if (nodeName == "Button")
         {
-            shared_ptr<UIButton> pElement = ParseElement<UIButton>(node, pParentElement, dirname);
-            ParseButton(node, pElement);
+            ParseButton(node, pParentElement, currentDir);
         }
         else if (nodeName == "Input")
         {
-            shared_ptr<UIInput> pElement = ParseElement<UIInput>(node, pParentElement, dirname);
-            ParseInput(node, pElement);
+            ParseInput(node, pParentElement, currentDir);
         }
     }
 }
@@ -312,23 +308,113 @@ shared_ptr<UIFont> UIManager::ParseFont(xml_node<>* node)
     return nullptr;
 }
 
-void UIManager::ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIFrame>& pElement)
-{
 
-}
-
-void UIManager::ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UILabel>& pElement)
+void UIManager::ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
 {
-}
-
-void UIManager::ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pElement)
-{
-    pElement->SetText("100");
-}
-
-void UIManager::ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pElement)
-{
+    shared_ptr<UIElement> pElement(New UIElement());
     shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+    shared_ptr<UIElement> pInheritsFrom = ParseElementInherits(node);
+
+    ParseElementName(node, pGenericElement, pParentElement, currentDir);
+    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
+    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
+    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
+    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
+    ParseElementFont(node, pGenericElement, pParentElement, currentDir);
+}
+
+void UIManager::ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
+{
+    shared_ptr<UIFrame> pElement(New UIFrame());
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+    shared_ptr<UIElement> pInheritsFrom = ParseElementInherits(node);
+
+    if (pInheritsFrom)
+        pElement->Init(pInheritsFrom);
+    else
+        pElement->Init();
+
+    ParseElementName(node, pGenericElement, pParentElement, currentDir);
+    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
+    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
+    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
+    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
+
+    xml_node<>* childrenNode = node->first_node("Children");
+    if (childrenNode)
+        ParseElementNodes(childrenNode, pParentElement, currentDir);
+
+}
+
+void UIManager::ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
+{
+    shared_ptr<UIFrame> pElement(New UIFrame());
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+    shared_ptr<UIElement> pInheritsFrom = ParseElementInherits(node);
+
+    if (pInheritsFrom)
+        pElement->Init(pInheritsFrom);
+    else
+        pElement->Init();
+
+    ParseElementName(node, pGenericElement, pParentElement, currentDir);
+    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
+    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
+    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
+    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
+    ParseElementText(node, pGenericElement, pParentElement, currentDir);
+    ParseElementFont(node, pGenericElement, pParentElement, currentDir);
+}
+
+void UIManager::ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
+{
+    shared_ptr<UIFrame> pElement(New UIFrame());
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+    shared_ptr<UIElement> pInheritsFrom = ParseElementInherits(node);
+
+    if (pInheritsFrom)
+        pElement->Init(pInheritsFrom);
+    else
+        pElement->Init();
+
+    ParseElementName(node, pGenericElement, pParentElement, currentDir);
+    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
+    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
+    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
+    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
+    ParseElementText(node, pGenericElement, pParentElement, currentDir);
+    ParseElementFont(node, pGenericElement, pParentElement, currentDir);
+
+    pElement->SetText("100"); // TODO
+}
+
+void UIManager::ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
+{
+    shared_ptr<UIFrame> pElement(New UIFrame());
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+    shared_ptr<UIElement> pInheritsFrom = ParseElementInherits(node);
+
+    if (pInheritsFrom)
+        pElement->Init(pInheritsFrom);
+    else
+        pElement->Init();
+
+    ParseElementName(node, pGenericElement, pParentElement, currentDir);
+    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
+    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
+    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
+    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
+    ParseElementText(node, pGenericElement, pParentElement, currentDir);
+    ParseElementFont(node, pGenericElement, pParentElement, currentDir);
+}
+
+
+shared_ptr<UIElement> UIManager::ParseElementInherits(rapidxml::xml_node<>* node)
+{
+    xml_attribute<>* inheritsAttr = node->first_attribute("inherits");
+    if (inheritsAttr)
+        return m_UIElements[inheritsAttr->value()];
+    return nullptr;
 }
 
 void UIManager::ParseElementName(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname)

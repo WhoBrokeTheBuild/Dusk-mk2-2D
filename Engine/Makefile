@@ -22,7 +22,7 @@ OUT = $(OUTDIR)/libdusk-engine.a
 INC_PATH = \
 -I. \
 -I../Libraries/RapidXML/include/ \
-`pkg-config --cflags lua5.2` \
+`pkg-config --cflags lua` \
 `pkg-config --cflags sfml-all`
 
 SOURCES = \

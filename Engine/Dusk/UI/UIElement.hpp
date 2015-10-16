@@ -93,6 +93,7 @@ public:
     void SetName(string name) { m_Name = name; }
 
     Vector2f GetPos() const { return m_Pos; }
+    Vector2f GetInnerPos() const { return m_Pos; }
 
     Vector2f GetSize() const { return m_Size; }
     void SetSize(const Vector2f& size);

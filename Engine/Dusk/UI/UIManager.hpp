@@ -45,17 +45,16 @@ private:
     Vector2f ParseVector2(rapidxml::xml_node<>* node);
     UIState ParseState(const string& state);
 
-    template <typename ElementType>
-    shared_ptr<ElementType> ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& dirname);
-
-    void ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& dirname);
+    void ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& currentDir);
 
     shared_ptr<UIFont> ParseFont(rapidxml::xml_node<>* node);
-    void ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIFrame>& pElement);
-    void ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UILabel>& pElement);
-    void ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pElement);
-    void ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pElement);
+    void ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir);
+    void ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir);
+    void ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir);
+    void ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir);
+    void ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir);
 
+    shared_ptr<UIElement> ParseElementInherits(rapidxml::xml_node<>* node);
     void ParseElementName(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
     void ParseElementVirtual(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
     void ParseElementSize(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& dirname);
@@ -76,49 +75,6 @@ private:
     //Map<string, shared_ptr<UIFrame>> m_UIFrames;
 
 };
-
-template <typename ElementType>
-shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& currentDir)
-{
-    xml_attribute<>* inheritsAttr = node->first_attribute("inherits");
-
-    xml_node<>* childrenNode = node->first_node("Children");
-
-    shared_ptr<ElementType> pElement(New ElementType());
-    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
-
-    if (inheritsAttr)
-    {
-        const string& inheritsVal = inheritsAttr->value();
-        shared_ptr<ElementType> pInheritFrom = dynamic_pointer_cast<ElementType>(m_UIElements[inheritsVal]);
-
-        if (pInheritFrom != nullptr)
-        {
-            if (!pElement->Init(pInheritFrom))
-                return nullptr;
-        }
-    }
-    else
-    {
-        if (!pElement->Init())
-            return nullptr;
-    }
-
-    ParseElementName(node, pGenericElement, pParentElement, currentDir);
-    ParseElementVirtual(node, pGenericElement, pParentElement, currentDir);
-    ParseElementSize(node, pGenericElement, pParentElement, currentDir);
-    ParseElementPosition(node, pGenericElement, pParentElement, currentDir);
-    ParseElementBorder(node, pGenericElement, pParentElement, currentDir);
-    ParseElementText(node, pGenericElement, pParentElement, currentDir);
-    ParseElementFont(node, pGenericElement, pParentElement, currentDir);
-
-    if (childrenNode)
-    {
-        ParseElementNodes(childrenNode, pParentElement, currentDir);
-    }
-
-    return pElement;
-}
 
 } // namespace dusk
 
