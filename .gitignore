@@ -5,9 +5,14 @@ obj/
 
 # User-specific files
 *.suo
-#*.user
+*.user
 *.userosscache
 *.sln.docstates
+*.sln
+*.tss
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
 
 # Build results
 [Dd]ebug/
@@ -69,4 +74,11 @@ ipch/
 *.vsp
 *.vspx
 
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/
+
+arch.c
 *.luac
+
+Engine/Dusk/Config.hpp

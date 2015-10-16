@@ -55,6 +55,15 @@
 #   add_executable(myapp ...)
 #   target_link_libraries(myapp ${SFML_LIBRARIES})
 
+include(${CMAKE_SOURCE_DIR}/CMake/TargetArch.cmake)
+
+target_architecture(SFML_ARCH)
+if(${SFML_ARCH} STREQUAL "x86_64")
+    set(SFML_ARCH_LIB_DIR "lib64")
+elseif(${SFML_ARCH} STREQUAL "i386")
+    set(SFML_ARCH_LIB_DIR "lib")
+endif()
+
 # define the SFML_STATIC macro if static build was chosen
 if(SFML_STATIC_LIBRARIES)
     add_definitions(-DSFML_STATIC)
@@ -129,37 +138,37 @@ foreach(FIND_SFML_COMPONENT ${SFML_FIND_COMPONENTS})
         # release library
         find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_RELEASE
                      NAMES ${FIND_SFML_COMPONENT_NAME}
-                     PATH_SUFFIXES lib64 lib
+                     PATH_SUFFIXES ${SFML_ARCH_LIB_DIR}
                      PATHS ${FIND_SFML_PATHS})
 
         # debug library
         find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_DEBUG
                      NAMES ${FIND_SFML_COMPONENT_NAME}-d
-                     PATH_SUFFIXES lib64 lib
+                     PATH_SUFFIXES ${SFML_ARCH_LIB_DIR}
                      PATHS ${FIND_SFML_PATHS})
     else()
         # static release library
         find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_STATIC_RELEASE
                      NAMES ${FIND_SFML_COMPONENT_NAME}-s
-                     PATH_SUFFIXES lib64 lib
+                     PATH_SUFFIXES ${SFML_ARCH_LIB_DIR}
                      PATHS ${FIND_SFML_PATHS})
 
         # static debug library
         find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_STATIC_DEBUG
                      NAMES ${FIND_SFML_COMPONENT_NAME}-s-d
-                     PATH_SUFFIXES lib64 lib
+                     PATH_SUFFIXES ${SFML_ARCH_LIB_DIR}
                      PATHS ${FIND_SFML_PATHS})
 
         # dynamic release library
         find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_DYNAMIC_RELEASE
                      NAMES ${FIND_SFML_COMPONENT_NAME}
-                     PATH_SUFFIXES lib64 lib
+                     PATH_SUFFIXES ${SFML_ARCH_LIB_DIR}
                      PATHS ${FIND_SFML_PATHS})
 
         # dynamic debug library
         find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_DYNAMIC_DEBUG
                      NAMES ${FIND_SFML_COMPONENT_NAME}-d
-                     PATH_SUFFIXES lib64 lib
+                     PATH_SUFFIXES ${SFML_ARCH_LIB_DIR}
                      PATHS ${FIND_SFML_PATHS})
 
         # choose the entries that fit the requested link type
