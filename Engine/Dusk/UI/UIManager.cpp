@@ -24,20 +24,49 @@ UIManager::UIManager() :
 
     Program::Inst()->AddEventListener(Program::EvtUpdate, this, &UIManager::OnUpdate);
     Program::Inst()->AddEventListener(Program::EvtRender, this, &UIManager::OnRender);
+
+    Program::Inst()->GetGraphicsSystem()->AddEventListener(GraphicsSystem::EvtWindowResize, this, &UIManager::OnWindowResize);
+    Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseMove, this, &UIManager::OnMouseMove);
+    Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseButtonPress, this, &UIManager::OnMouseButtonPress);
 }
 
 UIManager::~UIManager()
 {
+    Program::Inst()->GetInputSystem()->RemoveEventListener(InputSystem::EvtMouseButtonPress, this, &UIManager::OnMouseButtonPress);
+    Program::Inst()->GetInputSystem()->RemoveEventListener(InputSystem::EvtMouseMove, this, &UIManager::OnMouseMove);
+    Program::Inst()->GetGraphicsSystem()->RemoveEventListener(GraphicsSystem::EvtWindowResize, this, &UIManager::OnWindowResize);
+
+    Program::Inst()->RemoveEventListener(Program::EvtRender, this, &UIManager::OnRender);
+    Program::Inst()->RemoveEventListener(Program::EvtUpdate, this, &UIManager::OnUpdate);
 }
 
 void UIManager::OnUpdate(const Event& evt)
 {
-    mp_RootElement->OnUpdate(evt);
+    auto pData = evt.GetDataAs<UpdateEventData>();
+    mp_RootElement->OnUpdate(pData);
 }
 
 void UIManager::OnRender(const Event& evt)
 {
-    mp_RootElement->OnRender(evt);
+    auto pData = evt.GetDataAs<RenderEventData>();
+    mp_RootElement->OnRender(pData);
+}
+
+void UIManager::OnWindowResize(const Event& evt)
+{
+    auto pData = evt.GetDataAs<WindowResizeEventData>();
+    mp_RootElement->SetSize((Vector2f)pData->GetSize());
+}
+
+void UIManager::OnMouseMove(const Event& evt)
+{
+    auto pData = evt.GetDataAs<MouseMoveEventData>();
+    mp_RootElement->OnMouseMove(pData);
+}
+
+void UIManager::OnMouseButtonPress(const Event& evt)
+{
+
 }
 
 bool UIManager::LoadFile(const string& filename)

@@ -72,6 +72,8 @@ public:
 
     GraphicsContext* GetContext() const;
 
+    sf::WindowHandle GetWindowHandle() const { return m_SfWindow.getSystemHandle(); }
+
 private:
 
     GraphicsSystem() :
@@ -125,6 +127,7 @@ public:
 
     inline unsigned int GetWidth() const { return m_Width; }
     inline unsigned int GetHeight() const { return m_Height; }
+    inline Vector2u GetSize() const { return Vector2u(m_Width, m_Height); }
 
     virtual int PushDataToLua(lua_State* L) const;
 

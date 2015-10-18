@@ -117,6 +117,7 @@ void GraphicsSystem::SetWindowStyle(const int& styleFlags)
 void GraphicsSystem::ApplyWindowChanges()
 {
     CreateSFMLWindow();
+    Dispatch(Event(EvtWindowResize, WindowResizeEventData(m_Width, m_Height)));
 }
 
 void GraphicsSystem::SetWindowTitle(const string& title)

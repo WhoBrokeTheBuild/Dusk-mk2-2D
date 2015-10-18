@@ -224,6 +224,7 @@
     <ClCompile Include="Dusk\Events\Callbacks.cpp" />
     <ClCompile Include="Dusk\Events\Event.cpp" />
     <ClCompile Include="Dusk\Events\EventDispatcher.cpp" />
+    <ClCompile Include="Dusk\Graphics\Cursor.cpp" />
     <ClCompile Include="Dusk\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Dusk\Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Dusk\Input\InputSystem.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="Dusk\Events\EventDispatcher.hpp" />
     <ClInclude Include="Dusk\Geometry\Vector2.hpp" />
     <ClInclude Include="Dusk\Graphics\Color.hpp" />
+    <ClInclude Include="Dusk\Graphics\Cursor.hpp" />
     <ClInclude Include="Dusk\Graphics\GraphicsContext.hpp" />
     <ClInclude Include="Dusk\Graphics\GraphicsSystem.hpp" />
     <ClInclude Include="Dusk\Input\InputSystem.hpp" />

@@ -4,11 +4,13 @@
 #include <Dusk/Tracking/TrackedObject.hpp>
 #include <Dusk/Events/EventDispatcher.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
+#include <Dusk/Geometry/Rect.hpp>
 #include <Dusk/Graphics/Color.hpp>
 #include <Dusk/Graphics/TextBuffer.hpp>
 #include <Dusk/Collections/Map.hpp>
 #include <Dusk/Collections/ArrayList.hpp>
 #include <Dusk/UI/UIFont.hpp>
+#include <Dusk/Program.hpp>
 
 namespace dusk
 {
@@ -91,18 +93,22 @@ public:
 
     virtual void Inherit(const UIElement* pInheritFrom);
 
-    void OnUpdate(const Event& evt);
-    void OnRender(const Event& evt);
+    void OnUpdate(UpdateEventData* pData);
+    void OnRender(RenderEventData* pData);
+    void OnMouseMove(MouseMoveEventData* pData);
 
     void OnRelativeToLayoutChanged(const Event& evt);
     
     string GetName() const { return m_Name; }
     void SetName(string name) { m_Name = name; }
 
+    UIState GetState() const { return m_State; }
+    void SetState(const UIState& state);
+
     Vector2f GetPos() const { return m_Pos; }
 
     Vector2f GetSize() const { return m_Size; }
-    void SetSize(const Vector2f& size);
+    virtual void SetSize(const Vector2f& size);
 
     weak_ptr<UIElement> GetParent() const { return mp_Parent; }
     void SetParent(weak_ptr<UIElement> pParent);
@@ -114,26 +120,31 @@ public:
     void SetRelativePoint(UIRelPoint relPoint);
 
     Vector2f GetOffset() const { return m_Offset; }
-    void SetOffset(const Vector2f& offset);
+    virtual void SetOffset(const Vector2f& offset);
 
-    float GetBorderSize(const UIState& state = UIState::StateDefault) const { return m_BorderSize.GetValue(state); }
-    void SetBorderSize(const float& size, const UIState& state = UIState::StateDefault) { m_BorderSize.SetValue(state, size); }
+    virtual FloatRect GetBounds() const { return{ m_Pos.x, m_Pos.y, m_Size.x, m_Size.y }; }
 
-    Color GetBorderColor(const UIState& state = UIState::StateDefault) const { return m_BorderColor.GetValue(state); }
-    void SetBorderColor(const Color& color, const UIState& state = UIState::StateDefault) { m_BorderColor.SetValue(state, color); }
+    virtual Color GetBackgroundColor(const UIState& state = UIState::StateDefault) const { return m_BackgroundColor.GetValue(state); }
+    virtual void SetBackgroundColor(const Color& color, const UIState& state = UIState::StateDefault) { m_BackgroundColor.SetValue(state, color); }
 
-    UIFont* GetFont(const UIState& state = UIState::StateDefault) const { return m_Font.GetValue(state); }
-    void SetFont(UIFont* pFont, const UIState& state = UIState::StateDefault);
+    virtual float GetBorderSize(const UIState& state = UIState::StateDefault) const { return m_BorderSize.GetValue(state); }
+    virtual void SetBorderSize(const float& size, const UIState& state = UIState::StateDefault) { m_BorderSize.SetValue(state, size); }
 
-    string GetText() const { return m_TextBuffer.GetText(); }
-    void SetText(const string& text);
+    virtual Color GetBorderColor(const UIState& state = UIState::StateDefault) const { return m_BorderColor.GetValue(state); }
+    virtual void SetBorderColor(const Color& color, const UIState& state = UIState::StateDefault) { m_BorderColor.SetValue(state, color); }
 
-    void AddChild(shared_ptr<UIElement>& pChild);
+    virtual UIFont* GetFont(const UIState& state = UIState::StateDefault) const { return m_Font.GetValue(state); }
+    virtual void SetFont(UIFont* pFont, const UIState& state = UIState::StateDefault);
+
+    virtual string GetText() const { return m_TextBuffer.GetText(); }
+    virtual void SetText(const string& text);
+
+    virtual void AddChild(shared_ptr<UIElement>& pChild);
 
 protected:
     
-    void UpdateState();
-    void UpdateLayout();
+    virtual void UpdateState();
+    virtual void UpdateLayout();
 
     string m_Name;
     UIState m_State = StateDefault;
@@ -149,6 +160,7 @@ protected:
     UIRelPoint m_RelativePoint;
     Vector2f m_Offset;
 
+    StateProp<Color> m_BackgroundColor = StateProp<Color>(Color::Transparent);
     StateProp<float> m_BorderSize;
     StateProp<Color> m_BorderColor;
     StateProp<UIFont*> m_Font;

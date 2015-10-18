@@ -34,10 +34,10 @@ int MouseButtonEventData::PushDataToLua(lua_State* L) const
 
 int MouseMoveEventData::PushDataToLua(lua_State* L) const
 {
-    lua_pushnumber(L, m_MouseX);
-    lua_pushnumber(L, m_MouseY);
-    lua_pushnumber(L, m_DeltaX);
-    lua_pushnumber(L, m_DeltaY);
+    lua_pushnumber(L, m_MousePos.x);
+    lua_pushnumber(L, m_MousePos.y);
+    lua_pushnumber(L, m_MouseDelta.x);
+    lua_pushnumber(L, m_MouseDelta.y);
     return 4;
 }
 

@@ -32,6 +32,7 @@
     <ClCompile Include="Dusk\UI\UILabel.cpp" />
     <ClCompile Include="Dusk\UI\UIInput.cpp" />
     <ClCompile Include="Dusk\UI\UIButton.cpp" />
+    <ClCompile Include="Dusk\Graphics\Cursor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="Dusk\UI\UILabel.hpp" />
     <ClInclude Include="Dusk\Logging\Logger.hpp" />
     <ClInclude Include="Dusk\Collections\HashMap.hpp" />
+    <ClInclude Include="Dusk\Graphics\Cursor.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

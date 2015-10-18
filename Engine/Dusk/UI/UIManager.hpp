@@ -34,6 +34,9 @@ public:
 
     void OnUpdate(const Event& evt);
     void OnRender(const Event& evt);
+    void OnWindowResize(const Event& evt);
+    void OnMouseMove(const Event& evt);
+    void OnMouseButtonPress(const Event& evt);
 
     bool LoadFile(const string& filename);
 
@@ -77,6 +80,8 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
     shared_ptr<ElementType> pElement(New ElementType());
     shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
 
+    pElement->SetName(name);
+
     if (!pGenericElement)
         return shared_ptr<ElementType>();
 
@@ -86,29 +91,29 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
         UIElement* pInheritFrom = m_UIElements[inheritsAttr->value()].get();
 
         if (pInheritFrom)
-            pElement->Inherit(pInheritFrom);
+            pGenericElement->Inherit(pInheritFrom);
     }
 
     bool isVirtual = false;
     xml_attribute<>* virtualAttr = node->first_attribute("virtual");
     if (virtualAttr)
-        isVirtual = (virtualAttr->value() == "true" ? true : false);
+        isVirtual = (string(virtualAttr->value()) == "true" ? true : false);
 
     if (!isVirtual && pParentElement)
     {
-        pElement->SetParent(pParentElement);
+        pGenericElement->SetParent(pParentElement);
         pParentElement->AddChild(pGenericElement);
     }
 
     xml_node<>* sizeNode = node->first_node("Size");
     if (sizeNode)
-        pElement->SetSize(ParseVector2(sizeNode));
+        pGenericElement->SetSize(ParseVector2(sizeNode));
 
     xml_node<>* posNode = node->first_node("Position");
     if (posNode)
     {
         Vector2f offset = ParseVector2(posNode);
-        pElement->SetOffset(offset);
+        pGenericElement->SetOffset(offset);
 
         xml_attribute<>* relToAttr = posNode->first_attribute("relTo");
         xml_attribute<>* relPointAttr = posNode->first_attribute("relPoint");
@@ -126,7 +131,7 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
                 else
                 {
                     if (m_UIElements.contains_key(relToVal))
-                        pElement->SetRelativeTo(m_UIElements[relToVal]);
+                        pGenericElement->SetRelativeTo(m_UIElements[relToVal]);
                 }
             }
         }
@@ -152,13 +157,24 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
             {
                 relPoint = BottomRight;
             }
-            pElement->SetRelativePoint(relPoint);
+            pGenericElement->SetRelativePoint(relPoint);
         }
     }
 
     xml_attribute<>* textAttr = node->first_attribute("text");
     if (textAttr)
-        pElement->SetText(textAttr->value());
+        pGenericElement->SetText(textAttr->value());
+
+    for (xml_node<>* backgroundNode = node->first_node("Background"); backgroundNode; backgroundNode = backgroundNode->next_sibling("Background"))
+    {
+        UIState state = StateDefault;
+        xml_attribute<>* stateAttr = backgroundNode->first_attribute("state");
+        if (stateAttr)
+            state = ParseState(stateAttr->value());
+
+        xml_node<>* bgColorNode = backgroundNode->first_node("Color");
+        pGenericElement->SetBackgroundColor(ParseColor(bgColorNode), state);
+    }
 
     for (xml_node<>* fontNode = node->first_node("UseFont"); fontNode; fontNode = fontNode->next_sibling("UseFont"))
     {
@@ -177,7 +193,7 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
         if (stateAttr)
             state = ParseState(stateAttr->value());
 
-        pElement->SetFont(font, state);
+        pGenericElement->SetFont(font, state);
     }
 
     for (xml_node<>* borderNode = node->first_node("Border"); borderNode; borderNode = borderNode->next_sibling("Border"))
@@ -191,14 +207,14 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
         xml_attribute<>* sizeAttr = borderNode->first_attribute("size");
         if (sizeAttr)
             size = std::stof(sizeAttr->value());
-        pElement->SetBorderSize(size, state);
+        pGenericElement->SetBorderSize(size, state);
 
         xml_node<>* colorNode = borderNode->first_node("Color");
         Color color = Color::Black;
         if (colorNode)
             color = ParseColor(colorNode);
 
-        pElement->SetBorderColor(color, state);
+        pGenericElement->SetBorderColor(color, state);
     }
 
     xml_node<>* childrenNode = node->first_node("Children");

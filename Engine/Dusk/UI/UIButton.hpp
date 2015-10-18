@@ -18,6 +18,10 @@ public:
 
     virtual void Inherit(const UIElement* pInheritFrom);
 
+protected:
+
+    virtual void UpdateState() override;
+
 };
 
 } // namespace dusk

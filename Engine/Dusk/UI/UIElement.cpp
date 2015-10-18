@@ -29,6 +29,7 @@ void UIElement::Inherit(const UIElement* pInheritFrom)
     m_RelativeTo = pInheritFrom->m_RelativeTo;
     m_RelativePoint = pInheritFrom->m_RelativePoint;
     m_Offset = pInheritFrom->m_Offset;
+    m_BackgroundColor = pInheritFrom->m_BackgroundColor;
     m_BorderSize = pInheritFrom->m_BorderSize;
     m_BorderColor = pInheritFrom->m_BorderColor;
     m_Font = pInheritFrom->m_Font;
@@ -37,25 +38,23 @@ void UIElement::Inherit(const UIElement* pInheritFrom)
     UpdateLayout();
 }
 
-void UIElement::OnUpdate(const Event& evt)
+void UIElement::OnUpdate(UpdateEventData* pData)
 {
     if (!m_Active)
         return;
 
     for (auto& child : m_Children)
-        child->OnUpdate(evt);
+        child->OnUpdate(pData);
 }
 
-void UIElement::OnRender(const Event& evt)
+void UIElement::OnRender(RenderEventData* pData)
 {
     if (!m_Visible)
         return;
 
-    RenderEventData* pData = evt.GetDataAs<RenderEventData>();
-
     sf::RectangleShape rect(m_Size);
     rect.setPosition(m_Pos);
-    rect.setFillColor(Color::White);
+    rect.setFillColor(m_BackgroundColor.GetValue(m_State));
     pData->GetContext()->Draw(rect);
 
     float borderSize = m_BorderSize.GetValue(m_State);
@@ -73,13 +72,42 @@ void UIElement::OnRender(const Event& evt)
     pData->GetContext()->Draw(&m_TextBuffer);
 
     for (auto& child : m_Children)
-        child->OnRender(evt);
+        child->OnRender(pData);
+}
+
+void UIElement::OnMouseMove(MouseMoveEventData* pData)
+{
+    if (GetBounds().contains(pData->GetPos()))
+    {
+        if (m_State != StateDisabled && m_State != StateHover)
+        {
+            DuskExtLog("info", "Entering %s", m_Name.c_str());
+            SetState(StateHover);
+        }
+    }
+    else
+    {
+        if (m_State != StateDisabled && m_State != StateDefault)
+        {
+            DuskExtLog("info", "Leaving %s", m_Name.c_str());
+            SetState(StateDefault);
+        }
+    }
+
+    for (auto& child : m_Children)
+        child->OnMouseMove(pData);
 }
 
 void UIElement::OnRelativeToLayoutChanged(const Event& evt)
 {
     UpdateLayout();
     Dispatch(evt);
+}
+
+void UIElement::SetState(const UIState& state)
+{
+    m_State = state;
+    UpdateState();
 }
 
 void UIElement::SetSize(const Vector2f& size)
@@ -160,38 +188,6 @@ void UIElement::UpdateState()
 
 void UIElement::UpdateLayout()
 {
-    Vector2f parentSize;
-    if (auto pParent = mp_Parent.lock())
-        parentSize = pParent->GetSize();
-
-    Vector2f textSize = m_TextBuffer.GetSize();
-
-    if (m_TargetSize.x == FLT_MIN)
-    {
-        m_Size.x = textSize.x;
-    }
-    else if (m_TargetSize.x == FLT_MAX)
-    {
-        m_Size.x = parentSize.x - m_Pos.x;
-    }
-    else
-    {
-        m_Size.x = m_TargetSize.x;
-    }
-
-    if (m_TargetSize.y == FLT_MIN)
-    {
-        m_Size.y = textSize.y;
-    }
-    else if (m_TargetSize.y == FLT_MAX)
-    {
-        m_Size.y = parentSize.y - m_Pos.y;
-    }
-    else
-    {
-        m_Size.y = m_TargetSize.y;
-    }
-
     if (auto pRelativeTo = m_RelativeTo.lock())
     {
         Vector2f relPos = pRelativeTo->GetPos();
@@ -226,6 +222,38 @@ void UIElement::UpdateLayout()
     else
     {
         m_Pos = m_Offset;
+    }
+
+    Vector2f parentSize;
+    if (auto pParent = mp_Parent.lock())
+        parentSize = pParent->GetSize();
+
+    Vector2f textSize = m_TextBuffer.GetSize();
+
+    if (m_TargetSize.x == FLT_MIN)
+    {
+        m_Size.x = textSize.x;
+    }
+    else if (m_TargetSize.x == FLT_MAX)
+    {
+        m_Size.x = parentSize.x - m_Pos.x;
+    }
+    else
+    {
+        m_Size.x = m_TargetSize.x;
+    }
+
+    if (m_TargetSize.y == FLT_MIN)
+    {
+        m_Size.y = textSize.y;
+    }
+    else if (m_TargetSize.y == FLT_MAX)
+    {
+        m_Size.y = parentSize.y - m_Pos.y;
+    }
+    else
+    {
+        m_Size.y = m_TargetSize.y;
     }
 }
 

@@ -1,98 +1,107 @@
 <DuskUI>
-    <Script file="ToolboxFrame.lua" />
+  <Script file="ToolboxFrame.lua" />
 
-    <!-- Templates -->
-    <Label name="ToolboxFrame_HeadingTemplate"
-        inherits="DefaultElementTemplate"
-        virtual="true">
-        <Size x="$min" y="$min" />
-        <UseFont name="HeadingFont" />
-    </Label>
+  <!-- Templates -->
+  <Label name="ToolboxFrame_HeadingTemplate"
+      inherits="DefaultElementTemplate"
+      virtual="true">
+    <Size x="$min" y="$min" />
+    <UseFont name="HeadingFont" />
+  </Label>
 
-    <Label name="ToolboxFrame_LabelTemplate"
-        inherits="DefaultElementTemplate"
-        virtual="true">
+  <Label name="ToolboxFrame_LabelTemplate"
+      inherits="DefaultElementTemplate"
+      virtual="true">
+    <Size x="$min" y="20" />
+    <UseFont name="MainFont" />
+  </Label>
+
+  <Input name="ToolboxFrame_InputTemplate"
+      inherits="DefaultElementTemplate"
+      virtual="true"
+      maxLength="5">
+    <Size x="$min" y="$min" />
+    <Border size="1">
+      <Color r="0" g="0" b="0" />
+    </Border>
+    <Border size="1" state="disabled">
+      <Color r="128" g="128" b="128" />
+    </Border>
+  </Input>
+
+  <Button name="ToolboxFrame_ButtonTemplate"
+      inherits="DefaultElementTemplate"
+      virtual="true">
+    <Size x="$min" y="$min" />
+    <Background>
+      <Color r="230" g="230" b="230" />
+    </Background>
+    <Background state="hover">
+      <Color r="150" g="150" b="150" />
+    </Background>
+    <Border size="1">
+      <Color r="0" g="0" b="0" />
+    </Border>
+    <Border size="1" state="disabled">
+      <Color r="128" g="128" b="128" />
+    </Border>
+  </Button>
+
+  <Frame name="ToolboxFrame">
+    <Size x="250" y="$max" />
+    <Position x="0" y="0" relTo="$parent" relPoint="TopLeft" />
+    <Background>
+      <Color r="255" g="255" b="255" />
+    </Background>
+    <Children>
+
+      <Label name="ToolboxFrame_MapSizeLabel"
+          inherits="ToolboxFrame_HeadingTemplate"
+          text="Map Size">
+        <Position x="10" y="10" relTo="$parent" relPoint="TopLeft" />
+      </Label>
+
+      <Label name="ToolboxFrame_WidthLabel"
+          inherits="ToolboxFrame_LabelTemplate"
+          text="Width:"
+          target="ToolboxFrame_WidthInput">
+        <Position x="10" y="15" relTo="ToolboxFrame_MapSizeLabel" relPoint="BottomLeft" />
+      </Label>
+      <Label name="ToolboxFrame_HeightLabel"
+          inherits="ToolboxFrame_LabelTemplate"
+          text="Height:"
+          target="ToolboxFrame_HeightInput">
+        <Position x="0" y="5" relTo="ToolboxFrame_WidthLabel" relPoint="BottomLeft" />
+      </Label>
+
+      <Input name="ToolboxFrame_WidthInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="int">
+        <Size x="100" y="20" />
+        <Position x="10" y="0" relTo="ToolboxFrame_WidthLabel" relPoint="TopRight" />
+      </Input>
+      <Input name="ToolboxFrame_HeightInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="int">
+        <Size x="100" y="20" />
+        <Position x="0" y="5" relTo="ToolboxFrame_WidthInput" relPoint="BottomLeft" />
+      </Input>
+
+      <Button name="ToolboxFrame_UpdateSizeButton"
+          inherits="ToolboxFrame_ButtonTemplate"
+          text="Update Size">
         <Size x="$min" y="20" />
-        <UseFont name="MainFont" />
-    </Label>
-
-    <Input name="ToolboxFrame_InputTemplate"
-        inherits="DefaultElementTemplate"
-        virtual="true"
-        maxLength="5">
-        <Size x="$min" y="$min" />
-        <Border size="1">
-            <Color r="0" g="0" b="0" />
-        </Border>
-        <Border size="1" state="disabled">
-            <Color r="128" g="128" b="128" />
-        </Border>
-    </Input>
-
-    <Button name="ToolboxFrame_ButtonTemplate"
-        inherits="DefaultElementTemplate"
-        virtual="true">
-        <Size x="$min" y="$min" />
-        <Border size="1">
-            <Color r="0" g="0" b="0" />
-        </Border>
-        <Border size="1" state="disabled">
-            <Color r="128" g="128" b="128" />
-        </Border>
-    </Button>
-
-    <Frame name="ToolboxFrame">
-        <Size x="250" y="$max" />
-        <Position x="0" y="0" relTo="$parent" relPoint="TopLeft" />
-        <Children>
-
-            <Label name="ToolboxFrame_MapSizeLabel"
-                inherits="ToolboxFrame_HeadingTemplate"
-                text="Map Size">
-                <Position x="10" y="10" relTo="$parent" relPoint="TopLeft" />
-            </Label>
-
-            <Label name="ToolboxFrame_WidthLabel"
-                inherits="ToolboxFrame_LabelTemplate"
-                text="Width:"
-                target="ToolboxFrame_WidthInput">
-                <Position x="10" y="15" relTo="ToolboxFrame_MapSizeLabel" relPoint="BottomLeft" />
-            </Label>
-            <Label name="ToolboxFrame_HeightLabel"
-                inherits="ToolboxFrame_LabelTemplate"
-                text="Height:"
-                target="ToolboxFrame_HeightInput">
-                <Position x="0" y="5" relTo="ToolboxFrame_WidthLabel" relPoint="BottomLeft" />
-            </Label>
-
-            <Input name="ToolboxFrame_WidthInput"
-                inherits="ToolboxFrame_InputTemplate"
-                type="int">
-                <Size x="100" y="20" />
-                <Position x="10" y="0" relTo="ToolboxFrame_WidthLabel" relPoint="TopRight" />
-            </Input>
-            <Input name="ToolboxFrame_HeightInput"
-                inherits="ToolboxFrame_InputTemplate"
-                type="int">
-                <Size x="100" y="20" />
-                <Position x="0" y="5" relTo="ToolboxFrame_WidthInput" relPoint="BottomLeft" />
-            </Input>
-
-            <Button name="ToolboxFrame_UpdateSizeButton"
-                inherits="ToolboxFrame_ButtonTemplate"
-                text="Update Size"
-                target="ToolboxFrame_WidthInput">
-                <Position x="10" y="10" relTo="ToolboxFrame_HeightLabel" relPoint="BottomLeft" />
-                <Bindings>
-                    <OnClick func="ToolboxFrame_UpdateSizeButton_OnClick" />
-                </Bindings>
-            </Button>
-
-        </Children>
+        <Position x="0" y="10" relTo="ToolboxFrame_HeightLabel" relPoint="BottomLeft" />
         <Bindings>
-            <OnShow func="ToolboxFrame_OnShow" />
-            <OnHide func="ToolboxFrame_OnHide" />
-            <OnUpdate func="ToolboxFrame_OnUpdate" />
+          <OnClick func="ToolboxFrame_UpdateSizeButton_OnClick" />
         </Bindings>
-    </Frame>
+      </Button>
+
+    </Children>
+    <Bindings>
+      <OnShow func="ToolboxFrame_OnShow" />
+      <OnHide func="ToolboxFrame_OnHide" />
+      <OnUpdate func="ToolboxFrame_OnUpdate" />
+    </Bindings>
+  </Frame>
 </DuskUI>
