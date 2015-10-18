@@ -1,9 +1,9 @@
-#ifndef DUSK_COLLECTIONS_MAP_HPP
-#define DUSK_COLLECTIONS_MAP_HPP
+#ifndef DUSK_COLLECTIONS_HASH_MAP_HPP
+#define DUSK_COLLECTIONS_HASH_MAP_HPP
 
 #include <Dusk/Tracking/TrackedObject.hpp>
 
-#include <map>
+#include <unordered_map>
 
 /// \addtogroup Collections
 /// @{
@@ -12,23 +12,24 @@ namespace dusk
 {
 
 ////////////////////////////////////////////////////////////
-/// \class Map Map.hpp <Dusk/Collections/Map.hpp>
+/// \class HashMap HashMap.hpp <Dusk/Collections/HashMap.hpp>
 ///
-/// \brief A templated map. Based on std::map
+/// \brief A templated hash map. Based on std::unordered_map
 ///
 ////////////////////////////////////////////////////////////
 template <class KeyType, class ValueType, 
-          typename Sort = std::less<KeyType>, 
-          typename Alloc = std::allocator<std::pair<KeyType, ValueType>>>
-class Map :
+            typename Hasher = std::hash<KeyType>,
+            typename KeyEqual = std::equal_to<KeyType>,
+            typename Alloc = std::allocator<std::pair<KeyType, ValueType>>>
+class HashMap :
     public TrackedObject,
-    public std::map<KeyType, ValueType, Sort, Alloc>
+    public std::unordered_map<KeyType, ValueType, Hasher, KeyEqual, Alloc>
 {
 public:
 
-    typedef std::map<KeyType, ValueType, Sort, Alloc> STLType;
+    typedef std::unordered_map<KeyType, ValueType, Hasher, KeyEqual, Alloc> STLType;
 
-    virtual inline string GetClassName() const override { return "Map"; }
+    virtual inline string GetClassName() const override { return "Hash Map"; }
 
     ////////////////////////////////////////////////////////////
     /// \brief Add a new item to the collection. Alias for insert()
@@ -120,10 +121,10 @@ public:
         return found;
     }
 
-}; // class Map
+}; // class HashMap
 
 } // namespace dusk
 
-/// @}
+  /// @}
 
-#endif // DUSK_COLLECTIONS_MAP_HPP
+#endif // DUSK_COLLECTIONS_HASH_MAP_HPP

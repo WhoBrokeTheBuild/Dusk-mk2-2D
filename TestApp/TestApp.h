@@ -13,16 +13,14 @@ class TestApp :
 {
 public:
 
+    using Program::Program;
+
     TestApp();
-    virtual inline ~TestApp() { Term(); }
+    inline ~TestApp();
 
     virtual inline string GetClassName() const { return "Test App"; }
 
 protected:
-
-    virtual bool Init() override;
-
-    virtual void Term() override;
 
     virtual void Update(dusk::FrameTimeInfo& timeInfo) override;
 

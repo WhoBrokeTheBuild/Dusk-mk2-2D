@@ -14,30 +14,17 @@ class ScriptHost :
 {
 public:
 
-    ScriptHost(void) :
-        mp_LuaState(nullptr)
-    { }
+    ScriptHost();
+    ScriptHost(const ScriptHost&) = delete;
+    ScriptHost& operator=(const ScriptHost&) = delete;
+    virtual ~ScriptHost();
 
-    virtual ~ScriptHost(void)
-    {
-        Term();
-    }
-
-    virtual inline string GetClassName(void) const
-    {
-        return "Script Host";
-    }
-
-    bool Init(void);
-    void Term(void);
+    virtual inline string GetClassName() const override { return "Script Host"; }
 
     bool RunFile(const string& filename);
     bool RegisterFunction(const string& funcName, LuaCallback callback);
 
-    inline lua_State* GetState(void)
-    {
-        return mp_LuaState;
-    }
+    inline lua_State* GetState() { return mp_LuaState; }
 
 private:
 

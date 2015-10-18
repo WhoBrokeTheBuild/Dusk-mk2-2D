@@ -8,25 +8,18 @@ UILabel::UILabel()
 
 }
 
-bool UILabel::Init(shared_ptr<UIElement> inheritFrom)
+UILabel::~UILabel()
 {
-    if (!UIElement::Init(inheritFrom))
-        return false;
-
-    return true;
 }
 
-bool UILabel::Init()
+void UILabel::Inherit(const UIElement* pInheritFrom)
 {
-    if (!UIElement::Init())
-        return false;
+    UIElement::Inherit(pInheritFrom);
+    const UILabel* pInheritFromLabel = dynamic_cast<const UILabel*>(pInheritFrom);
+    if (pInheritFromLabel)
+    {
 
-    return true;
-}
-
-void UILabel::Term()
-{
-    UIElement::Term();
+    }
 }
 
 }

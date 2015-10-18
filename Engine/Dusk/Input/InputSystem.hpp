@@ -23,21 +23,26 @@ class InputSystem :
 
 public:
 
-    static EventID EvtKeyPress;
-    static EventID EvtKeyRelease;
+    enum : EventID
+    {
+        EvtKeyPress,
+        EvtKeyRelease,
 
-    static EventID EvtMouseMove;
-    static EventID EvtMouseScroll;
-    static EventID EvtMouseButtonPress;
-    static EventID EvtMouseButtonRelease;
+        EvtMouseMove,
+        EvtMouseScroll,
+        EvtMouseButtonPress,
+        EvtMouseButtonRelease,
 
-    static EventID EvtMappedInputPress;
-    static EventID EvtMappedInputRelease;
+        EvtMappedInputPress,
+        EvtMappedInputRelease,
+    };
+
+    InputSystem(const InputSystem&) = delete;
+    InputSystem& operator=(const InputSystem&) = delete;
+
+    virtual ~InputSystem() = default;
 
     virtual inline string GetClassName() const { return "Input System"; }
-
-    bool Init();
-    void Term();
 
     void MapKey(const MappedInputID& id, const Keyboard::Key& key);
     void MapMouseButton(const MappedInputID& id, const Mouse::Button& button);
@@ -57,27 +62,26 @@ public:
     void TriggerMappedInputPress(const MappedInputID& input);
     void TriggerMappedInputRelease(const MappedInputID& input);
 
+private:
+
+    InputSystem() = default;
+
+    double m_MouseX = 0.0;
+
+    double m_MouseY = 0.0;
+
+    Map<Keyboard::Key, MappedInputID> m_MappedKeys;
+
+    Map<Mouse::Button, MappedInputID> m_MappedMouseButtons;
+
+public:
+
     static void InitScripting();
     static int Script_Get(lua_State* L);
     static int Script_MapKey(lua_State* L);
     static int Script_MapMouseButton(lua_State* L);
     static int Script_GetMappedKey(lua_State* L);
     static int Script_GetMappedMouseButton(lua_State* L);
-
-private:
-
-    InputSystem();
-
-    virtual inline ~InputSystem() { Term(); }
-
-    double m_MouseX;
-
-    double m_MouseY;
-
-    Map<Keyboard::Key, MappedInputID> m_MappedKeys;
-
-    Map<Mouse::Button, MappedInputID> m_MappedMouseButtons;
-
 
 }; // class InputSystem
 

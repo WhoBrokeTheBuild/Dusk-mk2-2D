@@ -12,14 +12,11 @@ class UILabel :
 public:
 
     UILabel();
-    virtual ~UILabel() { Term(); }
+    virtual ~UILabel();
 
     virtual inline string GetClassName() const { return "UI Label"; }
 
-    bool Init(shared_ptr<UIElement> inheritFrom);
-    bool Init();
-    void Term();
-
+    virtual void Inherit(const UIElement* pInheritFrom);
 };
 
 } // namespace dusk

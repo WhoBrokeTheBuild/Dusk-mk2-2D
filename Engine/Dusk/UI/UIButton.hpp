@@ -12,13 +12,11 @@ class UIButton :
 public:
 
     UIButton();
-    virtual ~UIButton() { Term(); }
+    virtual ~UIButton();
 
     virtual inline string GetClassName() const { return "UI Button"; }
 
-    bool Init(shared_ptr<UIElement> inheritFrom);
-    bool Init();
-    void Term();
+    virtual void Inherit(const UIElement* pInheritFrom);
 
 };
 

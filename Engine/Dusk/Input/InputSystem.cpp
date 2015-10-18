@@ -8,39 +8,6 @@
 namespace dusk
 {
 
-EventID InputSystem::EvtKeyPress = 1;
-EventID InputSystem::EvtKeyRelease = 2;
-
-EventID InputSystem::EvtMouseMove = 10;
-EventID InputSystem::EvtMouseScroll = 11;
-EventID InputSystem::EvtMouseButtonPress = 12;
-EventID InputSystem::EvtMouseButtonRelease = 13;
-
-EventID InputSystem::EvtMappedInputPress = 20;
-EventID InputSystem::EvtMappedInputRelease = 21;
-
-InputSystem::InputSystem() :
-    m_MouseX(0),
-    m_MouseY(0),
-    m_MappedKeys(),
-    m_MappedMouseButtons()
-{ }
-
-bool InputSystem::Init()
-{
-    DuskLog("verbose", "Input System initializing");
-
-    m_MappedKeys.clear();
-    m_MappedMouseButtons.clear();
-
-    return true;
-}
-
-void InputSystem::Term()
-{
-    RemoveAllListeners();
-}
-
 void InputSystem::MapKey(const MappedInputID & id, const Keyboard::Key & key)
 {
     m_MappedKeys.erase_all(id);

@@ -16,6 +16,11 @@ class Scripting
 {
 public:
 
+    Scripting() = delete;
+    Scripting(const Scripting&) = delete;
+    Scripting& operator=(const Scripting&) = delete;
+    ~Scripting() = delete;
+
     static void AddScriptHost(ScriptHost* pHost);
 
     static ScriptHost* GetScriptHost(lua_State* L);

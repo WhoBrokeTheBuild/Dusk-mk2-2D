@@ -243,7 +243,6 @@
     <ClCompile Include="Dusk\Tracking\TrackedObject.cpp" />
     <ClCompile Include="Dusk\Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Dusk\UI\UIButton.cpp" />
-    <ClCompile Include="Dusk\UI\UIFont.cpp" />
     <ClCompile Include="Dusk\UI\UIElement.cpp" />
     <ClCompile Include="Dusk\UI\UIFrame.cpp" />
     <ClCompile Include="Dusk\UI\UIInput.cpp" />
@@ -256,6 +255,7 @@
     <ClInclude Include="Dusk\Audio\Music.hpp" />
     <ClInclude Include="Dusk\Audio\Sound.hpp" />
     <ClInclude Include="Dusk\Collections\ArrayList.hpp" />
+    <ClInclude Include="Dusk\Collections\HashMap.hpp" />
     <ClInclude Include="Dusk\Collections\Map.hpp" />
     <ClInclude Include="Dusk\Events\Callbacks.hpp" />
     <ClInclude Include="Dusk\Events\Delegate.hpp" />
@@ -272,7 +272,7 @@
     <ClInclude Include="Dusk\Graphics\Texture.hpp" />
     <ClInclude Include="Dusk\Geometry\Rect.hpp" />
     <ClInclude Include="Dusk\Input\Mapped.hpp" />
-    <ClInclude Include="Dusk\Logging\ILogger.hpp" />
+    <ClInclude Include="Dusk\Logging\Logger.hpp" />
     <ClInclude Include="Dusk\Logging\LogColors.hpp" />
     <ClInclude Include="Dusk\Logging\Loggers\ConsoleLogger.hpp" />
     <ClInclude Include="Dusk\Logging\Loggers\FileLogger.hpp" />

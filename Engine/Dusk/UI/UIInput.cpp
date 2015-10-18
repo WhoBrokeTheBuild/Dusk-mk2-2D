@@ -8,25 +8,20 @@ UIInput::UIInput()
 
 }
 
-bool UIInput::Init(shared_ptr<UIElement> inheritFrom)
-{
-    if (!UIElement::Init(inheritFrom))
-        return false;
 
-    return true;
+UIInput::~UIInput()
+{
+
 }
 
-bool UIInput::Init()
+void UIInput::Inherit(const UIElement* pInheritFrom)
 {
-    if (!UIElement::Init())
-        return false;
+    UIElement::Inherit(pInheritFrom);
+    const UIInput* pInheritFromInput = dynamic_cast<const UIInput*>(pInheritFrom);
+    if (pInheritFromInput)
+    {
 
-    return true;
-}
-
-void UIInput::Term()
-{
-    UIElement::Term();
+    }
 }
 
 }

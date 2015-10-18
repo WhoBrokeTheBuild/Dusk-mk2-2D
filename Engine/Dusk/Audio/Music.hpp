@@ -15,10 +15,18 @@ class Music :
 {
 public:
 
+    Music() = default;
+    Music(const Music&) = delete;
+    Music& operator=(const Music&) = delete;
+    ~Music() = default;
+
+    inline Music(const string& filename) { Load(filename); }
+
     virtual inline string GetClassName() const { return "Music"; }
 
     bool Load(const string& filename);
-    void Term();
+
+    inline bool IsLoaded() const { return m_Loaded; }
 
     void Play();
     void Stop();
@@ -32,6 +40,8 @@ public:
     bool IsLooping() const;
 
 private:
+
+    bool m_Loaded = false;
 
     sf::Music m_SfMusic;
 

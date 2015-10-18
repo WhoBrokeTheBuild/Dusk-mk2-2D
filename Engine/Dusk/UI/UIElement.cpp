@@ -10,75 +10,31 @@
 namespace dusk
 {
 
-EventID UIElement::EvtLayoutChanged = 1;
-
-UIElement::UIElement() :
-    m_Active(false),
-    m_Visible(false),
-    m_Pos(),
-    m_TargetSize(),
-    m_Size(),
-    m_RelativeTo(nullptr),
-    m_RelativePoint(TopLeft),
-    m_BorderSize(),
-    m_BorderColor(),
-    m_Font(),
-    m_Parent(nullptr),
-    m_Children()
+UIElement::UIElement()
 {
-
+    UpdateLayout();
 }
 
-bool UIElement::Init(shared_ptr<UIElement> inheritFrom)
+UIElement::~UIElement()
 {
-    m_Name = "";
-    m_State = StateDefault;
-    m_RelativeTo = inheritFrom->m_RelativeTo;
-    m_RelativePoint = inheritFrom->m_RelativePoint;
-    m_Offset = inheritFrom->m_Offset;
-    m_BorderSize = inheritFrom->m_BorderSize;
-    m_BorderColor = inheritFrom->m_BorderColor;
-    m_Font = inheritFrom->m_Font;
-    m_TargetSize = inheritFrom->m_TargetSize;
-    m_TextBuffer = inheritFrom->m_TextBuffer;
+    if (auto pRelativeTo = m_RelativeTo.lock())
+        pRelativeTo->RemoveEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
+}
 
-    m_Active = true;
-    m_Visible = true;
+void UIElement::Inherit(const UIElement* pInheritFrom)
+{
+    m_Active = pInheritFrom->m_Active;
+    m_Visible = pInheritFrom->m_Visible;
+    m_TargetSize = pInheritFrom->m_TargetSize;
+    m_RelativeTo = pInheritFrom->m_RelativeTo;
+    m_RelativePoint = pInheritFrom->m_RelativePoint;
+    m_Offset = pInheritFrom->m_Offset;
+    m_BorderSize = pInheritFrom->m_BorderSize;
+    m_BorderColor = pInheritFrom->m_BorderColor;
+    m_Font = pInheritFrom->m_Font;
+    m_TextBuffer = pInheritFrom->m_TextBuffer;
 
     UpdateLayout();
-
-    return true;
-}
-
-bool UIElement::Init()
-{
-    m_Name = "";
-    m_State = StateDefault;
-    m_RelativeTo = nullptr;
-    m_RelativePoint = TopLeft;
-    m_Offset = Vector2f();
-    m_TargetSize = Vector2f();
-
-    m_Active = true;
-    m_Visible = true;
-
-    UpdateLayout();
-
-    return true;
-}
-
-void UIElement::Term()
-{
-    if (m_RelativeTo)
-        m_RelativeTo->RemoveEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
-
-    m_Active = false;
-    m_Visible = false;
-    m_RelativeTo = nullptr;
-    m_Parent = nullptr;
-    m_Children.clear();
-
-    RemoveAllListeners();
 }
 
 void UIElement::OnUpdate(const Event& evt)
@@ -102,7 +58,7 @@ void UIElement::OnRender(const Event& evt)
     rect.setFillColor(Color::White);
     pData->GetContext()->Draw(rect);
 
-    size_t borderSize = m_BorderSize.GetValue(m_State);
+    float borderSize = m_BorderSize.GetValue(m_State);
     if (borderSize > 0)
     {
         sf::RectangleShape borderRect(m_Size);
@@ -134,21 +90,23 @@ void UIElement::SetSize(const Vector2f& size)
     Dispatch(Event(EvtLayoutChanged));
 }
 
-void UIElement::SetParent(shared_ptr<UIElement> parent)
+void UIElement::SetParent(weak_ptr<UIElement> pParent)
 {
-    m_Parent = parent;
+    mp_Parent = pParent;
 
     UpdateLayout();
     Dispatch(Event(EvtLayoutChanged));
 }
 
-void UIElement::SetRelativeTo(shared_ptr<UIElement> relTo)
+void UIElement::SetRelativeTo(weak_ptr<UIElement> pRelativeTo)
 {
-    if (m_RelativeTo)
-        m_RelativeTo->RemoveEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
+    if (auto pOldRelativeTo = m_RelativeTo.lock())
+        pOldRelativeTo->RemoveEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
 
-    m_RelativeTo = relTo;
-    m_RelativeTo->AddEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
+    m_RelativeTo = pRelativeTo;
+
+    if (auto pNewRelativeTo = m_RelativeTo.lock())
+        pNewRelativeTo->AddEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
 
     UpdateLayout();
     Dispatch(Event(EvtLayoutChanged));
@@ -170,9 +128,9 @@ void UIElement::SetOffset(const Vector2f& offset)
     Dispatch(Event(EvtLayoutChanged));
 }
 
-void UIElement::SetFont(shared_ptr<UIFont> font, const UIState& state /*= UIState::StateDefault*/)
+void UIElement::SetFont(UIFont* pFont, const UIState& state /*= UIState::StateDefault*/)
 {
-    m_Font.SetValue(state, font);
+    m_Font.SetValue(state, pFont);
     UpdateState();
 }
 
@@ -189,10 +147,13 @@ void UIElement::AddChild(shared_ptr<UIElement>& pChild)
 
 void UIElement::UpdateState()
 {
-    shared_ptr<UIFont> pUIFont = m_Font.GetValue(m_State);
-    m_TextBuffer.SetFont(pUIFont->GetFont().get());
-    m_TextBuffer.SetFontSize(pUIFont->GetFontSize());
-    m_TextBuffer.SetColor(pUIFont->GetColor());
+    UIFont* pUIFont = m_Font.GetValue(m_State);
+    if (pUIFont)
+    {
+        m_TextBuffer.SetFont(pUIFont->GetFont());
+        m_TextBuffer.SetFontSize(pUIFont->GetFontSize());
+        m_TextBuffer.SetColor(pUIFont->GetColor());
+    }
 
     UpdateLayout();
 }
@@ -200,8 +161,9 @@ void UIElement::UpdateState()
 void UIElement::UpdateLayout()
 {
     Vector2f parentSize;
-    if (m_Parent)
-        parentSize = m_Parent->GetSize();
+    if (auto pParent = mp_Parent.lock())
+        parentSize = pParent->GetSize();
+
     Vector2f textSize = m_TextBuffer.GetSize();
 
     if (m_TargetSize.x == FLT_MIN)
@@ -230,13 +192,9 @@ void UIElement::UpdateLayout()
         m_Size.y = m_TargetSize.y;
     }
 
-    if (m_RelativeTo == nullptr)
+    if (auto pRelativeTo = m_RelativeTo.lock())
     {
-        m_Pos = m_Offset;
-    }
-    else
-    {
-        Vector2f relPos = m_RelativeTo->GetPos();
+        Vector2f relPos = pRelativeTo->GetPos();
         switch (m_RelativePoint)
         {
         case TopLeft:
@@ -264,6 +222,10 @@ void UIElement::UpdateLayout()
 
             break;
         }
+    }
+    else
+    {
+        m_Pos = m_Offset;
     }
 }
 

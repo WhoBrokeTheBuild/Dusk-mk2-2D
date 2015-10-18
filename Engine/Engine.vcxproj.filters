@@ -28,7 +28,6 @@
     <ClCompile Include="Dusk\Events\EventDispatcher.cpp" />
     <ClCompile Include="Dusk\UI\UIManager.cpp" />
     <ClCompile Include="Dusk\UI\UIElement.cpp" />
-    <ClCompile Include="Dusk\UI\UIFont.cpp" />
     <ClCompile Include="Dusk\UI\UIFrame.cpp" />
     <ClCompile Include="Dusk\UI\UILabel.cpp" />
     <ClCompile Include="Dusk\UI\UIInput.cpp" />
@@ -56,7 +55,6 @@
     <ClInclude Include="Dusk\Events\Event.hpp" />
     <ClInclude Include="Dusk\Logging\Loggers\ConsoleLogger.hpp" />
     <ClInclude Include="Dusk\Logging\Loggers\FileLogger.hpp" />
-    <ClInclude Include="Dusk\Logging\ILogger.hpp" />
     <ClInclude Include="Dusk\Logging\LogColors.hpp" />
     <ClInclude Include="Dusk\Logging\Logging.hpp" />
     <ClInclude Include="Dusk\Scripting\ScriptHost.hpp" />
@@ -81,6 +79,8 @@
     <ClInclude Include="Dusk\UI\UIButton.hpp" />
     <ClInclude Include="Dusk\UI\UIInput.hpp" />
     <ClInclude Include="Dusk\UI\UILabel.hpp" />
+    <ClInclude Include="Dusk\Logging\Logger.hpp" />
+    <ClInclude Include="Dusk\Collections\HashMap.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

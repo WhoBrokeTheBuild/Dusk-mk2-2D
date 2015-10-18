@@ -11,14 +11,12 @@ bool Music::Load(const string& filename)
     if (!m_SfMusic.openFromFile(filename))
     {
         DuskExtLog("error", "Failed to load music file %s", filename.c_str());
+        m_Loaded = false;
         return false;
     }
 
+    m_Loaded = true;
     return true;
-}
-
-void Music::Term()
-{
 }
 
 void Music::Play()
@@ -120,7 +118,7 @@ int Music::Script_Pause(lua_State* L)
 int Music::Script_SetLooping(lua_State* L)
 {
     Music* pMusic = (Music*)lua_tointeger(L, 1);
-    bool loop = lua_toboolean(L, 2);
+    bool loop = lua_toboolean(L, 2) == 1;
     pMusic->SetLooping(loop);
 
     return 0;

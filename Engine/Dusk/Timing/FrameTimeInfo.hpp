@@ -12,51 +12,46 @@ class FrameTimeInfo
 {
 public:
 
-    FrameTimeInfo() :
-        TargetFPS(0.0),
-        CurrentFPS(0.0),
-        TotalSeconds(0.0),
-        TotalMilliseconds(0.0),
-        ElapsedSeconds(0.0),
-        ElapsedMilliseconds(0.0),
-        Delta(0.0)
-    { }
+    FrameTimeInfo() = default;
+    FrameTimeInfo(const FrameTimeInfo&) = default;
+    FrameTimeInfo& operator=(const FrameTimeInfo&) = default;
+    ~FrameTimeInfo() = default;
 
     ////////////////////////////////////////////////////////////
     /// \brief The Frames Per Second rate that is being targeted
     ///
     ////////////////////////////////////////////////////////////
-    double TargetFPS;
+    double TargetFPS = 0.0;
 
     ////////////////////////////////////////////////////////////
     /// \brief The Current Frames Per Second rate
     ///
     ////////////////////////////////////////////////////////////
-    double CurrentFPS;
+    double CurrentFPS = 0.0;
 
     ////////////////////////////////////////////////////////////
     /// \brief The total seconds that have elapsed since the program started
     ///
     ////////////////////////////////////////////////////////////
-    double TotalSeconds;
+    double TotalSeconds = 0.0;
 
     ////////////////////////////////////////////////////////////
     /// \brief The total milliseconds that have elapsed since the program started
     ///
     ////////////////////////////////////////////////////////////
-    double TotalMilliseconds;
+    double TotalMilliseconds = 0.0;
 
     ////////////////////////////////////////////////////////////
     /// \brief The seconds that have elapsed since the last update
     ///
     ////////////////////////////////////////////////////////////
-    double ElapsedSeconds;
+    double ElapsedSeconds = 0.0;
 
     ////////////////////////////////////////////////////////////
     /// \brief The milliseconds that have elapsed since the last update
     ///
     ////////////////////////////////////////////////////////////
-    double ElapsedMilliseconds;
+    double ElapsedMilliseconds = 0.0;
 
     ////////////////////////////////////////////////////////////
     /// \brief The measurement of time relative to the desired frame rate.
@@ -66,7 +61,7 @@ public:
     /// running fast.
     ///
     ////////////////////////////////////////////////////////////
-    double Delta;
+    double Delta = 0.0;
 
 }; // class TimeInfo
 

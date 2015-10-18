@@ -14,29 +14,36 @@ class UIFont :
 {
 public:
 
-    UIFont();
-    virtual inline ~UIFont() { Term(); }
+    inline UIFont() :
+        mp_Font(nullptr)
+    { }
 
-    virtual inline string GetClassName() const { return "Font Element"; }
+    virtual inline ~UIFont()
+    { }
 
-    bool Init(shared_ptr<UIFont> inheritFrom);
-    bool Init();
-    void Term();
+    virtual inline string GetClassName() const { return "UI Font"; }
 
-    inline shared_ptr<Font> GetFont() const { return mp_Font; }
-    inline void SetFont(shared_ptr<Font> pFont) { mp_Font = pFont; }
+    inline void Inherit(const UIFont* pInheritFrom)
+    {
+        mp_Font = pInheritFrom->mp_Font;
+        m_FontSize = pInheritFrom->m_FontSize;
+        m_Color = pInheritFrom->m_Color;
+    }
 
-    inline size_t GetFontSize() const { return m_FontSize; }
-    inline void SetFontSize(const size_t& size) { m_FontSize = size; }
+    inline Font* GetFont() const { return mp_Font; }
+    inline void SetFont(Font* pFont) { mp_Font = pFont; }
+
+    inline unsigned int GetFontSize() const { return m_FontSize; }
+    inline void SetFontSize(const unsigned int& size) { m_FontSize = size; }
 
     inline Color GetColor() const { return m_Color; }
     inline void SetColor(const Color& color) { m_Color = color; }
 
 private:
 
-    shared_ptr<Font> mp_Font;
+    Font* mp_Font;
 
-    size_t m_FontSize;
+    unsigned int m_FontSize;
 
     Color m_Color;
 

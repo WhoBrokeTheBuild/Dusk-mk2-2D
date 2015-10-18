@@ -9,11 +9,9 @@ namespace dusk
 bool Font::Load(const string& filename)
 {
     m_Filename = filename;
-    return m_SfFont.loadFromFile(filename);
+    m_Loaded = m_SfFont.loadFromFile(filename);
+    return m_Loaded;
 }
-
-void Font::Term()
-{ }
 
 void Font::Script_RegisterFunctions()
 {

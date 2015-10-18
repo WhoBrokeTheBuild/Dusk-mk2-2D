@@ -9,37 +9,24 @@
 using namespace dusk;
 
 TestApp::TestApp()
-{ }
-
-bool TestApp::Init()
+    : Program()
 {
-    if (!Program::Init())
-    {
-        DuskLog("error", "Failed to init program");
-        return false;
-    }
-
     GraphicsSystem* pGS = GetGraphicsSystem();
     pGS->SetWindowSize(1600, 900);
     pGS->SetWindowTitle("Test");
-    pGS->SetWindowStyle(WindowStyle::Decorated);
+    pGS->SetWindowStyle(GraphicsSystem::WindowStyle::Decorated);
     pGS->ApplyWindowChanges();
 
     GetScriptHost()->RunFile("Content/Scripts/Setup.lua");
 
-    m_UIManager.Init();
     m_UIManager.LoadFile("Content/Interface/EditorFrame.xml");
 
     DuskLog("info", "Starting Up");
-    return true;
 }
 
-void TestApp::Term()
+TestApp::~TestApp()
 {
     DuskLog("info", "Shutting Down");
-    m_UIManager.Term();
-
-    Program::Term();
 }
 
 void TestApp::Update(FrameTimeInfo& timeInfo)

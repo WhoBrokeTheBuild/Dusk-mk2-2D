@@ -20,36 +20,33 @@ class Texture :
 
 public:
 
-    inline Texture() :
-        m_SfTexture()
-    { }
+    Texture() = default;
+    Texture(const Texture&) = default;
+    Texture& operator=(const Texture&) = default;
 
-    virtual inline ~Texture()
-    {
-        Term();
-    }
+    inline Texture(const string& filename) { Load(filename); }
 
-    virtual inline string GetClassName() const
-    {
-        return "Texture";
-    }
+    virtual inline string GetClassName() const override { return "Texture"; }
 
     bool Load(const string& filename);
 
-    void Term();
+    bool IsLoaded() const { return m_Loaded; }
+
+protected:
+
+    inline const sf::Texture& GetSFMLTexture() const { return m_SfTexture; }
+
+private:
+
+    bool m_Loaded = false;
+
+    sf::Texture m_SfTexture;
+
+public:
 
     static void Script_RegisterFunctions();
     static int Script_New(lua_State* L);
     static int Script_Delete(lua_State* L);
-
-private:
-
-    inline const sf::Texture& GetSFMLTexture() const
-    {
-        return m_SfTexture;
-    }
-
-    sf::Texture m_SfTexture;
 
 }; // class Texture
 

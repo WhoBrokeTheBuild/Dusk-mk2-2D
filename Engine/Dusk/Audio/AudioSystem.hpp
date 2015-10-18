@@ -18,19 +18,15 @@ class AudioSystem :
 
 public:
 
-    virtual inline string GetClassName() const { return "Audio System"; }
+    AudioSystem(const AudioSystem&) = delete;
+    AudioSystem& operator=(const AudioSystem&) = delete;
+    ~AudioSystem() = default;
 
-    bool Init();
-    void Term();
+    virtual inline string GetClassName() const { return "Audio System"; }
 
 private:
 
     AudioSystem();
-
-    virtual inline ~AudioSystem()
-    {
-        Term();
-    }
 
 };
 

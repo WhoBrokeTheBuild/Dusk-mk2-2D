@@ -26,22 +26,35 @@ Program::Program() :
     m_TargetFPS(),
     m_CurrentFPS(),
     m_UpdateInterval(),
-    mp_GraphicsSystem(nullptr),
-    mp_InputSystem(nullptr),
+    mp_GraphicsSystem(New GraphicsSystem),
+    mp_InputSystem(New InputSystem),
     mp_ScriptHost(nullptr)
 {
+    DuskLog("verbose", "Program initializing");
+    DuskBenchStart();
+
+    delete sp_Inst;
     sp_Inst = this;
+
+    mp_GraphicsSystem->CreateWindow();
+
+    Script_RegisterFunctions();
+
+    SetTargetFPS(60.0);
+
+    mp_ScriptHost.reset(New ScriptHost);
+
+    DuskBenchEnd("Program::Init");
+}
+
+Program::~Program()
+{
+    sp_Inst = nullptr;
 }
 
 Program* Program::Run(int argc, char* argv[])
 {
     DuskLog("verbose", "Program running");
-
-    if (!Init())
-    {
-        DuskLog("error", "Failed to start program");
-        return sp_Inst;
-    }
 
     FrameTimeInfo timeInfo;
     unsigned long long frameCount = 0;
@@ -99,59 +112,17 @@ void Program::SetTargetFPS(double fps)
 
 GraphicsSystem* Program::GetGraphicsSystem() const
 {
-    return mp_GraphicsSystem;
+    return mp_GraphicsSystem.get();
 }
 
 InputSystem* Program::GetInputSystem() const
 {
-    return mp_InputSystem;
+    return mp_InputSystem.get();
 }
 
 ScriptHost* Program::GetScriptHost()
 {
-    return mp_ScriptHost;
-}
-
-bool Program::Init()
-{
-    DuskLog("verbose", "Program initializing");
-    DuskBenchStart();
-
-    mp_GraphicsSystem = New GraphicsSystem();
-    mp_GraphicsSystem->Init();
-
-    mp_InputSystem = New InputSystem();
-    mp_InputSystem->Init();
-
-    //mp_AudioSystem = New AudioSystem();
-    //mp_AudioSystem->Init();
-
-    Script_RegisterFunctions();
-
-    SetTargetFPS(60.0);
-
-    mp_ScriptHost = New ScriptHost();
-    mp_ScriptHost->Init();
-
-    DuskBenchEnd("Program::Init");
-    return true;
-}
-
-void Program::Term()
-{
-    RemoveAllListeners();
-
-    delete mp_ScriptHost;
-    mp_ScriptHost = nullptr;
-
-    //delete mp_AudioSystem;
-    //mp_AudioSystem = nullptr;
-
-    delete mp_InputSystem;
-    mp_InputSystem = nullptr;
-
-    delete mp_GraphicsSystem;
-    mp_GraphicsSystem = nullptr;
+    return mp_ScriptHost.get();
 }
 
 void Program::Update(FrameTimeInfo& timeInfo)
@@ -159,19 +130,19 @@ void Program::Update(FrameTimeInfo& timeInfo)
     Dispatch(Event(EvtUpdate, UpdateEventData(&timeInfo)));
 }
 
-void Program::PreRender(GraphicsContext* ctx)
+void Program::PreRender(GraphicsContext* pCtx)
 {
-    ctx->Clear();
+    pCtx->Clear();
 }
 
-void Program::Render(GraphicsContext* ctx)
+void Program::Render(GraphicsContext* pCtx)
 {
-    Dispatch(Event(EvtRender, RenderEventData(ctx)));
+    Dispatch(Event(EvtRender, RenderEventData(pCtx)));
 }
 
-void Program::PostRender(GraphicsContext* ctx)
+void Program::PostRender(GraphicsContext* pCtx)
 {
-    ctx->SwapBuffers();
+    pCtx->SwapBuffers();
 }
 
 void Program::Script_RegisterFunctions()

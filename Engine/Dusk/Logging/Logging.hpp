@@ -27,7 +27,7 @@
 namespace dusk
 {
 
-class ILogger;
+class Logger;
 
 ////////////////////////////////////////////////////////////
 /// \class Logging Logging.hpp <Dusk/Logging/Logging.hpp>
@@ -41,11 +41,16 @@ class Logging
 {
 public:
 
+    Logging() = delete;
+    Logging(const Logging&) = delete;
+    Logging& operator=(const Logging&) = delete;
+    ~Logging() = delete;
+
     ////////////////////////////////////////////////////////////
-    /// \brief Initialize the Logging setup, required before any logging calls are made
+    /// \brief Start the Logging Clock, Needed for timestamps
     ///
     ////////////////////////////////////////////////////////////
-    static void Init();
+    static void StartClock();
 
     ////////////////////////////////////////////////////////////
     /// \brief Add a logging level with an index
@@ -198,7 +203,7 @@ private:
 
     static Map<string, LogBackgroundColor> s_BackgroundColors;
 
-    static Map<string, ArrayList<ILogger*>> s_Loggers;
+    static Map<string, ArrayList<Logger*>> s_Loggers;
 
 public:
 

@@ -13,13 +13,10 @@ using std::string;
 namespace dusk
 {
 
-class ILogger :
+class Logger :
     public TrackedObject
 {
 public:
-
-    virtual inline ~ILogger()
-    { }
 
     virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor) = 0;
 

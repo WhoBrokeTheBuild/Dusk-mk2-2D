@@ -15,9 +15,7 @@ void dusk::Scripting::AddScriptHost(ScriptHost* pHost)
     s_ScriptHosts.add(pHost);
 
     for (auto it : s_Functions)
-    {
         pHost->RegisterFunction(it.first, it.second);
-    }
 }
 
 ScriptHost* dusk::Scripting::GetScriptHost(lua_State* L)
@@ -58,9 +56,7 @@ bool dusk::Scripting::RegisterFunction(const string& funcName, LuaCallback callb
     s_Functions.add(funcName, callback);
 
     for (auto it : s_ScriptHosts)
-    {
         it->RegisterFunction(funcName, callback);
-    }
 
     return true;
 }

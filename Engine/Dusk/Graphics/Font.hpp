@@ -19,29 +19,23 @@ class Font :
 
 public:
 
-    inline Font() :
-        m_SfFont()
-    { }
+    Font() = default;
+    Font(const Font&) = default;
+    Font& operator=(const Font&) = default;
 
-    virtual inline ~Font()
-    {
-        Term();
-    }
+    inline Font(const string& filename) { Load(filename); }
 
-    virtual inline string GetClassName() const
-    {
-        return "Font";
-    }
+    virtual inline string GetClassName() const override { return "Font"; }
 
     bool Load(const string& filename);
-    void Term();
+
+    bool IsLoaded() const { return m_Loaded; }
 
 private:
 
-    inline const sf::Font& GetSFMLFont() const
-    {
-        return m_SfFont;
-    }
+    inline const sf::Font& GetSFMLFont() const { return m_SfFont; }
+
+    bool m_Loaded = false;
 
     string m_Filename;
 

@@ -2,7 +2,7 @@
 #define DUSK_EVENT_DISPATCHER_HPP
 
 #include <Dusk/Collections/ArrayList.hpp>
-#include <Dusk/Collections/Map.hpp>
+#include <Dusk/Collections/HashMap.hpp>
 #include <Dusk/Events/Event.hpp>
 #include <Dusk/Events/Delegate.hpp>
 
@@ -76,7 +76,7 @@ private:
     void CleanMap();
 
     static ArrayList<EventDispatcher*>         s_Dispatchers;
-    Map<EventID, ArrayList<EventDelegate*>>     m_EventMap;
+    HashMap<EventID, ArrayList<EventDelegate*>>     m_EventMap;
 
     bool    m_Changed;
 

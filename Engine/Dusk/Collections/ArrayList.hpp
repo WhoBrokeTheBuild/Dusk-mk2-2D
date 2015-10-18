@@ -18,17 +18,16 @@ namespace dusk
 /// \brief A templated array-backed container. Based on std::vector
 ///
 ////////////////////////////////////////////////////////////
-template <class T>
+template <class ValueType, typename Alloc = std::allocator<ValueType>>
 class ArrayList :
     public TrackedObject,
-    public std::vector<T>
+    public std::vector<ValueType, Alloc>
 {
 public:
 
-    virtual inline string GetClassName() const
-    {
-        return "Array List";
-    }
+    typedef std::vector<ValueType, Alloc> STLType;
+
+    virtual inline string GetClassName() const override { return "Array List"; }
 
     ////////////////////////////////////////////////////////////
     /// \brief Add a new item to the collection. Alias for push_back()
@@ -36,9 +35,9 @@ public:
     /// \param item A new item to add to the collection
     ///
     ////////////////////////////////////////////////////////////
-    inline void add(const T& item)
+    inline void add(const ValueType& item)
     {
-        std::vector<T>::push_back(item);
+        STLType::push_back(item);
     }
 
     ////////////////////////////////////////////////////////////
@@ -49,9 +48,9 @@ public:
     /// \returns True if the item exists in the collection, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    inline bool contains(const T& item) const
+    inline bool contains(const ValueType& item) const
     {
-        return (std::vector<T>::empty() ? false : std::find(std::vector<T>::cbegin(), std::vector<T>::cend(), item) != std::vector<T>::cend());
+        return (STLType::empty() ? false : std::find(STLType::cbegin(), STLType::cend(), item) != STLType::cend());
     }
 
     ////////////////////////////////////////////////////////////
@@ -64,7 +63,7 @@ public:
     ////////////////////////////////////////////////////////////
     inline bool has_index(const unsigned int& index) const
     {
-        return (std::vector<T>::empty() ? false : (index >= 0 && index <= std::vector<T>::size() - 1));
+        return (STLType::empty() ? false : (index >= 0 && index <= STLType::size() - 1));
     }
 
     ////////////////////////////////////////////////////////////
@@ -75,9 +74,9 @@ public:
     /// \returns The index of the item if it exists in the collection, -1 otherwise
     ///
     ////////////////////////////////////////////////////////////
-    inline unsigned int index_of(const T& item) const
+    inline unsigned int index_of(const ValueType& item) const
     {
-        return std::find(std::vector<T>::begin(), std::vector<T>::end(), item) - std::vector<T>::begin();
+        return std::find(STLType::begin(), STLType::end(), item) - STLType::begin();
     }
 
     ////////////////////////////////////////////////////////////
@@ -88,13 +87,13 @@ public:
     /// \returns True if an element was removed, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    inline bool erase_next(const T& item)
+    inline bool erase_next(const ValueType& item)
     {
-        auto it = std::find(std::vector<T>::begin(), std::vector<T>::end(), item);
+        auto it = std::find(STLType::begin(), STLType::end(), item);
 
-        if (it != std::vector<T>::end())
+        if (it != STLType::end())
         {
-            std::vector<T>::erase(it);
+            STLType::erase(it);
             return true;
         }
 
@@ -109,17 +108,17 @@ public:
     /// \returns True if an element was removed, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    inline bool erase_all(const T& item)
+    inline bool erase_all(const ValueType& item)
     {
-        auto it = std::find(std::vector<T>::begin(), std::vector<T>::end(), item);
+        auto it = std::find(STLType::begin(), STLType::end(), item);
 
-        if (it == std::vector<T>::end())
+        if (it == STLType::end())
             return false;
 
-        while (it != std::vector<T>::end())
+        while (it != STLType::end())
         {
-            std::vector<T>::erase(it);
-            it = find(std::vector<T>::begin(), std::vector<T>::end(), item);
+            STLType::erase(it);
+            it = find(STLType::begin(), STLType::end(), item);
         }
 
         return true;
@@ -137,7 +136,7 @@ public:
     {
         if (has_index(index))
         {
-            std::vector<T>::erase(std::vector<T>::begin() + index);
+            STLType::erase(STLType::begin() + index);
             return true;
         }
 

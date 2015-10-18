@@ -12,13 +12,11 @@ class UIInput :
 public:
 
     UIInput();
-    virtual ~UIInput() { Term(); }
+    virtual ~UIInput();
 
     virtual inline string GetClassName() const { return "UI Input"; }
 
-    bool Init(shared_ptr<UIElement> inheritFrom);
-    bool Init();
-    void Term();
+    virtual void Inherit(const UIElement* pInheritFrom);
 
 };
 

@@ -21,22 +21,22 @@ class TextBuffer :
 
 public:
 
-    inline TextBuffer() :
-        mp_Font(nullptr),
-        m_Text(),
-        m_FontSize(),
-        m_Color(),
-        m_SfText()
-    { }
+    TextBuffer() = default;
+    TextBuffer(const TextBuffer&) = default;
+    TextBuffer& operator=(const TextBuffer&) = default;
+    ~TextBuffer() = default;
 
-    virtual inline ~TextBuffer() { Term(); }
+    TextBuffer(const Font* pFont, const string& text, const unsigned int& fontSize, const Color& color)
+    {
+        SetFont(pFont);
+        SetText(text);
+        SetFontSize(fontSize);
+        SetColor(color);
+    }
 
-    virtual inline string GetClassName() const { return "Text Buffer"; }
+    virtual inline string GetClassName() const override { return "Text Buffer"; }
 
-    bool Init(Font* pFont, const string& text, const unsigned int& fontSize, const Color& color);
-    void Term();
-
-    void SetFont(Font* pFont);
+    void SetFont(const Font* pFont);
 
     inline string GetText() const { return m_Text; }
     void SetText(const string& text);
@@ -47,22 +47,22 @@ public:
     inline Color GetColor() const { return m_Color; }
     void SetColor(const Color& color);
 
+    Vector2f GetPos() const;
     void SetPos(const Vector2f& pos);
 
-    Vector2f GetPos() const;
     Vector2f GetSize() const;
 
     inline const sf::Text& GetSFMLText() const { return m_SfText; }
 
 private:
 
-    Font* mp_Font;
+    const Font* mp_Font;
 
     string m_Text;
 
-    unsigned int m_FontSize;
+    unsigned int m_FontSize = 12;
 
-    Color m_Color;
+    Color m_Color = Color::Black;
 
     sf::Text m_SfText;
 

@@ -16,17 +16,11 @@ class MemoryTracker
 
 public:
 
-    static bool Init();
-    static void Term();
+    static bool AddAllocation(TrackedObject* pObject, size_t size, unsigned int lineNumber, string filename);
 
-    static bool AddAllocation(TrackedObject* pObject, size_t size,
-                              unsigned int lineNumber, string filename);
     static bool RemoveAllocation(TrackedObject* pObject);
 
-    static inline unsigned int GetAllocationCount()
-    {
-        return (unsigned int)s_Allocations.size();
-    }
+    static inline unsigned int GetAllocationCount() { return (unsigned int)s_Allocations.size(); }
 
     static void PrintAllocations();
 
@@ -36,23 +30,16 @@ private:
     {
     public:
 
-        unsigned int    Number,
-            LineNumber;
-        size_t            Size;
-        string            Filename;
-
-        AllocationRecord(int num, size_t size, int lineNum, string filename) :
-            Number(num),
-            LineNumber(lineNum),
-            Size(size),
-            Filename(filename)
-        { }
+        unsigned int Number;
+        unsigned int LineNumber;
+        size_t Size;
+        string Filename;
 
     }; // struct AllocationRecord
 
     static Map<TrackedObject*, AllocationRecord> s_Allocations;
 
-    static unsigned int    s_AllocationIndex;
+    static unsigned int s_AllocationIndex;
 
 }; // class MemoryTracker
 

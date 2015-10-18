@@ -11,8 +11,8 @@ namespace dusk
 
 bool Texture::Load(const string& filename)
 {
-    DuskBenchStart();
     DuskExtLog("verbose", "Loading texture %s", filename.c_str());
+    DuskBenchStart();
 
     if (!m_SfTexture.loadFromFile(filename))
     {
@@ -23,9 +23,6 @@ bool Texture::Load(const string& filename)
     DuskBenchEnd("Texture::Init");
     return true;
 }
-
-void Texture::Term()
-{ }
 
 void Texture::Script_RegisterFunctions()
 {

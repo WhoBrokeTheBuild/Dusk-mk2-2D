@@ -3,20 +3,19 @@
 
 #include <Dusk/Events/EventDispatcher.hpp>
 #include <Dusk/Tracking/TrackedObject.hpp>
+#include <Dusk/Graphics/GraphicsSystem.hpp>
 #include <Dusk/Events/Event.hpp>
+#include <Dusk/Scripting/ScriptHost.hpp>
+#include <Dusk/Input/InputSystem.hpp>
 
 #include <lua.hpp>
 
 namespace dusk
 {
 
-class GraphicsSystem;
 class GraphicsContext;
 
-class InputSystem;
-
 class Scripting;
-class ScriptHost;
 
 class FrameTimeInfo;
 
@@ -29,10 +28,7 @@ public:
 
     // Singleton Instance
 
-    static inline Program* Inst()
-    {
-        return sp_Inst;
-    }
+    static inline Program* Inst() { return sp_Inst; }
 
     // Events
 
@@ -41,16 +37,11 @@ public:
     static EventID EvtExit;
 
     Program();
+    Program(const Program &) = delete;
+    Program& operator=(const Program &) = delete;
+    virtual ~Program();
 
-    virtual inline ~Program()
-    {
-        Term();
-    }
-
-    virtual inline string GetClassName() const
-    {
-        return "Program";
-    }
+    virtual inline string GetClassName() const { return "Program"; }
 
     Program* Run(int argc, char* argv[]);
     inline void Exit() { m_Running = false; }
@@ -69,8 +60,6 @@ protected:
 
     ScriptHost* GetScriptHost();
 
-    virtual bool Init();
-    virtual void Term();
     virtual void Update(FrameTimeInfo& timeInfo);
     virtual void PreRender(GraphicsContext* ctx);
     virtual void Render(GraphicsContext* ctx);
@@ -80,11 +69,8 @@ private:
 
     static Program* sp_Inst;
 
-    Program(Program const&);
-    void operator=(Program const&);
-
-    GraphicsSystem* mp_GraphicsSystem;
-    InputSystem* mp_InputSystem;
+    unique_ptr<GraphicsSystem> mp_GraphicsSystem;
+    unique_ptr<InputSystem> mp_InputSystem;
     //AudioSystem* mp_AudioSystem;
 
     bool m_Running;
@@ -93,7 +79,7 @@ private:
     double m_CurrentFPS;
     double m_UpdateInterval;
 
-    ScriptHost*    mp_ScriptHost;
+    unique_ptr<ScriptHost> mp_ScriptHost;
 
 public:
 

@@ -20,10 +20,11 @@ class GraphicsContext :
 
 public:
 
-    virtual inline string GetClassName() const
-    {
-        return "Graphics Context";
-    }
+    GraphicsContext() = delete;
+    GraphicsContext(const GraphicsContext&) = delete;
+    GraphicsContext& operator=(const GraphicsContext&) = delete;
+
+    virtual inline string GetClassName() const override { return "Graphics Context"; }
 
     void Clear();
     void SwapBuffers();
@@ -31,11 +32,6 @@ public:
     void Draw(const sf::Drawable& drawable);
     void Draw(Sprite* sprite);
     void Draw(TextBuffer* textBuffer);
-
-    static void Script_RegisterFunctions();
-    static int Script_Clear(lua_State* L);
-    static int Script_Draw(lua_State* L);
-    static int Script_SwapBuffers(lua_State* L);
 
     inline sf::RenderWindow& GetSFMLWindow() { return m_SfWindow; }
 
@@ -45,10 +41,16 @@ private:
         m_SfWindow(pSFMLWindow)
     { }
 
-    virtual inline ~GraphicsContext()
-    { }
+    ~GraphicsContext() = default;
 
     sf::RenderWindow& m_SfWindow;
+
+public:
+
+    static void Script_RegisterFunctions();
+    static int Script_Clear(lua_State* L);
+    static int Script_Draw(lua_State* L);
+    static int Script_SwapBuffers(lua_State* L);
 
 }; // GraphicsContext
 

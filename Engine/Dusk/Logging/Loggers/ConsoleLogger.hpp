@@ -1,27 +1,23 @@
 #ifndef DUSK_LOGGING_CONSOLE_LOGGER_HPP
 #define DUSK_LOGGING_CONSOLE_LOGGER_HPP
 
-#include <Dusk/Logging/ILogger.hpp>
+#include <Dusk/Logging/Logger.hpp>
 #include <Dusk/Utility/Types.hpp>
 
 namespace dusk
 {
 
 class ConsoleLogger :
-    public ILogger
+    public Logger
 {
 public:
 
-    inline ConsoleLogger()
-    { }
+    ConsoleLogger() = default;
+    ConsoleLogger(const ConsoleLogger&) = delete;
+    ConsoleLogger& operator=(const ConsoleLogger&) = delete;
+    virtual ~ConsoleLogger() = default;
 
-    virtual ~ConsoleLogger()
-    { }
-
-    virtual inline string GetClassName() const
-    {
-        return "Console Logger";
-    }
+    virtual inline string GetClassName() const override { return "Console Logger"; }
 
     virtual void Log(const string& line, const LogForegroundColor& fgColor, const LogBackgroundColor& bgColor);
 

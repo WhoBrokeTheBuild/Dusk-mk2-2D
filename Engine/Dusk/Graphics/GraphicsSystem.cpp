@@ -14,37 +14,17 @@
 namespace dusk
 {
 
-dusk::EventID GraphicsSystem::EvtWindowResize = 1;
-
-GraphicsSystem::GraphicsSystem() :
-    m_Title(),
-    m_Width(1024),
-    m_Height(768),
-    m_Style(WindowStyle::Default),
-    m_SfWindow(),
-    mp_GraphicsContext(nullptr)
-{ }
-
-bool GraphicsSystem::Init()
+bool GraphicsSystem::CreateWindow()
 {
-    DuskLog("verbose", "Graphics System initializing");
     DuskBenchStart();
 
     CreateSFMLWindow();
-    mp_GraphicsContext = New GraphicsContext(m_SfWindow);
+    mp_GraphicsContext.reset(New GraphicsContext(m_SfWindow));
 
     Program::Inst()->AddEventListener(Program::EvtUpdate, this, &GraphicsSystem::OnUpdate);
 
-    DuskBenchEnd("GraphicsSystem::Init");
+    DuskBenchEnd("GraphicsSystem::CreateWindow");
     return true;
-}
-
-void GraphicsSystem::Term()
-{
-    RemoveAllListeners();
-
-    delete mp_GraphicsContext;
-    mp_GraphicsContext = nullptr;
 }
 
 void GraphicsSystem::OnUpdate(const Event& event)
@@ -162,7 +142,7 @@ bool GraphicsSystem::IsResizable() const
 
 GraphicsContext* GraphicsSystem::GetContext() const
 {
-    return mp_GraphicsContext;
+    return mp_GraphicsContext.get();
 }
 
 bool GraphicsSystem::CreateSFMLWindow()

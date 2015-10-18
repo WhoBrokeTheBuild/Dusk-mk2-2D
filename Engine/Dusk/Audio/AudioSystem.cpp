@@ -5,13 +5,7 @@
 namespace dusk
 {
 
-bool AudioSystem::Init()
-{
-
-    return true;
-}
-
-void AudioSystem::Term()
+AudioSystem::AudioSystem()
 {
 
 }

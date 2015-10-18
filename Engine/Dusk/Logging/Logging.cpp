@@ -1,6 +1,6 @@
 #include "Logging.hpp"
 
-#include <Dusk/Logging/ILogger.hpp>
+#include <Dusk/Logging/Logger.hpp>
 #include <Dusk/Logging/Loggers/ConsoleLogger.hpp>
 #include <Dusk/Logging/Loggers/FileLogger.hpp>
 #include <Dusk/Scripting/Scripting.hpp>
@@ -29,10 +29,10 @@ Logging::s_ForegroundColors = Map<string, LogForegroundColor>();
 Map<string, LogBackgroundColor>
 Logging::s_BackgroundColors = Map<string, LogBackgroundColor>();
 
-Map<string, ArrayList<ILogger*>>
-Logging::s_Loggers = Map<string, ArrayList<ILogger*>>();
+Map<string, ArrayList<Logger*>>
+Logging::s_Loggers = Map<string, ArrayList<Logger*>>();
 
-void Logging::Init()
+void Logging::StartClock()
 {
     s_StartTime = high_resolution_clock::now();
 }
@@ -42,7 +42,7 @@ bool Logging::AddLevel(const int& index, const string& level)
     if (s_Loggers.contains_key(level) || s_Levels.contains_key(level))
         return false;
 
-    s_Loggers.add(level, ArrayList<ILogger*>());
+    s_Loggers.add(level, ArrayList<Logger*>());
     s_Levels.add(level, index);
     s_ForegroundColors.add(level, LOG_FG_DEFAULT);
     s_BackgroundColors.add(level, LOG_BG_DEFAULT);
@@ -54,7 +54,7 @@ void Logging::CloseAllLoggers()
 {
     for (auto& level : s_Loggers)
     {
-        ArrayList<ILogger*>& loggers = level.second;
+        ArrayList<Logger*>& loggers = level.second;
 
         for (auto logger : loggers)
             delete logger;
@@ -127,7 +127,7 @@ void Logging::DispatchLog(const string& level)
     LogForegroundColor fgColor = s_ForegroundColors[level];
     LogBackgroundColor bgColor = s_BackgroundColors[level];
 
-    ArrayList<ILogger*>& loggers = s_Loggers[level];
+    ArrayList<Logger*>& loggers = s_Loggers[level];
     for (auto logger : loggers)
     {
         if (logger == nullptr)

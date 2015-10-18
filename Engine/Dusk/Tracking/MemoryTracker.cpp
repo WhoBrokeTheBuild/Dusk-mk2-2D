@@ -9,25 +9,12 @@ Map<TrackedObject*, MemoryTracker::AllocationRecord> MemoryTracker::s_Allocation
 
 unsigned int MemoryTracker::s_AllocationIndex = 0;
 
-bool MemoryTracker::Init()
-{
-    s_AllocationIndex = 0;
-    s_Allocations.clear();
-
-    return true;
-}
-
-void MemoryTracker::Term()
-{
-    s_Allocations.clear();
-}
-
 bool MemoryTracker::AddAllocation(TrackedObject* pObject, size_t size, unsigned int lineNumber, string filename)
 {
     if (s_Allocations.contains_key(pObject))
         return false;
 
-    s_Allocations.add(pObject, AllocationRecord(s_AllocationIndex, size, lineNumber, filename));
+    s_Allocations.add(pObject, { s_AllocationIndex, lineNumber, size, filename });
     s_AllocationIndex++;
 
     return true;

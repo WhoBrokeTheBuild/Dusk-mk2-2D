@@ -7,27 +7,23 @@
 namespace dusk
 {
 
-bool ScriptHost::Init()
+ScriptHost::ScriptHost()
 {
-    DuskBenchStart();
-
     mp_LuaState = luaL_newstate();
 
     if (!mp_LuaState)
     {
         DuskLog("error", "Failed to create Lua State");
-        return false;
+        lua_close(mp_LuaState);
+        return;
     }
 
     luaL_openlibs(mp_LuaState);
 
     Scripting::AddScriptHost(this);
-
-    DuskBenchEnd("ScriptingSystem::Init");
-    return true;
 }
 
-void ScriptHost::Term()
+ScriptHost::~ScriptHost()
 {
     Scripting::RemoveScriptHost(this);
 
@@ -58,10 +54,8 @@ bool ScriptHost::RunFile(const string& filename)
     if (status)
         goto error;
 
-    status = lua_pcall(mp_LuaState,
-                       0,
-                       LUA_MULTRET,
-                       0); // Set the error callback to 0, this means errors will be pushed onto the stack
+    // Set the error callback to 0, this means errors will be pushed onto the stack
+    status = lua_pcall(mp_LuaState, 0, LUA_MULTRET, 0);
 
     if (status)
         goto error;

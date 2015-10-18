@@ -12,8 +12,7 @@ namespace dusk
 template <class ProgramType>
 int DuskMain(int argc, char* argv[])
 {
-    MemoryTracker::Init();
-    Logging::Init();
+    Logging::StartClock();
 
     Logging::AddLevel(4, "error");
     Logging::AddLevel(3, "info");
@@ -44,7 +43,7 @@ int DuskMain(int argc, char* argv[])
 
     Logging::Script_RegisterFunctions();
 
-    ProgramType* pInst = New ProgramType();
+    ProgramType* pInst = New ProgramType;
     pInst->Run(argc, argv);
     delete pInst;
 
@@ -59,8 +58,6 @@ int DuskMain(int argc, char* argv[])
     }
 
 #endif // DUSK_DEBUG_BUILD
-
-    MemoryTracker::Term();
 
     return 0;
 }

@@ -8,25 +8,19 @@ UIFrame::UIFrame()
 
 }
 
-bool UIFrame::Init(shared_ptr<UIElement> inheritFrom)
+UIFrame::~UIFrame()
 {
-    if (!UIElement::Init(inheritFrom))
-        return false;
 
-    return true;
 }
 
-bool UIFrame::Init()
+void UIFrame::Inherit(const UIElement* pInheritFrom)
 {
-    if (!UIElement::Init())
-        return false;
+    UIElement::Inherit(pInheritFrom);
+    const UIFrame* pInheritFromFrame = dynamic_cast<const UIFrame*>(pInheritFrom);
+    if (pInheritFromFrame)
+    {
 
-    return true;
-}
-
-void UIFrame::Term()
-{
-    UIElement::Term();
+    }
 }
 
 } // namespace dusk

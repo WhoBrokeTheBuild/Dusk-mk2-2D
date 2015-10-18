@@ -6,6 +6,7 @@
 #include <Dusk/Utility/Types.hpp>
 #include <Dusk/Events/Event.hpp>
 #include <Dusk/Geometry/Vector2.hpp>
+#include <Dusk/Graphics/GraphicsContext.hpp>
 
 #include <lua.hpp>
 #include <SFML/Graphics.hpp>
@@ -15,16 +16,6 @@ namespace dusk
 
 class Program;
 class Window;
-class GraphicsContext;
-
-enum WindowStyle
-{
-    Fullscreen = 1,
-    Resizable  = 2,
-    Decorated  = 4,
-
-    Default = Resizable | Decorated
-};
 
 class GraphicsSystem :
     public TrackedObject,
@@ -35,12 +26,28 @@ class GraphicsSystem :
 
 public:
 
-    static EventID EvtWindowResize;
+    enum WindowStyle : uint8_t
+    {
+        Fullscreen = 1,
+        Resizable = 2,
+        Decorated = 4,
 
-    virtual inline string GetClassName() const { return "Graphics System"; }
+        Default = Resizable | Decorated
+    };
 
-    bool Init();
-    void Term();
+    enum : EventID
+    {
+        EvtWindowResize = 1,
+    };
+
+    GraphicsSystem(const GraphicsSystem&) = delete;
+    GraphicsSystem& operator=(const GraphicsSystem&) = delete;
+
+    virtual ~GraphicsSystem() = default;
+
+    virtual inline string GetClassName() const override { return "Graphics System"; }
+
+    bool CreateWindow();
 
     void OnUpdate(const Event& evt);
 
@@ -67,20 +74,23 @@ public:
 
 private:
 
-    GraphicsSystem();
-
-    virtual inline ~GraphicsSystem() { Term(); }
+    GraphicsSystem() :
+        mp_GraphicsContext(nullptr)
+    { }
 
     bool CreateSFMLWindow();
 
-    unsigned int m_Width;
-    unsigned int m_Height;
-    string m_Title;
-    int m_Style;
+    unsigned int m_Width = 1024;
+
+    unsigned int m_Height = 768;
+
+    string m_Title = "Dusk";
+
+    int m_Style = WindowStyle::Default;
 
     sf::RenderWindow m_SfWindow;
 
-    GraphicsContext* mp_GraphicsContext;
+    unique_ptr<GraphicsContext> mp_GraphicsContext;
 
 public:
 

@@ -12,13 +12,11 @@ class UIFrame :
 public:
 
     UIFrame();
-    virtual ~UIFrame() { Term(); }
+    virtual ~UIFrame();
 
     virtual inline string GetClassName() const { return "UI Frame"; }
 
-    bool Init(shared_ptr<UIElement> inheritFrom);
-    bool Init();
-    void Term();
+    virtual void Inherit(const UIElement* pInheritFrom);
 
 };
 

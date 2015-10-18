@@ -73,16 +73,23 @@ class UIElement :
 {
 public:
 
-    static EventID EvtLayoutChanged;
+    enum : EventID
+    {
+        EvtShown,
+        EvtHidden,
+
+        EvtLayoutChanged,
+        EvtStateChanged,
+    };
 
     UIElement();
-    virtual ~UIElement() { Term(); }
+    UIElement(const UIElement&) = delete;
+    UIElement& operator=(const UIElement&) = delete;
+    virtual ~UIElement();
 
     virtual inline string GetClassName() const { return "UI Element"; }
 
-    bool Init(shared_ptr<UIElement> inheritFrom);
-    bool Init();
-    void Term();
+    virtual void Inherit(const UIElement* pInheritFrom);
 
     void OnUpdate(const Event& evt);
     void OnRender(const Event& evt);
@@ -97,11 +104,11 @@ public:
     Vector2f GetSize() const { return m_Size; }
     void SetSize(const Vector2f& size);
 
-    shared_ptr<UIElement> GetParent() const { return m_Parent; }
-    void SetParent(shared_ptr<UIElement> parent);
+    weak_ptr<UIElement> GetParent() const { return mp_Parent; }
+    void SetParent(weak_ptr<UIElement> pParent);
 
-    shared_ptr<UIElement> GetRelativeTo() const { return m_RelativeTo; }
-    void SetRelativeTo(shared_ptr<UIElement> relTo);
+    weak_ptr<UIElement> GetRelativeTo() const { return m_RelativeTo; }
+    void SetRelativeTo(weak_ptr<UIElement> pRelativeTo);
 
     UIRelPoint GetRelativePoint() const { return m_RelativePoint; }
     void SetRelativePoint(UIRelPoint relPoint);
@@ -109,14 +116,14 @@ public:
     Vector2f GetOffset() const { return m_Offset; }
     void SetOffset(const Vector2f& offset);
 
-    size_t GetBorderSize(const UIState& state = UIState::StateDefault) const { return m_BorderSize.GetValue(state); }
-    void SetBorderSize(const size_t& size, const UIState& state = UIState::StateDefault) { m_BorderSize.SetValue(state, size); }
+    float GetBorderSize(const UIState& state = UIState::StateDefault) const { return m_BorderSize.GetValue(state); }
+    void SetBorderSize(const float& size, const UIState& state = UIState::StateDefault) { m_BorderSize.SetValue(state, size); }
 
     Color GetBorderColor(const UIState& state = UIState::StateDefault) const { return m_BorderColor.GetValue(state); }
     void SetBorderColor(const Color& color, const UIState& state = UIState::StateDefault) { m_BorderColor.SetValue(state, color); }
 
-    shared_ptr<UIFont> GetFont(const UIState& state = UIState::StateDefault) const { return m_Font.GetValue(state); }
-    void SetFont(shared_ptr<UIFont> font, const UIState& state = UIState::StateDefault);
+    UIFont* GetFont(const UIState& state = UIState::StateDefault) const { return m_Font.GetValue(state); }
+    void SetFont(UIFont* pFont, const UIState& state = UIState::StateDefault);
 
     string GetText() const { return m_TextBuffer.GetText(); }
     void SetText(const string& text);
@@ -129,26 +136,26 @@ protected:
     void UpdateLayout();
 
     string m_Name;
-    UIState m_State;
+    UIState m_State = StateDefault;
 
-    bool m_Active;
-    bool m_Visible;
+    bool m_Active = true;
+    bool m_Visible = true;
 
     Vector2f m_Pos;
     Vector2f m_TargetSize;
     Vector2f m_Size;
 
-    shared_ptr<UIElement> m_RelativeTo;
+    weak_ptr<UIElement> m_RelativeTo;
     UIRelPoint m_RelativePoint;
     Vector2f m_Offset;
 
-    StateProp<size_t> m_BorderSize;
+    StateProp<float> m_BorderSize;
     StateProp<Color> m_BorderColor;
-    StateProp<shared_ptr<UIFont>> m_Font;
+    StateProp<UIFont*> m_Font;
 
     TextBuffer m_TextBuffer;
 
-    shared_ptr<UIElement> m_Parent;
+    weak_ptr<UIElement> mp_Parent;
     ArrayList<shared_ptr<UIElement>> m_Children;
 };
 

@@ -8,25 +8,19 @@ UIButton::UIButton()
 
 }
 
-bool UIButton::Init(shared_ptr<UIElement> inheritFrom)
+UIButton::~UIButton()
 {
-    if (!UIElement::Init(inheritFrom))
-        return false;
 
-    return true;
 }
 
-bool UIButton::Init()
+void UIButton::Inherit(const UIElement* pInheritFrom)
 {
-    if (!UIElement::Init())
-        return false;
+    UIElement::Inherit(pInheritFrom);
+    const UIButton* pInheritFromButton = dynamic_cast<const UIButton*>(pInheritFrom);
+    if (pInheritFromButton)
+    {
 
-    return true;
-}
-
-void UIButton::Term()
-{
-    UIElement::Term();
+    }
 }
 
 }
