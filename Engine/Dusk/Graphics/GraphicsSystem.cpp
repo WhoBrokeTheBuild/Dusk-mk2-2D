@@ -34,9 +34,6 @@ void GraphicsSystem::OnUpdate(const Event& event)
     sf::Event sfEvent;
     while (m_SfWindow.pollEvent(sfEvent))
     {
-        Keyboard::Key key = Keyboard::Key::Invalid;
-        Mouse::Button button = Mouse::Button::Invalid;
-
         if (sfEvent.type == sf::Event::Closed)
         {
             m_SfWindow.close();
@@ -49,42 +46,10 @@ void GraphicsSystem::OnUpdate(const Event& event)
 
             Dispatch(Event(EvtWindowResize, WindowResizeEventData(m_Width, m_Height)));
         }
-        else if (sfEvent.type == sf::Event::KeyPressed)
+        else
         {
-            key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
-            pIS->TriggerKeyPress(key);
+            pIS->ProcessSfEvent(sfEvent);
         }
-        else if (sfEvent.type == sf::Event::KeyReleased)
-        {
-            key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
-            pIS->TriggerKeyRelease(key);
-        }
-        else if (sfEvent.type == sf::Event::MouseButtonPressed)
-        {
-            button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
-            pIS->TriggerMouseButtonPress(button);
-        }
-        else if (sfEvent.type == sf::Event::MouseButtonReleased)
-        {
-            button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
-            pIS->TriggerMouseButtonRelease(button);
-        }
-        else if (sfEvent.type == sf::Event::MouseMoved)
-        {
-            pIS->TriggerMouseMoveAbsolute(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
-        }
-        // TODO: Fix disparite versions of SFML on Win/Linux
-        /*else if (sfEvent.type == sf::Event::MouseWheelScrolled)
-        {
-        if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel)
-        {
-            pIS->TriggerMouseScroll(sfEvent.mouseWheelScroll.delta, 0.0f);
-        }
-        else if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::VerticalWheel)
-        {
-            pIS->TriggerMouseScroll(0.0f, sfEvent.mouseWheelScroll.delta);
-        }
-        }*/
     }
 }
 

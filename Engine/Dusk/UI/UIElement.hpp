@@ -69,6 +69,8 @@ private:
 
 };
 
+class UIManager;
+
 class UIElement :
     public TrackedObject,
     public EventDispatcher
@@ -77,11 +79,29 @@ public:
 
     enum : EventID
     {
-        EvtShown,
-        EvtHidden,
+        EvtShow,
+        EvtHide,
 
-        EvtLayoutChanged,
-        EvtStateChanged,
+        EvtActivate,
+        EvtDeactivate,
+
+        EvtMouseEnter,
+        EvtMouseLeave,
+
+        EvtMouseDown,
+        EvtMouseUp,
+
+        EvtFocus,
+        EvtBlur,
+
+        EvtClick,
+        EvtChange,
+
+        EvtUpdate,
+        EvtRender,
+
+        EvtLayoutChange,
+        EvtStateChange,
     };
 
     UIElement();
@@ -93,17 +113,39 @@ public:
 
     virtual void Inherit(const UIElement* pInheritFrom);
 
-    void OnUpdate(UpdateEventData* pData);
-    void OnRender(RenderEventData* pData);
-    void OnMouseMove(MouseMoveEventData* pData);
+    void SetUIManager(UIManager* pUIManager);
 
-    void OnRelativeToLayoutChanged(const Event& evt);
+    virtual void OnUpdate(const Event& evt);
+    virtual void OnRender(const Event& evt);
+    virtual void OnMouseMove(const Event& evt);
+    virtual void OnMouseButtonPress(const Event& evt);
+    virtual void OnMouseButtonRelease(const Event& evt);
+
+    void OnRelativeToLayoutChange(const Event& evt);
+
+    virtual inline void Show() { SetVisible(true); }
+    virtual inline void Hide() { SetVisible(false); }
+    virtual inline void Activate() { SetActive(true); }
+    virtual inline void Deactivate() { SetActive(false); }
+    virtual inline void MouseEnter() { Dispatch(Event(UIElement::EvtMouseEnter)); }
+    virtual inline void MouseLeave() { Dispatch(Event(UIElement::EvtMouseLeave)); }
+    virtual inline void MouseUp() { Dispatch(Event(UIElement::EvtMouseUp)); }
+    virtual inline void MouseDown() { Dispatch(Event(UIElement::EvtMouseDown)); }
+    virtual void Focus();
+    virtual inline void Blur() { Dispatch(Event(UIElement::EvtBlur)); }
+    virtual inline void Click() { Dispatch(Event(UIElement::EvtClick)); }
+    virtual inline void Change() { Dispatch(Event(UIElement::EvtChange)); }
+
+    bool IsActive() const { return m_Active; }
+    void SetActive(bool active);
+
+    bool IsVisible() const { return m_Visible; }
+    void SetVisible(bool visible);
     
     string GetName() const { return m_Name; }
     void SetName(string name) { m_Name = name; }
 
     UIState GetState() const { return m_State; }
-    void SetState(const UIState& state);
 
     Vector2f GetPos() const { return m_Pos; }
 
@@ -143,8 +185,11 @@ public:
 
 protected:
     
-    virtual void UpdateState();
+    virtual void ChangeState(const UIState& newState);
+    virtual void UpdateStateData();
     virtual void UpdateLayout();
+
+    UIManager* mp_UIManager;
 
     string m_Name;
     UIState m_State = StateDefault;
@@ -169,6 +214,38 @@ protected:
 
     weak_ptr<UIElement> mp_Parent;
     ArrayList<shared_ptr<UIElement>> m_Children;
+};
+
+class StateChangeData :
+    public EventData
+{
+public:
+
+    StateChangeData(const UIState& oldState, const UIState& newState) :
+        m_OldState(oldState),
+        m_NewState(newState)
+    { }
+
+    virtual inline string GetClassName() const
+    {
+        return "State Change Event Data";
+    }
+
+    virtual inline EventData* Clone() const
+    {
+        return New StateChangeData(m_OldState, m_NewState);
+    }
+
+    inline unsigned int GetWidth() const { return m_OldState; }
+    inline unsigned int GetHeight() const { return m_NewState; }
+
+    virtual int PushDataToLua(lua_State* L) const;
+
+private:
+
+    UIState m_OldState;
+    UIState m_NewState;
+
 };
 
 } // namespace dusk

@@ -4,6 +4,7 @@
 #include <Dusk/Logging/Logging.hpp>
 #include <Dusk/Events/Event.hpp>
 #include <Dusk/Scripting/Scripting.hpp>
+#include <Dusk/Graphics/GraphicsSystem.hpp>
 
 namespace dusk
 {
@@ -62,7 +63,12 @@ void InputSystem::TriggerKeyRelease(const Keyboard::Key& key)
     Dispatch(Event(EvtKeyRelease, KeyEventData(key)));
 }
 
-void InputSystem::TriggerMouseMoveRelative(const double& dx, const double& dy)
+void InputSystem::TriggerTextInput(const char32_t& input)
+{
+    Dispatch(Event(EvtTextInput, TextInputEventData(input)));
+}
+
+void InputSystem::TriggerMouseMoveRelative(const float& dx, const float& dy)
 {
     m_MouseX += dx;
     m_MouseY += dy;
@@ -70,9 +76,10 @@ void InputSystem::TriggerMouseMoveRelative(const double& dx, const double& dy)
     Dispatch(Event(EvtMouseMove, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
-void InputSystem::TriggerMouseMoveAbsolute(const double& x, const double& y)
+void InputSystem::TriggerMouseMoveAbsolute(const float& x, const float& y)
 {
-    double dx = x - m_MouseX,
+    float 
+        dx = x - m_MouseX, 
         dy = y - m_MouseY;
 
     m_MouseX = x;
@@ -81,7 +88,7 @@ void InputSystem::TriggerMouseMoveAbsolute(const double& x, const double& y)
     Dispatch(Event(EvtMouseMove, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
-void InputSystem::TriggerMouseScroll(const double& dx, const double& dy)
+void InputSystem::TriggerMouseScroll(const float& dx, const float& dy)
 {
     Dispatch(Event(EvtMouseScroll, MouseScrollEventData(dx, dy)));
 }
@@ -114,6 +121,53 @@ void InputSystem::TriggerMappedInputPress(const MappedInputID& input)
 void InputSystem::TriggerMappedInputRelease(const MappedInputID& input)
 {
     Dispatch(Event(EvtMappedInputRelease, MappedInputEventData(input)));
+}
+
+void InputSystem::ProcessSfEvent(const sf::Event& sfEvent)
+{
+    Keyboard::Key key = Keyboard::Key::Invalid;
+    Mouse::Button button = Mouse::Button::Invalid;
+
+    if (sfEvent.type == sf::Event::KeyPressed)
+    {
+        key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
+        TriggerKeyPress(key);
+    }
+    else if (sfEvent.type == sf::Event::KeyReleased)
+    {
+        key = Keyboard::ConvertSFMLKey(sfEvent.key.code);
+        TriggerKeyRelease(key);
+    }
+    else if (sfEvent.type == sf::Event::MouseButtonPressed)
+    {
+        button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
+        TriggerMouseButtonPress(button);
+    }
+    else if (sfEvent.type == sf::Event::MouseButtonReleased)
+    {
+        button = Mouse::ConvertSFMLMouseButton(sfEvent.mouseButton.button);
+        TriggerMouseButtonRelease(button);
+    }
+    else if (sfEvent.type == sf::Event::MouseMoved)
+    {
+        TriggerMouseMoveAbsolute(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
+    }
+    else if (sfEvent.type == sf::Event::TextEntered)
+    {
+        TriggerTextInput(sfEvent.text.unicode);
+    }
+    // TODO: Fix disparite versions of SFML on Win/Linux
+    /*else if (sfEvent.type == sf::Event::MouseWheelScrolled)
+    {
+    if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel)
+    {
+    pIS->TriggerMouseScroll(sfEvent.mouseWheelScroll.delta, 0.0f);
+    }
+    else if (sfEvent.mouseWheelScroll.wheel == sf::Mouse::Wheel::VerticalWheel)
+    {
+    pIS->TriggerMouseScroll(0.0f, sfEvent.mouseWheelScroll.delta);
+    }
+    }*/
 }
 
 void InputSystem::InitScripting(void)

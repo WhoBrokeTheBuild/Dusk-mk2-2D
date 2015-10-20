@@ -18,6 +18,21 @@ public:
 
     virtual void Inherit(const UIElement* pInheritFrom);
 
+    virtual void Focus() override;
+    virtual void Blur() override;
+
+    virtual void OnTextInput(const Event& evt);
+
+protected:
+
+    void ApplyCursor();
+
+    bool m_HasCursor = false;
+
+    size_t m_MaxLen = 0;
+    
+    string m_Value;
+
 };
 
 } // namespace dusk

@@ -69,6 +69,49 @@ void EventDispatcher::AddEventListener(const EventID& eventId, void(*function)(c
     AddEventListener(eventId, EventDelegate(function));
 }
 
+void EventDispatcher::AddEventListener(const EventID& eventId, ScriptHost* pScriptHost, const string& callback)
+{
+    EventDelegate *pDelegate = New EventDelegate(pScriptHost, callback);
+
+    if (!m_EventMap.contains_key(eventId))
+        m_EventMap.add(eventId, ArrayList<EventDelegate*>());
+
+    unsigned int length = (unsigned int)m_EventMap[eventId].size();
+
+    for (unsigned int i = 0; i < length; ++i)
+    {
+        if (m_EventMap[eventId][i] == nullptr)
+            continue;
+        if (*(m_EventMap[eventId][i]) == *pDelegate)
+            return;
+    }
+
+    m_EventMap[eventId].add(pDelegate);
+}
+
+void EventDispatcher::RemoveEventListener(const EventID& eventId, ScriptHost* pScriptHost, const string& callback)
+{
+    EventDelegate delegate = EventDelegate(pScriptHost, callback);
+
+    if (!m_EventMap.contains_key(eventId))
+        return;
+
+    unsigned int length = (unsigned int)m_EventMap[eventId].size();
+
+    for (unsigned int i = 0; i < length; ++i)
+    {
+        if (m_EventMap[eventId][i] == nullptr)
+            continue;
+        if (*(m_EventMap[eventId][i]) == delegate)
+        {
+            delete m_EventMap[eventId][i];
+            m_EventMap[eventId][i] = nullptr;
+            m_Changed = true;
+            return;
+        }
+    }
+}
+
 void EventDispatcher::RemoveAllListeners()
 {
     for (auto mapIt : m_EventMap)
@@ -163,22 +206,7 @@ int EventDispatcher::Script_AddEventListener(lua_State* L)
     EventID eventId = (EventID)lua_tointeger(L, 2);
     string callback = lua_tostring(L, 3);
 
-    EventDelegate *pDelegate = New EventDelegate(Scripting::GetScriptHost(L), callback);
-
-    if (!pEventDispatcher->m_EventMap.contains_key(eventId))
-        pEventDispatcher->m_EventMap.add(eventId, ArrayList<EventDelegate*>());
-
-    unsigned int length = (unsigned int)pEventDispatcher->m_EventMap[eventId].size();
-
-    for (unsigned int i = 0; i < length; ++i)
-    {
-        if (pEventDispatcher->m_EventMap[eventId][i] == nullptr)
-            continue;
-        if (*(pEventDispatcher->m_EventMap[eventId][i]) == *pDelegate)
-            return 0;
-    }
-
-    pEventDispatcher->m_EventMap[eventId].add(pDelegate);
+    pEventDispatcher->AddEventListener(eventId, Scripting::GetScriptHost(L), callback);
 
     return 0;
 }
@@ -190,25 +218,8 @@ int EventDispatcher::Script_RemoveEventListener(lua_State* L)
     EventID eventId = (EventID)lua_tointeger(L, 2);
     string callback = lua_tostring(L, 3);
 
-    EventDelegate delegate = EventDelegate(Scripting::GetScriptHost(L), callback);
+    pEventDispatcher->RemoveEventListener(eventId, Scripting::GetScriptHost(L), callback);
 
-    if (!pEventDispatcher->m_EventMap.contains_key(eventId))
-        return 0;
-
-    unsigned int length = (unsigned int)pEventDispatcher->m_EventMap[eventId].size();
-
-    for (unsigned int i = 0; i < length; ++i)
-    {
-        if (pEventDispatcher->m_EventMap[eventId][i] == nullptr)
-            continue;
-        if (*(pEventDispatcher->m_EventMap[eventId][i]) == delegate)
-        {
-            delete pEventDispatcher->m_EventMap[eventId][i];
-            pEventDispatcher->m_EventMap[eventId][i] = nullptr;
-            pEventDispatcher->m_Changed = true;
-            return 0;
-        }
-    }
 
     return 0;
 }

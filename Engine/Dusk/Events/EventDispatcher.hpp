@@ -29,10 +29,7 @@ public:
     EventDispatcher();
     virtual ~EventDispatcher();
 
-    virtual inline string GetClassName() const
-    {
-        return "Event Dispatcher";
-    }
+    virtual inline string GetClassName() const { return "Event Dispatcher"; }
 
     void AddEventListener(const EventID& eventId, const EventDelegate& funcDelegate);
     void RemoveEventListener(const EventID& eventId, const EventDelegate& funcDelegate);
@@ -51,6 +48,9 @@ public:
     {
         RemoveEventListener(eventId, EventDelegate(pObject, method));
     }
+
+    void AddEventListener(const EventID& eventId, ScriptHost* pScriptHost, const string& callback);
+    void RemoveEventListener(const EventID& eventId, ScriptHost* pScriptHost, const string& callback);
 
     template <typename ObjectType>
     void RemoveAllMethods(ObjectType* pObject);
@@ -75,8 +75,8 @@ private:
 
     void CleanMap();
 
-    static ArrayList<EventDispatcher*>         s_Dispatchers;
-    HashMap<EventID, ArrayList<EventDelegate*>>     m_EventMap;
+    static ArrayList<EventDispatcher*>           s_Dispatchers;
+    HashMap<EventID, ArrayList<EventDelegate*>>  m_EventMap;
 
     bool    m_Changed;
 

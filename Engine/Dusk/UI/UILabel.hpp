@@ -17,6 +17,16 @@ public:
     virtual inline string GetClassName() const { return "UI Label"; }
 
     virtual void Inherit(const UIElement* pInheritFrom);
+
+    weak_ptr<UIElement> GetTarget() const { return mp_Target; }
+    void SetTarget(weak_ptr<UIElement> pTarget) { mp_Target = pTarget; }
+
+    virtual void Focus() override;
+    virtual void Click() override;
+
+protected:
+
+    weak_ptr<UIElement> mp_Target;
 };
 
 } // namespace dusk

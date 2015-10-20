@@ -99,9 +99,6 @@
 
     </Children>
     <Bindings>
-      <OnShow func="ToolboxFrame_OnShow" />
-      <OnHide func="ToolboxFrame_OnHide" />
-      <OnUpdate func="ToolboxFrame_OnUpdate" />
     </Bindings>
   </Frame>
 </DuskUI>

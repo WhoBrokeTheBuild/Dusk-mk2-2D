@@ -32,11 +32,15 @@ public:
 
     virtual inline string GetClassName() const { return "UI Manager"; }
 
+    UIElement* GetFocusedElement() const { return mp_FocusedElement; }
+    void SetFocusedElement(UIElement* pFocusedElement) { mp_FocusedElement = pFocusedElement; }
+
     void OnUpdate(const Event& evt);
     void OnRender(const Event& evt);
     void OnWindowResize(const Event& evt);
     void OnMouseMove(const Event& evt);
     void OnMouseButtonPress(const Event& evt);
+    void OnMouseButtonRelease(const Event& evt);
 
     bool LoadFile(const string& filename);
 
@@ -48,6 +52,8 @@ private:
     Vector2f ParseVector2(rapidxml::xml_node<>* node);
     UIState ParseState(const string& state);
     string ParseName(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement);
+
+    void ParseBindings(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, const string& nodeName, const EventID& eventId);
 
     template <typename ElementType>
     shared_ptr<ElementType> ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pParentElement, const string& dirname);
@@ -62,6 +68,7 @@ private:
 
     unique_ptr<ScriptHost> mp_ScriptHost;
     shared_ptr<UIElement> mp_RootElement;
+    UIElement* mp_FocusedElement = nullptr;
 
     Map<string, unique_ptr<Font>> m_Fonts;
     Map<string, unique_ptr<Texture>> m_Textures;
@@ -80,10 +87,11 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
     shared_ptr<ElementType> pElement(New ElementType());
     shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
 
-    pElement->SetName(name);
-
     if (!pGenericElement)
         return shared_ptr<ElementType>();
+
+    pGenericElement->SetUIManager(this);
+    pGenericElement->SetName(name);
 
     xml_attribute<>* inheritsAttr = node->first_attribute("inherits");
     if (inheritsAttr && m_UIElements.contains_key(inheritsAttr->value()))
@@ -215,6 +223,25 @@ shared_ptr<ElementType> UIManager::ParseElement(rapidxml::xml_node<>* node, shar
             color = ParseColor(colorNode);
 
         pGenericElement->SetBorderColor(color, state);
+    }
+
+    xml_node<>* bindingsNode = node->first_node("Bindings");
+    if (bindingsNode)
+    {
+        ParseBindings(bindingsNode, pGenericElement, "OnUpdate", UIElement::EvtUpdate);
+        ParseBindings(bindingsNode, pGenericElement, "OnRender", UIElement::EvtRender);
+        ParseBindings(bindingsNode, pGenericElement, "OnShow", UIElement::EvtShow);
+        ParseBindings(bindingsNode, pGenericElement, "OnHide", UIElement::EvtHide);
+        ParseBindings(bindingsNode, pGenericElement, "OnActivate", UIElement::EvtActivate);
+        ParseBindings(bindingsNode, pGenericElement, "OnDeactivate", UIElement::EvtDeactivate);
+        ParseBindings(bindingsNode, pGenericElement, "OnMouseEnter", UIElement::EvtMouseEnter);
+        ParseBindings(bindingsNode, pGenericElement, "OnMouseLeave", UIElement::EvtMouseLeave);
+        ParseBindings(bindingsNode, pGenericElement, "OnMouseDown", UIElement::EvtMouseDown);
+        ParseBindings(bindingsNode, pGenericElement, "OnMouseUp", UIElement::EvtMouseUp);
+        ParseBindings(bindingsNode, pGenericElement, "OnFocus", UIElement::EvtFocus);
+        ParseBindings(bindingsNode, pGenericElement, "OnBlur", UIElement::EvtBlur);
+        ParseBindings(bindingsNode, pGenericElement, "OnClick", UIElement::EvtClick);
+        ParseBindings(bindingsNode, pGenericElement, "OnChange", UIElement::EvtChange);
     }
 
     xml_node<>* childrenNode = node->first_node("Children");

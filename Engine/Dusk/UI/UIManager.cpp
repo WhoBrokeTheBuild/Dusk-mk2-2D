@@ -21,6 +21,7 @@ UIManager::UIManager() :
     m_UIElements()
 {
     mp_RootElement->SetSize((Vector2f)Program::Inst()->GetGraphicsSystem()->GetWindowSize());
+    mp_RootElement->SetUIManager(this);
 
     Program::Inst()->AddEventListener(Program::EvtUpdate, this, &UIManager::OnUpdate);
     Program::Inst()->AddEventListener(Program::EvtRender, this, &UIManager::OnRender);
@@ -28,10 +29,12 @@ UIManager::UIManager() :
     Program::Inst()->GetGraphicsSystem()->AddEventListener(GraphicsSystem::EvtWindowResize, this, &UIManager::OnWindowResize);
     Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseMove, this, &UIManager::OnMouseMove);
     Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseButtonPress, this, &UIManager::OnMouseButtonPress);
+    Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseButtonRelease, this, &UIManager::OnMouseButtonRelease);
 }
 
 UIManager::~UIManager()
 {
+    Program::Inst()->GetInputSystem()->RemoveEventListener(InputSystem::EvtMouseButtonRelease, this, &UIManager::OnMouseButtonRelease);
     Program::Inst()->GetInputSystem()->RemoveEventListener(InputSystem::EvtMouseButtonPress, this, &UIManager::OnMouseButtonPress);
     Program::Inst()->GetInputSystem()->RemoveEventListener(InputSystem::EvtMouseMove, this, &UIManager::OnMouseMove);
     Program::Inst()->GetGraphicsSystem()->RemoveEventListener(GraphicsSystem::EvtWindowResize, this, &UIManager::OnWindowResize);
@@ -42,14 +45,12 @@ UIManager::~UIManager()
 
 void UIManager::OnUpdate(const Event& evt)
 {
-    auto pData = evt.GetDataAs<UpdateEventData>();
-    mp_RootElement->OnUpdate(pData);
+    mp_RootElement->OnUpdate(evt);
 }
 
 void UIManager::OnRender(const Event& evt)
 {
-    auto pData = evt.GetDataAs<RenderEventData>();
-    mp_RootElement->OnRender(pData);
+    mp_RootElement->OnRender(evt);
 }
 
 void UIManager::OnWindowResize(const Event& evt)
@@ -60,13 +61,17 @@ void UIManager::OnWindowResize(const Event& evt)
 
 void UIManager::OnMouseMove(const Event& evt)
 {
-    auto pData = evt.GetDataAs<MouseMoveEventData>();
-    mp_RootElement->OnMouseMove(pData);
+    mp_RootElement->OnMouseMove(evt);
 }
 
 void UIManager::OnMouseButtonPress(const Event& evt)
 {
+    mp_RootElement->OnMouseButtonPress(evt);
+}
 
+void UIManager::OnMouseButtonRelease(const Event& evt)
+{
+    mp_RootElement->OnMouseButtonRelease(evt);
 }
 
 bool UIManager::LoadFile(const string& filename)
@@ -220,6 +225,19 @@ string UIManager::ParseName(rapidxml::xml_node<>* node, shared_ptr<UIElement>& p
     return "";
 }
 
+void UIManager::ParseBindings(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, const string& nodeName, const EventID& eventId)
+{
+    for (xml_node<>* bindNode = node->first_node(nodeName.c_str()); bindNode; bindNode = bindNode->next_sibling(nodeName.c_str()))
+    {
+        xml_attribute<>* funcAttr = bindNode->first_attribute("func");
+        if (!funcAttr)
+            continue;
+
+        const string& funcName = funcAttr->value();
+        pElement->AddEventListener(eventId, mp_ScriptHost.get(), funcName);
+    }
+}
+
 void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIElement>& pParentElement, const string& dirname)
 {
     for (xml_node<>* node = root->first_node(); node; node = node->next_sibling())
@@ -326,11 +344,18 @@ void UIManager::ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIFrame>& pFra
 
 void UIManager::ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UILabel>& pLabel)
 {
+    xml_attribute<>* targetAttr = node->first_attribute("target");
+    if (targetAttr)
+    {
+        weak_ptr<UIElement> pTarget = m_UIElements[targetAttr->value()];
+
+        if (!pTarget.expired())
+            pLabel->SetTarget(pTarget);
+    }
 }
 
 void UIManager::ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pInput)
 {
-    pInput->SetText("100");
 }
 
 void UIManager::ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pButton)

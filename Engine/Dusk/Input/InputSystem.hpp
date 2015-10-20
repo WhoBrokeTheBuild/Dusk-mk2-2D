@@ -8,11 +8,13 @@
 #include <Dusk/Input/Mapped.hpp>
 
 #include <lua.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace dusk
 {
 
 class Program;
+class GraphicsSystem;
 
 class InputSystem :
     public EventDispatcher,
@@ -20,13 +22,16 @@ class InputSystem :
 {
 
     friend class Program;
+    friend class GraphicsSystem;
 
 public:
 
     enum : EventID
     {
-        EvtKeyPress,
+        EvtKeyPress = 1,
         EvtKeyRelease,
+
+        EvtTextInput,
 
         EvtMouseMove,
         EvtMouseScroll,
@@ -53,9 +58,11 @@ public:
     void TriggerKeyPress(const Keyboard::Key& key);
     void TriggerKeyRelease(const Keyboard::Key& key);
 
-    void TriggerMouseMoveRelative(const double& dx, const double& dy);
-    void TriggerMouseMoveAbsolute(const double& x, const double& y);
-    void TriggerMouseScroll(const double& dx, const double& dy);
+    void TriggerTextInput(const char32_t& input);
+
+    void TriggerMouseMoveRelative(const float& dx, const float& dy);
+    void TriggerMouseMoveAbsolute(const float& x, const float& y);
+    void TriggerMouseScroll(const float& dx, const float& dy);
     void TriggerMouseButtonPress(const Mouse::Button& mouseButton);
     void TriggerMouseButtonRelease(const Mouse::Button& mouseButton);
 
@@ -66,9 +73,11 @@ private:
 
     InputSystem() = default;
 
-    double m_MouseX = 0.0;
+    void ProcessSfEvent(const sf::Event& sfEvent);
 
-    double m_MouseY = 0.0;
+    float m_MouseX = 0.0;
+
+    float m_MouseY = 0.0;
 
     Map<Keyboard::Key, MappedInputID> m_MappedKeys;
 

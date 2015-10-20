@@ -42,7 +42,6 @@ public:
 
     GraphicsSystem(const GraphicsSystem&) = delete;
     GraphicsSystem& operator=(const GraphicsSystem&) = delete;
-
     virtual ~GraphicsSystem() = default;
 
     virtual inline string GetClassName() const override { return "Graphics System"; }

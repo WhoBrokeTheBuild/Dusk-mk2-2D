@@ -159,4 +159,9 @@ int KeyEventData::PushDataToLua(lua_State* L) const
     return 1;
 }
 
+int TextInputEventData::PushDataToLua(lua_State* L) const
+{
+    return 0;
+}
+
 } // namespace dusk

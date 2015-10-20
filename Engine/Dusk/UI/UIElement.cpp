@@ -3,6 +3,7 @@
 #include <Dusk/Program.hpp>
 #include <Dusk/Graphics/GraphicsContext.hpp>
 #include <Dusk/Logging/Logging.hpp>
+#include <Dusk/UI/UIManager.hpp>
 
 #include <cfloat>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -18,7 +19,7 @@ UIElement::UIElement()
 UIElement::~UIElement()
 {
     if (auto pRelativeTo = m_RelativeTo.lock())
-        pRelativeTo->RemoveEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
+        pRelativeTo->RemoveEventListener(EvtLayoutChange, this, &UIElement::OnRelativeToLayoutChange);
 }
 
 void UIElement::Inherit(const UIElement* pInheritFrom)
@@ -38,19 +39,30 @@ void UIElement::Inherit(const UIElement* pInheritFrom)
     UpdateLayout();
 }
 
-void UIElement::OnUpdate(UpdateEventData* pData)
+void UIElement::SetUIManager(UIManager* pUIManager)
+{
+    mp_UIManager = pUIManager;
+}
+
+void UIElement::OnUpdate(const Event& evt)
 {
     if (!m_Active)
         return;
 
+    Dispatch(Event(UIElement::EvtUpdate, *evt.GetData()));
+
     for (auto& child : m_Children)
-        child->OnUpdate(pData);
+        child->OnUpdate(evt);
 }
 
-void UIElement::OnRender(RenderEventData* pData)
+void UIElement::OnRender(const Event& evt)
 {
+    auto pData = evt.GetDataAs<RenderEventData>();
+
     if (!m_Visible)
         return;
+
+    Dispatch(Event(UIElement::EvtRender, *evt.GetData()));
 
     sf::RectangleShape rect(m_Size);
     rect.setPosition(m_Pos);
@@ -72,42 +84,112 @@ void UIElement::OnRender(RenderEventData* pData)
     pData->GetContext()->Draw(&m_TextBuffer);
 
     for (auto& child : m_Children)
-        child->OnRender(pData);
+        child->OnRender(evt);
 }
 
-void UIElement::OnMouseMove(MouseMoveEventData* pData)
+void UIElement::OnMouseMove(const Event& evt)
 {
+    auto pData = evt.GetDataAs<MouseMoveEventData>();
+
+    if (m_State == StateDisabled)
+        return;
+
     if (GetBounds().contains(pData->GetPos()))
     {
-        if (m_State != StateDisabled && m_State != StateHover)
+        if (m_State == StateDefault)
         {
-            DuskExtLog("info", "Entering %s", m_Name.c_str());
-            SetState(StateHover);
+            ChangeState(StateHover);
+            MouseEnter();
         }
     }
     else
     {
-        if (m_State != StateDisabled && m_State != StateDefault)
+        if (m_State == StateHover)
         {
-            DuskExtLog("info", "Leaving %s", m_Name.c_str());
-            SetState(StateDefault);
+            ChangeState(StateDefault);
+            MouseLeave();
         }
     }
 
     for (auto& child : m_Children)
-        child->OnMouseMove(pData);
+        child->OnMouseMove(evt);
 }
 
-void UIElement::OnRelativeToLayoutChanged(const Event& evt)
+void UIElement::OnMouseButtonPress(const Event& evt)
+{
+    auto pData = evt.GetDataAs<MouseButtonEventData>();
+
+    if (m_State == StateDisabled)
+        return;
+
+    if (m_State == StateHover)
+    {
+        ChangeState(StateActive);
+        MouseDown();
+        Focus();
+    }
+
+    for (auto& child : m_Children)
+        child->OnMouseButtonPress(evt);
+}
+
+void UIElement::OnMouseButtonRelease(const Event& evt)
+{
+    auto pData = evt.GetDataAs<MouseButtonEventData>();
+    
+    if (m_State == StateDisabled)
+        return;
+
+    if (m_State == StateActive)
+    {
+        MouseUp();
+        Click();
+    }
+
+    for (auto& child : m_Children)
+        child->OnMouseButtonRelease(evt);
+}
+
+void UIElement::OnRelativeToLayoutChange(const Event& evt)
 {
     UpdateLayout();
     Dispatch(evt);
 }
 
-void UIElement::SetState(const UIState& state)
+void UIElement::Focus()
 {
-    m_State = state;
-    UpdateState();
+    UIElement* pFocusedElement = mp_UIManager->GetFocusedElement();
+    if (pFocusedElement)
+        pFocusedElement->Blur();
+    mp_UIManager->SetFocusedElement(this);
+    Dispatch(Event(UIElement::EvtFocus));
+}
+
+void UIElement::SetActive(bool active)
+{
+    m_Active = active;
+    if (m_Active)
+        Dispatch(Event(UIElement::EvtActivate));
+    else
+    {
+        ChangeState(UIState::StateDisabled);
+        Dispatch(Event(UIElement::EvtDeactivate));
+    }
+}
+
+void UIElement::SetVisible(bool visible)
+{
+    m_Visible = visible;
+    if (m_Visible)
+        Dispatch(Event(UIElement::EvtShow));
+    else
+        Dispatch(Event(UIElement::EvtHide));
+}
+
+void UIElement::ChangeState(const UIState& newState)
+{
+    m_State = newState;
+    UpdateStateData();
 }
 
 void UIElement::SetSize(const Vector2f& size)
@@ -115,7 +197,7 @@ void UIElement::SetSize(const Vector2f& size)
     m_TargetSize = size;
 
     UpdateLayout();
-    Dispatch(Event(EvtLayoutChanged));
+    Dispatch(Event(EvtLayoutChange));
 }
 
 void UIElement::SetParent(weak_ptr<UIElement> pParent)
@@ -123,21 +205,21 @@ void UIElement::SetParent(weak_ptr<UIElement> pParent)
     mp_Parent = pParent;
 
     UpdateLayout();
-    Dispatch(Event(EvtLayoutChanged));
+    Dispatch(Event(EvtLayoutChange));
 }
 
 void UIElement::SetRelativeTo(weak_ptr<UIElement> pRelativeTo)
 {
     if (auto pOldRelativeTo = m_RelativeTo.lock())
-        pOldRelativeTo->RemoveEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
+        pOldRelativeTo->RemoveEventListener(EvtLayoutChange, this, &UIElement::OnRelativeToLayoutChange);
 
     m_RelativeTo = pRelativeTo;
 
     if (auto pNewRelativeTo = m_RelativeTo.lock())
-        pNewRelativeTo->AddEventListener(EvtLayoutChanged, this, &UIElement::OnRelativeToLayoutChanged);
+        pNewRelativeTo->AddEventListener(EvtLayoutChange, this, &UIElement::OnRelativeToLayoutChange);
 
     UpdateLayout();
-    Dispatch(Event(EvtLayoutChanged));
+    Dispatch(Event(EvtLayoutChange));
 }
 
 void UIElement::SetRelativePoint(UIRelPoint relPoint)
@@ -145,7 +227,7 @@ void UIElement::SetRelativePoint(UIRelPoint relPoint)
     m_RelativePoint = relPoint;
 
     UpdateLayout();
-    Dispatch(Event(EvtLayoutChanged));
+    Dispatch(Event(EvtLayoutChange));
 }
 
 void UIElement::SetOffset(const Vector2f& offset)
@@ -153,13 +235,13 @@ void UIElement::SetOffset(const Vector2f& offset)
     m_Offset = offset;
 
     UpdateLayout();
-    Dispatch(Event(EvtLayoutChanged));
+    Dispatch(Event(EvtLayoutChange));
 }
 
 void UIElement::SetFont(UIFont* pFont, const UIState& state /*= UIState::StateDefault*/)
 {
     m_Font.SetValue(state, pFont);
-    UpdateState();
+    UpdateStateData();
 }
 
 void UIElement::SetText(const string& text)
@@ -173,7 +255,7 @@ void UIElement::AddChild(shared_ptr<UIElement>& pChild)
     m_Children.add(pChild);
 }
 
-void UIElement::UpdateState()
+void UIElement::UpdateStateData()
 {
     UIFont* pUIFont = m_Font.GetValue(m_State);
     if (pUIFont)
@@ -255,6 +337,13 @@ void UIElement::UpdateLayout()
     {
         m_Size.y = m_TargetSize.y;
     }
+}
+
+int StateChangeData::PushDataToLua(lua_State* L) const
+{
+    lua_pushinteger(L, m_OldState);
+    lua_pushinteger(L, m_NewState);
+    return 2;
 }
 
 } // namespace dusk

@@ -3,11 +3,11 @@
 namespace dusk
 {
 
-const EventData EventData::BLANK_EVENT_DATA = EventData();
+const EventData EventData::BlankEventData = EventData();
 
 int Event::PushDataToLua(lua_State* L) const
 {
-    return mp_Data->PushDataToLua(L);
+    return m_Data->PushDataToLua(L);
 }
 
 int EventData::PushDataToLua(lua_State* L) const

@@ -20,7 +20,7 @@ class EventData :
 {
 public:
 
-    static const EventData BLANK_EVENT_DATA;
+    static const EventData BlankEventData;
 
     inline EventData()
     { }
@@ -50,25 +50,25 @@ class Event :
 {
 public:
 
-    Event(const EventID& eventId, const EventData& data = EventData::BLANK_EVENT_DATA) :
+    Event(const EventID& eventId, const EventData& data = EventData::BlankEventData) :
         m_ID(eventId),
-        mp_Data(nullptr),
-        mp_EventTarget(nullptr)
+        m_Data(nullptr),
+        m_EventTarget(nullptr)
     {
-        mp_Data = data.Clone();
+        m_Data = data.Clone();
     }
 
     Event(const Event& rhs) :
         m_ID(rhs.m_ID),
-        mp_Data(nullptr),
-        mp_EventTarget(nullptr)
+        m_Data(nullptr),
+        m_EventTarget(nullptr)
     {
-        mp_Data = (rhs.mp_Data == nullptr ? nullptr : rhs.mp_Data->Clone());
+        m_Data = (rhs.m_Data == nullptr ? nullptr : rhs.m_Data->Clone());
     }
 
     virtual inline ~Event()
     {
-        delete mp_Data;
+        delete m_Data;
     }
 
     virtual int PushDataToLua(lua_State* L) const;
@@ -85,34 +85,34 @@ public:
 
     inline EventDispatcher* GetTarget() const
     {
-        return mp_EventTarget;
+        return m_EventTarget;
     }
     template <typename T>
     inline T* GetTargetAs() const
     {
-        return dynamic_cast<T*>(mp_EventTarget);
+        return dynamic_cast<T*>(m_EventTarget);
     }
 
     inline void setTarget(EventDispatcher* pTarget)
     {
-        mp_EventTarget = pTarget;
+        m_EventTarget = pTarget;
     }
 
     inline EventData* GetData() const
     {
-        return mp_Data;
+        return m_Data;
     }
     template <typename T>
     inline T* GetDataAs() const
     {
-        return dynamic_cast<T*>(mp_Data);
+        return dynamic_cast<T*>(m_Data);
     }
 
 protected:
 
     EventID             m_ID;
-    EventData*          mp_Data;
-    EventDispatcher*   mp_EventTarget;
+    EventData*          m_Data;
+    EventDispatcher*    m_EventTarget;
 
 }; // class Event
 

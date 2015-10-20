@@ -25,12 +25,20 @@ void UIButton::Inherit(const UIElement* pInheritFrom)
     }
 }
 
-void UIButton::UpdateState()
+void UIButton::OnMouseButtonRelease(const Event& evt)
 {
-    UIElement::UpdateState();
+    auto pData = evt.GetDataAs<MouseButtonEventData>();
 
+    UIElement::OnMouseButtonRelease(evt);
+
+    if (m_State == StateActive)
+        ChangeState(StateHover);
+}
+
+void UIButton::ChangeState(const UIState& newState)
+{
     sf::WindowHandle handle = Program::Inst()->GetGraphicsSystem()->GetWindowHandle();
-    if (m_State == StateHover)
+    if (newState == StateHover || newState == StateActive)
     {
         Cursor handCursor(Cursor::HAND);
         handCursor.set(handle);
@@ -40,6 +48,8 @@ void UIButton::UpdateState()
         Cursor handCursor(Cursor::NORMAL);
         handCursor.set(handle);
     }
+
+    UIElement::ChangeState(newState);
 }
 
 }

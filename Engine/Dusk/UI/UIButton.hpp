@@ -18,9 +18,11 @@ public:
 
     virtual void Inherit(const UIElement* pInheritFrom);
 
+    virtual void OnMouseButtonRelease(const Event& evt) override;
+
 protected:
 
-    virtual void UpdateState() override;
+    virtual void ChangeState(const UIState& newState) override;
 
 };
 

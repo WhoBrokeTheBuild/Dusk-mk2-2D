@@ -175,8 +175,8 @@ protected:
 
 private:
 
-    ScriptHost*        mp_ScriptHost;
-    string            m_Callback;
+    ScriptHost*     mp_ScriptHost;
+    string          m_Callback;
 
 }; // class LuaFucntionCallback
 

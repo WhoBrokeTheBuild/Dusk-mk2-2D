@@ -5,6 +5,7 @@
 #include <Dusk/Events/Event.hpp>
 
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/System.hpp>
 
 namespace dusk
 {
@@ -141,36 +142,53 @@ class KeyEventData :
 {
 public:
 
-    KeyEventData() :
-        m_Key(Keyboard::Key::Invalid)
-    { }
+    KeyEventData() = default;
+    KeyEventData(const KeyEventData&) = default;
+    KeyEventData& operator=(const KeyEventData&) = default;
+    ~KeyEventData() = default;
 
     KeyEventData(const Keyboard::Key& key) :
         m_Key(key)
     { }
 
-    virtual inline string GetClassName() const
-    {
-        return "Key Event Data";
-    }
+    virtual inline string GetClassName() const override { return "Key Event Data"; }
 
-    virtual inline EventData* Clone() const
-    {
-        return New KeyEventData(m_Key);
-    }
+    virtual inline EventData* Clone() const { return New KeyEventData(m_Key); }
 
-    inline Keyboard::Key GetKey() const
-    {
-        return m_Key;
-    }
+    inline Keyboard::Key GetKey() const { return m_Key; }
 
     virtual int PushDataToLua(lua_State* L) const;
 
 private:
 
-    Keyboard::Key    m_Key;
+    Keyboard::Key m_Key = Keyboard::Key::Invalid;
 
 }; // class KeyEventData
+
+class TextInputEventData :
+    public EventData
+{
+public:
+
+    TextInputEventData() = default;
+
+    TextInputEventData(const char32_t& input) :
+        m_Input(input)
+    { }
+
+    virtual inline string GetClassName() const override { return "Text Input Data"; }
+
+    virtual inline EventData* Clone() const { return New TextInputEventData(m_Input); }
+
+    inline char32_t GetInput() const { return m_Input; }
+
+    virtual int PushDataToLua(lua_State* L) const;
+
+private:
+
+    char32_t m_Input = 0;
+
+}; // class TextInputEventData
 
 } // namespace dusk
 
