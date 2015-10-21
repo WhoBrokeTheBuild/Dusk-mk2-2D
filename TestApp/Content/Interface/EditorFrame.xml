@@ -14,12 +14,7 @@
     <Font name="MainFont_Active"
           inherits="MainFont"
           underline="true">
-        <Color r="64" g="64" b="64" />
-    </Font>
-    <Font name="MainFont_Error"
-          inherits="MainFont"
-          underline="true">
-        <Color r="128" g="0" b="0" />
+        <Color r="0" g="0" b="0" />
     </Font>
     <Font name="MainFont_Disabled"
           inherits="MainFont"
@@ -36,10 +31,9 @@
     <Element name="DefaultElementTemplate"
         virtual="true">
         <UseFont name="MainFont" />
-        <UseFont name="MainFont_Hover" state="Hover" />
-        <UseFont name="MainFont_Active" state="Active" />
-        <UseFont name="MainFont_Error" state="Error" />
-        <UseFont name="MainFont_Disabled" state="Disabled" />
+        <UseFont name="MainFont_Hover" state="hover" />
+        <UseFont name="MainFont_Active" state="active" />
+        <UseFont name="MainFont_Disabled" state="disabled" />
     </Element>
 
     <!-- Elements -->

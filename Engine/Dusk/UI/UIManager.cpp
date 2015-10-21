@@ -356,6 +356,31 @@ void UIManager::ParseLabel(rapidxml::xml_node<>* node, shared_ptr<UILabel>& pLab
 
 void UIManager::ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pInput)
 {
+    xml_attribute<>* maxLenAttr = node->first_attribute("maxLength");
+    if (maxLenAttr)
+    {
+        const string& maxLenStr = maxLenAttr->value();
+        size_t maxLen = std::stoull(maxLenStr);
+        pInput->SetMaxLength(maxLen);
+    }
+
+    xml_attribute<>* typeAttr = node->first_attribute("type");
+    if (typeAttr)
+    {
+        const string& type = typeAttr->value();
+        if (type == "text")
+        {
+            pInput->SetType(UIInput::TypeText);
+        }
+        else if (type == "int")
+        {
+            pInput->SetType(UIInput::TypeInt);
+        }
+        else if (type == "float")
+        {
+            pInput->SetType(UIInput::TypeFloat);
+        }
+    }
 }
 
 void UIManager::ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pButton)

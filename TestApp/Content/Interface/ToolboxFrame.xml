@@ -54,32 +54,45 @@
       <Color r="255" g="255" b="255" />
     </Background>
     <Children>
-
+      
       <Label name="ToolboxFrame_MapSizeLabel"
           inherits="ToolboxFrame_HeadingTemplate"
           text="Map Size">
         <Position x="10" y="10" relTo="$parent" relPoint="TopLeft" />
       </Label>
 
+      <Label name="ToolboxFrame_NameLabel"
+          inherits="ToolboxFrame_LabelTemplate"
+          text="Name:"
+          target="ToolboxFrame_NameInput">
+        <Position x="10" y="15" relTo="ToolboxFrame_MapSizeLabel" relPoint="BottomLeft" />
+      </Label>
+      <Input name="ToolboxFrame_NameInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="text">
+        <Size x="100" y="20" />
+        <Position x="10" y="0" relTo="ToolboxFrame_NameLabel" relPoint="TopRight" />
+      </Input>
+      
       <Label name="ToolboxFrame_WidthLabel"
           inherits="ToolboxFrame_LabelTemplate"
           text="Width:"
           target="ToolboxFrame_WidthInput">
-        <Position x="10" y="15" relTo="ToolboxFrame_MapSizeLabel" relPoint="BottomLeft" />
+        <Position x="0" y="5" relTo="ToolboxFrame_NameLabel" relPoint="BottomLeft" />
       </Label>
+      <Input name="ToolboxFrame_WidthInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="int">
+        <Size x="100" y="20" />
+        <Position x="0" y="5" relTo="ToolboxFrame_NameInput" relPoint="BottomLeft" />
+      </Input>
+      
       <Label name="ToolboxFrame_HeightLabel"
           inherits="ToolboxFrame_LabelTemplate"
           text="Height:"
           target="ToolboxFrame_HeightInput">
         <Position x="0" y="5" relTo="ToolboxFrame_WidthLabel" relPoint="BottomLeft" />
       </Label>
-
-      <Input name="ToolboxFrame_WidthInput"
-          inherits="ToolboxFrame_InputTemplate"
-          type="int">
-        <Size x="100" y="20" />
-        <Position x="10" y="0" relTo="ToolboxFrame_WidthLabel" relPoint="TopRight" />
-      </Input>
       <Input name="ToolboxFrame_HeightInput"
           inherits="ToolboxFrame_InputTemplate"
           type="int">
@@ -87,11 +100,24 @@
         <Position x="0" y="5" relTo="ToolboxFrame_WidthInput" relPoint="BottomLeft" />
       </Input>
 
+      <Label name="ToolboxFrame_ScaleLabel"
+          inherits="ToolboxFrame_LabelTemplate"
+          text="Scale:"
+          target="ToolboxFrame_ScaleInput">
+        <Position x="0" y="5" relTo="ToolboxFrame_HeightLabel" relPoint="BottomLeft" />
+      </Label>
+      <Input name="ToolboxFrame_ScaleInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="float">
+        <Size x="100" y="20" />
+        <Position x="0" y="5" relTo="ToolboxFrame_HeightInput" relPoint="BottomLeft" />
+      </Input>
+
       <Button name="ToolboxFrame_UpdateSizeButton"
           inherits="ToolboxFrame_ButtonTemplate"
           text="Update Size">
         <Size x="$min" y="20" />
-        <Position x="0" y="10" relTo="ToolboxFrame_HeightLabel" relPoint="BottomLeft" />
+        <Position x="0" y="10" relTo="ToolboxFrame_ScaleLabel" relPoint="BottomLeft" />
         <Bindings>
           <OnClick func="ToolboxFrame_UpdateSizeButton_OnClick" />
         </Bindings>
