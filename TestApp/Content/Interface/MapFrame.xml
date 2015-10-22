@@ -1,9 +1,9 @@
 <DuskUI>
-  <Frame name="MapFrame">
+  <RenderFrame name="MapFrame" type="Custom">
     <Size x="$max" y="$max" />
     <Position x="" y="0" relTo="ToolboxFrame" relPoint="TopRight" />
     <Background>
       <Color r="0" g="0" b="0" />
     </Background>
-  </Frame>
+  </RenderFrame>
 </DuskUI>

@@ -295,6 +295,7 @@
     <ClInclude Include="Dusk\UI\UIInput.hpp" />
     <ClInclude Include="Dusk\UI\UILabel.hpp" />
     <ClInclude Include="Dusk\UI\UIManager.hpp" />
+    <ClInclude Include="Dusk\UI\UIRenderFrame.hpp" />
     <ClInclude Include="Dusk\Utility\Benchmark.hpp" />
     <ClInclude Include="Dusk\Utility\Console.hpp" />
     <ClInclude Include="Dusk\Utility\Platform.hpp" />

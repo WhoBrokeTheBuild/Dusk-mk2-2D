@@ -161,6 +161,7 @@
     <ClCompile Include="TestApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomRenderFrame.h" />
     <ClInclude Include="TestApp.h" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@
 #include <Dusk/Graphics/GraphicsSystem.hpp>
 
 #include <iostream>
+#include "CustomRenderFrame.h"
 
 using namespace dusk;
 
@@ -19,6 +20,7 @@ TestApp::TestApp()
 
     GetScriptHost()->RunFile("Content/Scripts/Setup.lua");
 
+    m_UIManager.RegisterRenderFrameType<CustomRenderFrame>("Custom");
     m_UIManager.LoadFile("Content/Interface/EditorFrame.xml");
 
     DuskLog("info", "Starting Up");

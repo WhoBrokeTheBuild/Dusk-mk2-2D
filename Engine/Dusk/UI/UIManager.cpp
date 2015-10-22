@@ -254,27 +254,60 @@ void UIManager::ParseElementNodes(rapidxml::xml_node<>* root, shared_ptr<UIEleme
         }
         else if (nodeName == "Element")
         {
-            ParseElement<UIElement>(node, pParentElement, dirname);
+            shared_ptr<UIElement> pElement(New UIElement);
+            ParseElement(node, pElement, pParentElement, dirname);
         }
         else if (nodeName == "Frame")
         {
-            shared_ptr<UIFrame>& pElement = ParseElement<UIFrame>(node, pParentElement, dirname);
-            ParseFrame(node, pElement);
+            shared_ptr<UIFrame> pElement(New UIFrame);
+            shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+            if (ParseElement(node, pGenericElement, pParentElement, dirname))
+            {
+                ParseFrame(node, pElement);
+            }
         }
         else if (nodeName == "Label")
         {
-            shared_ptr<UILabel>& pElement = ParseElement<UILabel>(node, pParentElement, dirname);
-            ParseLabel(node, pElement);
+            shared_ptr<UILabel> pElement(New UILabel);
+            shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+            if (ParseElement(node, pGenericElement, pParentElement, dirname))
+            {
+                ParseLabel(node, pElement);
+            }
         }
         else if (nodeName == "Button")
         {
-            shared_ptr<UIButton>& pElement = ParseElement<UIButton>(node, pParentElement, dirname);
-            ParseButton(node, pElement);
+            shared_ptr<UIButton> pElement(New UIButton);
+            shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+            if (ParseElement(node, pGenericElement, pParentElement, dirname))
+            {
+                ParseButton(node, pElement);
+            }
         }
         else if (nodeName == "Input")
         {
-            shared_ptr<UIInput>& pElement = ParseElement<UIInput>(node, pParentElement, dirname);
-            ParseInput(node, pElement);
+            shared_ptr<UIInput> pElement(New UIInput);
+            shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pElement);
+            if (ParseElement(node, pGenericElement, pParentElement, dirname))
+            {
+                ParseInput(node, pElement);
+            }
+        }
+        else if (nodeName == "RenderFrame")
+        {
+            xml_attribute<>* typeAttr = node->first_attribute("type");
+            if (typeAttr)
+            {
+                const string& type = typeAttr->value();
+                if (m_RenderFrameTypes.contains_key(type))
+                {
+                    shared_ptr<UIElement> pGenericElement = m_RenderFrameTypes[type]();
+                    if (ParseElement(node, pGenericElement, pParentElement, dirname))
+                    {
+                        // Extra Loading Stuff
+                    }
+                }
+            }
         }
     }
 }
@@ -335,6 +368,177 @@ UIFont* UIManager::ParseFont(xml_node<>* node, shared_ptr<UIElement>& pParentEle
 
     m_UIFonts[name] = std::move(unique_ptr<UIFont>(pUIFont));
     return nullptr;
+}
+
+bool UIManager::ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& pElement, shared_ptr<UIElement>& pParentElement, const string& currentDir)
+{
+    const string& name = ParseName(node, pParentElement);
+    if (name.empty())
+        return false;
+
+    if (!pElement)
+        return false;
+
+    pElement->SetUIManager(this);
+    pElement->SetName(name);
+
+    xml_attribute<>* inheritsAttr = node->first_attribute("inherits");
+    if (inheritsAttr && m_UIElements.contains_key(inheritsAttr->value()))
+    {
+        UIElement* pInheritFrom = m_UIElements[inheritsAttr->value()].get();
+
+        if (pInheritFrom)
+            pElement->Inherit(pInheritFrom);
+    }
+
+    bool isVirtual = false;
+    xml_attribute<>* virtualAttr = node->first_attribute("virtual");
+    if (virtualAttr)
+        isVirtual = (string(virtualAttr->value()) == "true" ? true : false);
+
+    if (!isVirtual && pParentElement)
+    {
+        pElement->SetParent(pParentElement);
+        pParentElement->AddChild(pElement);
+    }
+
+    xml_node<>* sizeNode = node->first_node("Size");
+    if (sizeNode)
+        pElement->SetSize(ParseVector2(sizeNode));
+
+    xml_node<>* posNode = node->first_node("Position");
+    if (posNode)
+    {
+        Vector2f offset = ParseVector2(posNode);
+        pElement->SetOffset(offset);
+
+        xml_attribute<>* relToAttr = posNode->first_attribute("relTo");
+        xml_attribute<>* relPointAttr = posNode->first_attribute("relPoint");
+
+        if (relToAttr)
+        {
+            const string& relToVal = relToAttr->value();
+            if (!relToVal.empty())
+            {
+                if (relToVal[0] == '$')
+                {
+                    if (relToVal == "$parent")
+                        pElement->SetRelativeTo(pParentElement);
+                }
+                else
+                {
+                    if (m_UIElements.contains_key(relToVal))
+                        pElement->SetRelativeTo(m_UIElements[relToVal]);
+                }
+            }
+        }
+
+        if (relPointAttr)
+        {
+            const string& relPointVal = relPointAttr->value();
+
+            UIRelPoint relPoint;
+            if (relPointVal == "TopLeft")
+            {
+                relPoint = TopLeft;
+            }
+            else if (relPointVal == "TopRight")
+            {
+                relPoint = TopRight;
+            }
+            else if (relPointVal == "BottomLeft")
+            {
+                relPoint = BottomLeft;
+            }
+            else if (relPointVal == "BottomRight")
+            {
+                relPoint = BottomRight;
+            }
+            pElement->SetRelativePoint(relPoint);
+        }
+    }
+
+    xml_attribute<>* textAttr = node->first_attribute("text");
+    if (textAttr)
+        pElement->SetText(textAttr->value());
+
+    for (xml_node<>* backgroundNode = node->first_node("Background"); backgroundNode; backgroundNode = backgroundNode->next_sibling("Background"))
+    {
+        UIState state = StateDefault;
+        xml_attribute<>* stateAttr = backgroundNode->first_attribute("state");
+        if (stateAttr)
+            state = ParseState(stateAttr->value());
+
+        xml_node<>* bgColorNode = backgroundNode->first_node("Color");
+        pElement->SetBackgroundColor(ParseColor(bgColorNode), state);
+    }
+
+    for (xml_node<>* fontNode = node->first_node("UseFont"); fontNode; fontNode = fontNode->next_sibling("UseFont"))
+    {
+        xml_attribute<>* nameAttr = fontNode->first_attribute("name");
+        if (!nameAttr)
+            continue;
+
+        const string& nameVal = nameAttr->value();
+        if (!m_UIFonts.contains_key(nameVal))
+            continue;
+
+        UIFont* font = m_UIFonts[nameVal].get();
+
+        UIState state = StateDefault;
+        xml_attribute<>* stateAttr = fontNode->first_attribute("state");
+        if (stateAttr)
+            state = ParseState(stateAttr->value());
+
+        pElement->SetFont(font, state);
+    }
+
+    for (xml_node<>* borderNode = node->first_node("Border"); borderNode; borderNode = borderNode->next_sibling("Border"))
+    {
+        UIState state = StateDefault;
+        xml_attribute<>* stateAttr = borderNode->first_attribute("state");
+        if (stateAttr)
+            state = ParseState(stateAttr->value());
+
+        float size = 1;
+        xml_attribute<>* sizeAttr = borderNode->first_attribute("size");
+        if (sizeAttr)
+            size = std::stof(sizeAttr->value());
+        pElement->SetBorderSize(size, state);
+
+        xml_node<>* colorNode = borderNode->first_node("Color");
+        Color color = Color::Black;
+        if (colorNode)
+            color = ParseColor(colorNode);
+
+        pElement->SetBorderColor(color, state);
+    }
+
+    xml_node<>* bindingsNode = node->first_node("Bindings");
+    if (bindingsNode)
+    {
+        ParseBindings(bindingsNode, pElement, "OnUpdate", UIElement::EvtUpdate);
+        ParseBindings(bindingsNode, pElement, "OnRender", UIElement::EvtRender);
+        ParseBindings(bindingsNode, pElement, "OnShow", UIElement::EvtShow);
+        ParseBindings(bindingsNode, pElement, "OnHide", UIElement::EvtHide);
+        ParseBindings(bindingsNode, pElement, "OnActivate", UIElement::EvtActivate);
+        ParseBindings(bindingsNode, pElement, "OnDeactivate", UIElement::EvtDeactivate);
+        ParseBindings(bindingsNode, pElement, "OnMouseEnter", UIElement::EvtMouseEnter);
+        ParseBindings(bindingsNode, pElement, "OnMouseLeave", UIElement::EvtMouseLeave);
+        ParseBindings(bindingsNode, pElement, "OnMouseDown", UIElement::EvtMouseDown);
+        ParseBindings(bindingsNode, pElement, "OnMouseUp", UIElement::EvtMouseUp);
+        ParseBindings(bindingsNode, pElement, "OnFocus", UIElement::EvtFocus);
+        ParseBindings(bindingsNode, pElement, "OnBlur", UIElement::EvtBlur);
+        ParseBindings(bindingsNode, pElement, "OnClick", UIElement::EvtClick);
+        ParseBindings(bindingsNode, pElement, "OnChange", UIElement::EvtChange);
+    }
+
+    xml_node<>* childrenNode = node->first_node("Children");
+    if (childrenNode)
+        ParseElementNodes(childrenNode, pParentElement, currentDir);
+
+    m_UIElements[name] = pElement;
+    return true;
 }
 
 void UIManager::ParseFrame(rapidxml::xml_node<>* node, shared_ptr<UIFrame>& pFrame)

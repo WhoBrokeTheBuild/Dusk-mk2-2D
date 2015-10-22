@@ -26,6 +26,9 @@
     <ClInclude Include="TestApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CustomRenderFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Content\Fonts\Roboto.ttf" />
