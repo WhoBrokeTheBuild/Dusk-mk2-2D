@@ -2,10 +2,6 @@ require "Dusk/Object"
 
 -- Dusk.AudioSystem
 
-Dusk.GetAudioSystem = function()
-	return Dusk.AudioSystem( dusk_get_audio_system() )
-end
-
 local AudioSystem = Dusk.Class(Dusk.Object, function(self, ptr)
 	Dusk.Object.init(self, ptr)
 end)
@@ -27,6 +23,11 @@ function AudioSystem:SetSoundVolume(volume)
 end
 
 Dusk.AudioSystem = AudioSystem
+
+dusk_audio_system = Dusk.AudioSystem( dusk_get_audio_system() )
+Dusk.GetAudioSystem = function()
+	return dusk_audio_system
+end
 
 -- Dusk.Music
 

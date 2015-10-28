@@ -9,8 +9,8 @@
 
 using namespace dusk;
 
-TestApp::TestApp()
-    : Program()
+TestApp::TestApp() :
+    Program()
 {
     GraphicsSystem* pGS = GetGraphicsSystem();
     pGS->SetWindowSize(1600, 900);

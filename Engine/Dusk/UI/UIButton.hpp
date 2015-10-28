@@ -11,6 +11,11 @@ class UIButton :
 {
 public:
 
+    enum : EventID 
+    {
+        EvtClick = 100,
+    };
+
     UIButton();
     virtual ~UIButton();
 
@@ -20,9 +25,11 @@ public:
 
     virtual void OnMouseButtonRelease(const Event& evt) override;
 
+    virtual inline void Click() { Dispatch(Event(UIButton::EvtClick)); }
+
 protected:
 
-    virtual void ChangeState(const UIState& newState) override;
+    virtual void UpdateState() override;
 
 };
 

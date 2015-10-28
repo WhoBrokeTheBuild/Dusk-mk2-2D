@@ -16,17 +16,17 @@ namespace dusk
 {
 
 enum UIState {
-    StateDefault,
-    StateActive,
-    StateHover,
-    StateDisabled
+    StateDefault  = 1,
+    StateActive   = 2,
+    StateHover    = 3,
+    StateDisabled = 4,
 };
 
 enum UIRelPoint {
-    TopLeft,
-    TopRight,
-    BottomLeft,
-    BottomRight
+    TopLeft     = 1,
+    TopRight    = 2,
+    BottomLeft  = 3,
+    BottomRight = 4,
 };
 
 template <typename PropType>
@@ -79,29 +79,26 @@ public:
 
     enum : EventID
     {
-        EvtShow,
-        EvtHide,
+        EvtShow         = 1,
+        EvtHide         = 2,
 
-        EvtActivate,
-        EvtDeactivate,
+        EvtActivate     = 3,
+        EvtDeactivate   = 4,
 
-        EvtMouseEnter,
-        EvtMouseLeave,
+        EvtMouseEnter   = 5,
+        EvtMouseLeave   = 6,
 
-        EvtMouseDown,
-        EvtMouseUp,
+        EvtMouseDown    = 7,
+        EvtMouseUp      = 8,
 
-        EvtFocus,
-        EvtBlur,
+        EvtFocus        = 9,
+        EvtBlur         = 10,
 
-        EvtClick,
-        EvtChange,
+        EvtUpdate       = 11,
+        EvtRender       = 12,
 
-        EvtUpdate,
-        EvtRender,
-
-        EvtLayoutChange,
-        EvtStateChange,
+        EvtLayoutChange = 13,
+        EvtStateChange  = 14,
     };
 
     UIElement();
@@ -132,9 +129,14 @@ public:
     virtual inline void MouseUp() { Dispatch(Event(UIElement::EvtMouseUp)); }
     virtual inline void MouseDown() { Dispatch(Event(UIElement::EvtMouseDown)); }
     virtual void Focus();
-    virtual inline void Blur() { Dispatch(Event(UIElement::EvtBlur)); }
-    virtual inline void Click() { Dispatch(Event(UIElement::EvtClick)); }
-    virtual inline void Change() { Dispatch(Event(UIElement::EvtChange)); }
+    virtual void Blur();
+
+    bool IsMouseOver() const { return m_MouseOver; }
+    bool IsMouseDown() const { return m_MouseDown; }
+    bool HasFocus() const { return m_HasFocus; }
+
+    bool IsFocusable() const { return m_Focusable; }
+    void SetFocusable(bool focusable);
 
     bool IsActive() const { return m_Active; }
     void SetActive(bool active);
@@ -181,21 +183,30 @@ public:
     virtual string GetText() const { return m_TextBuffer.GetText(); }
     virtual void SetText(const string& text);
 
+    virtual ArrayList<shared_ptr<UIElement>>& GetChildren() { return m_Children; }
     virtual void AddChild(shared_ptr<UIElement>& pChild);
 
 protected:
     
-    virtual void ChangeState(const UIState& newState);
+    virtual void UpdateState();
     virtual void UpdateStateData();
     virtual void UpdateLayout();
+
+private:
 
     UIManager* mp_UIManager;
 
     string m_Name;
     UIState m_State = StateDefault;
 
+    bool m_Focusable = true;
+
     bool m_Active = true;
     bool m_Visible = true;
+
+    bool m_MouseOver = false;
+    bool m_MouseDown = false;
+    bool m_HasFocus = false;
 
     Vector2f m_Pos;
     Vector2f m_TargetSize;
@@ -214,6 +225,49 @@ protected:
 
     weak_ptr<UIElement> mp_Parent;
     ArrayList<shared_ptr<UIElement>> m_Children;
+
+public:
+
+    static void Script_RegisterFunctions();
+
+    static int Script_IsMouseOver(lua_State* L);
+    static int Script_IsMouseDown(lua_State* L);
+    static int Script_HasFocus(lua_State* L);
+
+    static int Script_IsFocusable(lua_State* L);
+    static int Script_SetFocusable(lua_State* L);
+
+    static int Script_IsActive(lua_State* L);
+    static int Script_SetActive(lua_State* L);
+
+    static int Script_IsVisible(lua_State* L);
+    static int Script_SetVisible(lua_State* L);
+
+    static int Script_GetValue(lua_State* L);
+
+    static int Script_GetState(lua_State* L);
+
+    static int Script_GetPos(lua_State* L);
+    static int Script_GetBounds(lua_State* L);
+
+    static int Script_GetParent(lua_State* L);
+    //static int Script_SetParent(lua_State* L);
+
+    static int Script_GetSize(lua_State* L);
+    static int Script_SetSize(lua_State* L);
+
+    static int Script_GetOffset(lua_State* L);
+    static int Script_SetOffset(lua_State* L);
+
+    static int Script_GetRelativePoint(lua_State* L);
+    //static int Script_SetRelativePoint(lua_State* L);
+
+    static int Script_GetRelativeTo(lua_State* L);
+    static int Script_SetRelativeTo(lua_State* L);
+
+    static int Script_GetText(lua_State* L);
+    static int Script_SetText(lua_State* L);
+
 };
 
 class StateChangeData :

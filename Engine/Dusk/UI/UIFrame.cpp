@@ -5,7 +5,7 @@ namespace dusk
 
 UIFrame::UIFrame()
 {
-
+    SetFocusable(false);
 }
 
 UIFrame::~UIFrame()

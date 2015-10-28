@@ -1,13 +1,9 @@
-require "Dusk/Object"
+require "Dusk/Events"
 
 -- Dusk.GraphicsSystem
 
-Dusk.GetGraphicsSystem = function()
-	return Dusk.GraphicsSystem( dusk_get_graphics_system() )
-end
-
-local GraphicsSystem = Dusk.Class(Dusk.Object, function(self, ptr)
-	Dusk.Object.init(self, ptr)
+local GraphicsSystem = Dusk.Class(Dusk.EventDispatcher, function(self, ptr)
+	Dusk.EventDispatcher.init(self, ptr)
 end)
 
 function GraphicsSystem:GetWinSize()
@@ -26,7 +22,14 @@ function GraphicsSystem:GetContext()
 	return Dusk.GraphicsContext( dusk_graphics_system_get_context() )
 end
 
+GraphicsSystem.EvtWindowResize = 1
+
 Dusk.GraphicsSystem = GraphicsSystem
+
+dusk_graphics_system = Dusk.GraphicsSystem( dusk_get_graphics_system() )
+Dusk.GetGraphicsSystem = function()
+	return dusk_graphics_system
+end
 
 -- Dusk.GraphicsContext
 

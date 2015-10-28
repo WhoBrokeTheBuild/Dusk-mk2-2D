@@ -6,8 +6,8 @@ end
 
 -- Dusk.InputSystem
 
-local InputSystem = Dusk.Class(Dusk.IEventDispatcher, function(self, ptr)
-	Dusk.IEventDispatcher.init(self, ptr)
+local InputSystem = Dusk.Class(Dusk.EventDispatcher, function(self, ptr)
+	Dusk.EventDispatcher.init(self, ptr)
 end)
 
 InputSystem.EvtKeyPress			  = 1

@@ -85,7 +85,7 @@ private:
 
 public:
 
-    static void InitScripting();
+    static void Script_RegisterFunctions();
     static int Script_Get(lua_State* L);
     static int Script_MapKey(lua_State* L);
     static int Script_MapMouseButton(lua_State* L);

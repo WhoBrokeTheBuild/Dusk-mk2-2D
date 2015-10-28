@@ -2,6 +2,7 @@
 #define DUSK_UI_UI_INPUT_HPP
 
 #include <Dusk/UI/UIElement.hpp>
+#include <Dusk/Scripting/Scripting.hpp>
 
 namespace dusk
 {
@@ -10,6 +11,11 @@ class UIInput :
     public UIElement
 {
 public:
+
+    enum : EventID
+    {
+        EvtChange = 100,
+    };
 
     enum InputType
     {
@@ -27,6 +33,7 @@ public:
 
     virtual void Focus() override;
     virtual void Blur() override;
+    virtual inline void Change() { Dispatch(Event(UIInput::EvtChange)); }
 
     virtual void OnTextInput(const Event& evt);
 
@@ -37,8 +44,8 @@ public:
     void SetMaxLength(const size_t& maxLen);
 
     inline string GetValue() const { return m_Value; }
-    inline int GetIntValue() const { return std::stoi(m_Value); }
-    inline float GetFloatValue() const { return std::stof(m_Value); }
+    inline int GetIntValue() const { return m_Value.empty() ? 0 : std::stoi(m_Value); }
+    inline float GetFloatValue() const { return m_Value.empty() ? 0.0f : std::stof(m_Value); }
 
     void SetValue(const string& value);
 
@@ -56,6 +63,12 @@ protected:
     size_t m_MaxLen = 0;
     
     string m_Value;
+
+public:
+
+    static void Script_RegisterFunctions();
+
+    static int Script_GetValue(lua_State* L);
 
 };
 

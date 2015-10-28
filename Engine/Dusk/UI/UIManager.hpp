@@ -13,6 +13,7 @@
 #include <Dusk/UI/UIFont.hpp>
 #include <Dusk/UI/UIRenderFrame.hpp>
 #include <Dusk/Utility/Types.hpp>
+#include <Dusk/Scripting/Scripting.hpp>
 #include <Dusk/Scripting/ScriptHost.hpp>
 
 #include <RapidXML/rapidxml.hpp>
@@ -35,6 +36,8 @@ public:
 
     UIElement* GetFocusedElement() const { return mp_FocusedElement; }
     void SetFocusedElement(UIElement* pFocusedElement) { mp_FocusedElement = pFocusedElement; }
+
+    UIElement* GetElement(const string& name) { return m_UIElements[name].get(); }
 
     void OnUpdate(const Event& evt);
     void OnRender(const Event& evt);
@@ -87,6 +90,12 @@ private:
     Map<string, shared_ptr<UIElement>> m_UIElements;
 
     Map<string, RenderFrameTypeFunc> m_RenderFrameTypes;
+
+public:
+
+    static void Script_RegisterFunctions();
+    static int Script_GetElement(lua_State* L);
+
 };
 
 } // namespace dusk

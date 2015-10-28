@@ -9,6 +9,7 @@ namespace dusk
 
 UIInput::UIInput()
 {
+    SetFocusable(true);
     Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtTextInput, this, &UIInput::OnTextInput);
 }
 
@@ -24,7 +25,9 @@ void UIInput::Inherit(const UIElement* pInheritFrom)
     const UIInput* pInheritFromInput = dynamic_cast<const UIInput*>(pInheritFrom);
     if (pInheritFromInput)
     {
-
+        SetType(pInheritFromInput->GetType());
+        SetMaxLength(pInheritFromInput->GetMaxLength());
+        SetValue(pInheritFromInput->GetValue());
     }
 }
 
@@ -37,13 +40,12 @@ void UIInput::Focus()
 void UIInput::Blur()
 {
     UIElement::Blur();
-    ChangeState(StateDefault);
     ApplyCursor();
 }
 
 void UIInput::OnTextInput(const Event& evt)
 {
-    if (GetState() == StateActive)
+    if (HasFocus())
     {
         auto pData = evt.GetDataAs<TextInputEventData>();
 
@@ -105,6 +107,8 @@ bool UIInput::IsValidInput(char input)
 
         return (input >= '0' && input <= '9') || (m_Value.find('.') == string::npos && input == '.');
     }
+
+    return false;
 }
 
 void UIInput::FixValue()
@@ -122,7 +126,7 @@ void UIInput::FixValue()
 
 void UIInput::ApplyCursor()
 {
-    if (GetState() == StateActive)
+    if (HasFocus())
     {
         SetText(m_Value + "_");
     }
@@ -130,6 +134,42 @@ void UIInput::ApplyCursor()
     {
         SetText(m_Value);
     }
+}
+
+void UIInput::Script_RegisterFunctions()
+{
+    Scripting::RegisterFunction("dusk_ui_input_get_value", &UIInput::Script_GetValue);
+}
+
+int UIInput::Script_GetValue(lua_State* L)
+{
+    UIInput* pInput = (UIInput*)lua_tointeger(L, 1);
+    switch (pInput->GetType())
+    {
+    case TypeText:
+        {
+            const string& strVal = pInput->GetValue();
+            lua_pushstring(L, strVal.c_str());
+        }
+        break;
+    case TypeInt:
+        {
+            const int& intVal = pInput->GetIntValue();
+            lua_pushinteger(L, intVal);
+        }
+        break;
+    case TypeFloat:
+        {
+            const float& fltVal = pInput->GetFloatValue();
+            lua_pushnumber(L, fltVal);
+        }
+        break;
+    default:
+
+        lua_pushstring(L, "");
+    }
+
+    return 1;
 }
 
 }

@@ -22,7 +22,8 @@ public:
     void SetTarget(weak_ptr<UIElement> pTarget) { mp_Target = pTarget; }
 
     virtual void Focus() override;
-    virtual void Click() override;
+    virtual void MouseUp() override;
+    virtual void MouseDown() override;
 
 protected:
 

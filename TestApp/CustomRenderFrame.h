@@ -16,13 +16,35 @@ public:
     virtual void OnUpdate(const Event& evt) override
     {
         UIRenderFrame::OnUpdate(evt);
-        DuskLog("info", "Render Frame Updated");
     }
 
-    virtual inline void Click() override
+    virtual void OnMouseMove(const Event& evt) override
     {
-        throw std::logic_error("The method or operation is not implemented.");
+        UIRenderFrame::OnMouseMove(evt);
+
+        auto pData = evt.GetDataAs<MouseMoveEventData>();
+
+        if (m_MouseDown && GetBounds().contains(pData->GetPos()))
+        {
+            DuskLog("info", "Custom Render Frame Mouse Dragged");
+        }
     }
+
+    virtual inline void MouseUp() override
+    {
+        UIRenderFrame::MouseUp();
+        m_MouseDown = false;
+    }
+
+    virtual inline void MouseDown() override
+    {
+        UIRenderFrame::MouseDown();
+        m_MouseDown = true;
+    }
+
+private:
+
+    bool m_MouseDown = false;
 
 };
 

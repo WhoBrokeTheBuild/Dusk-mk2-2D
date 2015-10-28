@@ -7,7 +7,7 @@ namespace dusk
 
 UIButton::UIButton()
 {
-
+    SetFocusable(false);
 }
 
 UIButton::~UIButton()
@@ -31,14 +31,17 @@ void UIButton::OnMouseButtonRelease(const Event& evt)
 
     UIElement::OnMouseButtonRelease(evt);
 
-    if (m_State == StateActive)
-        ChangeState(StateHover);
+    if (IsMouseOver())
+    {
+        Click();
+    }
 }
 
-void UIButton::ChangeState(const UIState& newState)
+void UIButton::UpdateState()
 {
+    UIElement::UpdateState();
     sf::WindowHandle handle = Program::Inst()->GetGraphicsSystem()->GetWindowHandle();
-    if (newState == StateHover || newState == StateActive)
+    if (IsMouseOver())
     {
         Cursor handCursor(Cursor::HAND);
         handCursor.set(handle);
@@ -48,8 +51,6 @@ void UIButton::ChangeState(const UIState& newState)
         Cursor handCursor(Cursor::NORMAL);
         handCursor.set(handle);
     }
-
-    UIElement::ChangeState(newState);
 }
 
 }

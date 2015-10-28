@@ -170,7 +170,7 @@ void InputSystem::ProcessSfEvent(const sf::Event& sfEvent)
     }*/
 }
 
-void InputSystem::InitScripting(void)
+void InputSystem::Script_RegisterFunctions(void)
 {
     Scripting::RegisterFunction("dusk_get_input_system", &InputSystem::Script_Get);
     Scripting::RegisterFunction("dusk_input_system_map_key", &InputSystem::Script_MapKey);

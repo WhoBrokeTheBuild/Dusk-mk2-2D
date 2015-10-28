@@ -6,6 +6,7 @@
 #include <Dusk/Utility/Strings.hpp>
 
 #include <cfloat>
+#include <lua.hpp>
 
 using namespace rapidxml;
 
@@ -30,6 +31,10 @@ UIManager::UIManager() :
     Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseMove, this, &UIManager::OnMouseMove);
     Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseButtonPress, this, &UIManager::OnMouseButtonPress);
     Program::Inst()->GetInputSystem()->AddEventListener(InputSystem::EvtMouseButtonRelease, this, &UIManager::OnMouseButtonRelease);
+
+    lua_State* L = mp_ScriptHost->GetState();
+    lua_pushinteger(L, (ptrdiff_t)this);
+    lua_setglobal(L, "dusk_ptr_ui_manager");
 }
 
 UIManager::~UIManager()
@@ -529,8 +534,6 @@ bool UIManager::ParseElement(rapidxml::xml_node<>* node, shared_ptr<UIElement>& 
         ParseBindings(bindingsNode, pElement, "OnMouseUp", UIElement::EvtMouseUp);
         ParseBindings(bindingsNode, pElement, "OnFocus", UIElement::EvtFocus);
         ParseBindings(bindingsNode, pElement, "OnBlur", UIElement::EvtBlur);
-        ParseBindings(bindingsNode, pElement, "OnClick", UIElement::EvtClick);
-        ParseBindings(bindingsNode, pElement, "OnChange", UIElement::EvtChange);
     }
 
     xml_node<>* childrenNode = node->first_node("Children");
@@ -585,10 +588,45 @@ void UIManager::ParseInput(rapidxml::xml_node<>* node, shared_ptr<UIInput>& pInp
             pInput->SetType(UIInput::TypeFloat);
         }
     }
+
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pInput);
+    xml_node<>* bindingsNode = node->first_node("Bindings");
+    if (bindingsNode)
+    {
+        ParseBindings(bindingsNode, pGenericElement, "OnChange", UIInput::EvtChange);
+    }
 }
 
 void UIManager::ParseButton(rapidxml::xml_node<>* node, shared_ptr<UIButton>& pButton)
 {
+    shared_ptr<UIElement> pGenericElement = dynamic_pointer_cast<UIElement>(pButton);
+
+    xml_node<>* bindingsNode = node->first_node("Bindings");
+    if (bindingsNode)
+    {
+        ParseBindings(bindingsNode, pGenericElement, "OnClick", UIButton::EvtClick);
+    }
+}
+
+void UIManager::Script_RegisterFunctions()
+{
+    Scripting::RegisterFunction("dusk_ui_manager_get_element", &UIManager::Script_GetElement);
+
+    UIElement::Script_RegisterFunctions();
+    //UIFrame::Script_RegisterFunctions();
+    //UIButton::Script_RegisterFunctions();
+    UIInput::Script_RegisterFunctions();
+}
+
+int UIManager::Script_GetElement(lua_State* L)
+{
+    UIManager* pUI = (UIManager*)lua_tointeger(L, 1);
+    const string& name = lua_tostring(L, 2);
+
+    UIElement* pElement = pUI->GetElement(name);
+
+    lua_pushinteger(L, (ptrdiff_t)pElement);
+    return 1;
 }
 
 } // namespace dusk

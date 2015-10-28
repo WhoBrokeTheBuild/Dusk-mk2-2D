@@ -8,6 +8,7 @@
 #include <Dusk/Input/InputSystem.hpp>
 #include <Dusk/Scripting/Scripting.hpp>
 #include <Dusk/Scripting/ScriptHost.hpp>
+#include <Dusk/UI/UIManager.hpp>
 
 #include <chrono>
 using namespace std::chrono;
@@ -147,15 +148,16 @@ void Program::PostRender(GraphicsContext* pCtx)
 
 void Program::Script_RegisterFunctions()
 {
-    Scripting::RegisterFunction("dusk_get_program", &Program::Script_GetProgram);
+    Scripting::RegisterFunction("dusk_get_program", &Program::Script_Get);
     Scripting::RegisterFunction("dusk_program_exit", &Program::Script_Exit);
 
     EventDispatcher::Script_RegisterFunctions();
     GraphicsSystem::Script_RegisterFunctions();
-    InputSystem::InitScripting();
+    InputSystem::Script_RegisterFunctions();
+    UIManager::Script_RegisterFunctions();
 }
 
-int Program::Script_GetProgram(lua_State* L)
+int Program::Script_Get(lua_State* L)
 {
     lua_pushinteger(L, (ptrdiff_t)Program::Inst());
     return 1;

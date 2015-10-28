@@ -5,7 +5,7 @@ namespace dusk
 
 UILabel::UILabel()
 {
-
+    SetFocusable(false);
 }
 
 UILabel::~UILabel()
@@ -31,12 +31,21 @@ void UILabel::Focus()
     }
 }
 
-void UILabel::Click()
+void UILabel::MouseUp()
 {
-    UIElement::Click();
+    UIElement::MouseUp();
     if (auto pTarget = mp_Target.lock())
     {
-        pTarget->Click();
+        pTarget->MouseUp();
+    }
+}
+
+void UILabel::MouseDown()
+{
+    UIElement::MouseDown();
+    if (auto pTarget = mp_Target.lock())
+    {
+        pTarget->MouseDown();
     }
 }
 

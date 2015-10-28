@@ -96,18 +96,20 @@ void UIElement::OnMouseMove(const Event& evt)
 
     if (GetBounds().contains(pData->GetPos()))
     {
-        if (m_State == StateDefault)
+        if (!m_MouseOver)
         {
-            ChangeState(StateHover);
+            m_MouseOver = true;
             MouseEnter();
+            UpdateState();
         }
     }
     else
     {
-        if (m_State == StateHover)
+        if (m_MouseOver) 
         {
-            ChangeState(StateDefault);
+            m_MouseOver = false;
             MouseLeave();
+            UpdateState();
         }
     }
 
@@ -122,11 +124,12 @@ void UIElement::OnMouseButtonPress(const Event& evt)
     if (m_State == StateDisabled)
         return;
 
-    if (m_State == StateHover)
+    if (m_MouseOver)
     {
-        ChangeState(StateActive);
+        m_MouseDown = true;
         MouseDown();
         Focus();
+        UpdateState();
     }
 
     for (auto& child : m_Children)
@@ -140,10 +143,11 @@ void UIElement::OnMouseButtonRelease(const Event& evt)
     if (m_State == StateDisabled)
         return;
 
-    if (m_State == StateActive)
+    if (m_MouseDown)
     {
+        m_MouseDown = false;
         MouseUp();
-        Click();
+        UpdateState();
     }
 
     for (auto& child : m_Children)
@@ -158,21 +162,46 @@ void UIElement::OnRelativeToLayoutChange(const Event& evt)
 
 void UIElement::Focus()
 {
+    if (!m_Focusable) return;
+
     UIElement* pFocusedElement = mp_UIManager->GetFocusedElement();
-    if (pFocusedElement)
-        pFocusedElement->Blur();
     mp_UIManager->SetFocusedElement(this);
+    if (pFocusedElement)
+    {
+        pFocusedElement->Blur();
+    }
+
+    m_HasFocus = true;
+    UpdateState();
     Dispatch(Event(UIElement::EvtFocus));
+}
+
+void UIElement::Blur()
+{
+    m_HasFocus = false;
+    UpdateState();
+    Dispatch(Event(UIElement::EvtBlur));
+}
+
+void UIElement::SetFocusable(bool focusable)
+{
+    m_Focusable = focusable;
+    if (!m_Focusable && m_HasFocus)
+    {
+        Blur();
+    }
 }
 
 void UIElement::SetActive(bool active)
 {
     m_Active = active;
+    UpdateState();
     if (m_Active)
+    {
         Dispatch(Event(UIElement::EvtActivate));
+    }
     else
     {
-        ChangeState(UIState::StateDisabled);
         Dispatch(Event(UIElement::EvtDeactivate));
     }
 }
@@ -186,9 +215,25 @@ void UIElement::SetVisible(bool visible)
         Dispatch(Event(UIElement::EvtHide));
 }
 
-void UIElement::ChangeState(const UIState& newState)
+void UIElement::UpdateState()
 {
-    m_State = newState;
+    if (!m_Active)
+    {
+        m_State = StateDisabled;
+    }
+    else if (m_MouseOver)
+    {
+        m_State = StateHover;
+    }
+    else if (m_MouseDown || m_HasFocus)
+    {
+        m_State = StateActive;
+    }
+    else
+    {
+        m_State = StateDefault;
+    }
+
     UpdateStateData();
 }
 
@@ -263,9 +308,8 @@ void UIElement::UpdateStateData()
         m_TextBuffer.SetFont(pUIFont->GetFont());
         m_TextBuffer.SetFontSize(pUIFont->GetFontSize());
         m_TextBuffer.SetColor(pUIFont->GetColor());
+        UpdateLayout();
     }
-
-    UpdateLayout();
 }
 
 void UIElement::UpdateLayout()
@@ -273,6 +317,7 @@ void UIElement::UpdateLayout()
     if (auto pRelativeTo = m_RelativeTo.lock())
     {
         Vector2f relPos = pRelativeTo->GetPos();
+        Vector2f relSize = pRelativeTo->GetSize();
         switch (m_RelativePoint)
         {
         case TopLeft:
@@ -283,7 +328,7 @@ void UIElement::UpdateLayout()
             break;
         case TopRight:
 
-            m_Pos.x = relPos.x + m_Size.x + m_Offset.x;
+            m_Pos.x = relPos.x + relSize.x + m_Offset.x;
             m_Pos.y = relPos.y + m_Offset.y;
 
             break;
@@ -295,8 +340,8 @@ void UIElement::UpdateLayout()
             break;
         case BottomRight:
 
-            m_Pos.x = relPos.x + m_Size.x + m_Offset.x;
-            m_Pos.y = relPos.y + m_Size.y + m_Offset.y;
+            m_Pos.x = relPos.x + relSize.x + m_Offset.x;
+            m_Pos.y = relPos.y + relSize.y + m_Offset.y;
 
             break;
         }
@@ -337,6 +382,172 @@ void UIElement::UpdateLayout()
     {
         m_Size.y = m_TargetSize.y;
     }
+}
+
+void UIElement::Script_RegisterFunctions()
+{
+    Scripting::RegisterFunction("dusk_ui_element_is_mouse_over", &UIElement::Script_IsMouseOver);
+    Scripting::RegisterFunction("dusk_ui_element_is_mouse_down", &UIElement::Script_IsMouseDown);
+    Scripting::RegisterFunction("dusk_ui_element_has_focus", &UIElement::Script_HasFocus);
+
+    Scripting::RegisterFunction("dusk_ui_element_is_focusable", &UIElement::Script_IsFocusable);
+    Scripting::RegisterFunction("dusk_ui_element_set_focusable", &UIElement::Script_SetFocusable);
+
+    Scripting::RegisterFunction("dusk_ui_element_is_active", &UIElement::Script_IsActive);
+    Scripting::RegisterFunction("dusk_ui_element_set_active", &UIElement::Script_SetActive);
+
+    Scripting::RegisterFunction("dusk_ui_element_is_visible", &UIElement::Script_IsVisible);
+    Scripting::RegisterFunction("dusk_ui_element_set_visible", &UIElement::Script_SetVisible);
+
+    Scripting::RegisterFunction("dusk_ui_element_get_name", &UIElement::Script_GetValue);
+
+    Scripting::RegisterFunction("dusk_ui_element_get_state", &UIElement::Script_GetState);
+
+    Scripting::RegisterFunction("dusk_ui_element_get_pos", &UIElement::Script_GetPos);
+
+    Scripting::RegisterFunction("dusk_ui_element_get_size", &UIElement::Script_GetSize);
+    Scripting::RegisterFunction("dusk_ui_element_set_size", &UIElement::Script_SetSize);
+}
+
+int UIElement::Script_IsMouseOver(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const bool& value = pElement->IsMouseOver();
+    lua_pushboolean(L, (int)value);
+    return 1;
+}
+
+int UIElement::Script_IsMouseDown(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const bool& value = pElement->IsMouseDown();
+    lua_pushboolean(L, (int)value);
+    return 1;
+}
+
+int UIElement::Script_HasFocus(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const bool& value = pElement->HasFocus();
+    lua_pushboolean(L, (int)value);
+    return 1;
+}
+
+int UIElement::Script_IsFocusable(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const bool& value = pElement->IsFocusable();
+    lua_pushboolean(L, (int)value);
+    return 1;
+}
+
+int UIElement::Script_SetFocusable(lua_State* L)
+{
+    return 0;
+}
+
+int UIElement::Script_IsActive(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const bool& value = pElement->IsActive();
+    lua_pushboolean(L, (int)value);
+    return 1;
+}
+
+int UIElement::Script_SetActive(lua_State* L)
+{
+    return 0;
+}
+
+int UIElement::Script_IsVisible(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const bool& value = pElement->IsVisible();
+    lua_pushboolean(L, (int)value);
+    return 1;
+}
+
+int UIElement::Script_SetVisible(lua_State* L)
+{
+    return 0;
+}
+
+int UIElement::Script_GetValue(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const string& name = pElement->GetName();
+    lua_pushstring(L, name.c_str());
+    return 1;
+}
+
+int UIElement::Script_GetState(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const UIState& state = pElement->GetState();
+    lua_pushinteger(L, state);
+    return 1;
+}
+
+int UIElement::Script_GetPos(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const Vector2f& pos = pElement->GetPos();
+    lua_pushnumber(L, pos.x);
+    lua_pushnumber(L, pos.y);
+    return 2;
+}
+
+int UIElement::Script_GetSize(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    const Vector2f& size = pElement->GetSize();
+    lua_pushnumber(L, size.x);
+    lua_pushnumber(L, size.y);
+    return 2;
+}
+
+int UIElement::Script_SetSize(lua_State* L)
+{
+    UIElement* pElement = (UIElement*)lua_tointeger(L, 1);
+    Vector2f size;
+
+    if (lua_isstring(L, 2)) 
+    {
+        const string& xStr = lua_tostring(L, 2);
+        if (xStr == "min")
+        {
+            size.x = FLT_MIN;
+        }
+        else if (xStr == "max")
+        {
+            size.x = FLT_MAX;
+        }
+    }
+    else
+    {
+        size.x = (float)lua_tonumber(L, 2);
+    }
+
+    float y = 0.0f;
+    if (lua_isstring(L, 3))
+    {
+        const string& yStr = lua_tostring(L, 3);
+        if (yStr == "min")
+        {
+            size.y = FLT_MIN;
+        }
+        else if (yStr == "max")
+        {
+            size.y = FLT_MAX;
+        }
+    }
+    else
+    {
+        size.y = (float)lua_tonumber(L, 3);
+    }
+
+    pElement->SetSize(size);
+    return 0;
 }
 
 int StateChangeData::PushDataToLua(lua_State* L) const

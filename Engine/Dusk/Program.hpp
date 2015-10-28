@@ -84,7 +84,7 @@ private:
 public:
 
     static void Script_RegisterFunctions();
-    static int Script_GetProgram(lua_State* L);
+    static int Script_Get(lua_State* L);
     static int Script_Exit(lua_State* L);
     static int Script_GetGraphicsSystem(lua_State* L);
     static int Script_GetInputSystem(lua_State* L);

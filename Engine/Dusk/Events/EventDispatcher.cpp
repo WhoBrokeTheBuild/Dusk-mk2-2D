@@ -195,8 +195,8 @@ void EventDispatcher::CleanMap()
 
 void EventDispatcher::Script_RegisterFunctions()
 {
-    Scripting::RegisterFunction("dusk_ievent_dispatcher_add_event_listener", &EventDispatcher::Script_AddEventListener);
-    Scripting::RegisterFunction("dusk_ievent_dispatcher_remove_event_listener", &EventDispatcher::Script_RemoveEventListener);
+    Scripting::RegisterFunction("dusk_event_dispatcher_add_event_listener", &EventDispatcher::Script_AddEventListener);
+    Scripting::RegisterFunction("dusk_event_dispatcher_remove_event_listener", &EventDispatcher::Script_RemoveEventListener);
 }
 
 int EventDispatcher::Script_AddEventListener(lua_State* L)

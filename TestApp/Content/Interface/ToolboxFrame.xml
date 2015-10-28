@@ -7,6 +7,7 @@
       virtual="true">
     <Size x="$min" y="$min" />
     <UseFont name="HeadingFont" />
+    <UseFont name="HeadingFont" state="hover" />
   </Label>
 
   <Label name="ToolboxFrame_LabelTemplate"
@@ -18,8 +19,7 @@
 
   <Input name="ToolboxFrame_InputTemplate"
       inherits="DefaultElementTemplate"
-      virtual="true"
-      maxLength="5">
+      virtual="true">
     <Size x="$min" y="$min" />
     <Border size="1">
       <Color r="0" g="0" b="0" />
@@ -54,7 +54,7 @@
       <Color r="255" g="255" b="255" />
     </Background>
     <Children>
-      
+
       <Label name="ToolboxFrame_MapSizeLabel"
           inherits="ToolboxFrame_HeadingTemplate"
           text="Map Size">
@@ -71,9 +71,9 @@
           inherits="ToolboxFrame_InputTemplate"
           type="text">
         <Size x="100" y="20" />
-        <Position x="10" y="0" relTo="ToolboxFrame_NameLabel" relPoint="TopRight" />
+        <Position x="50" y="0" relTo="ToolboxFrame_NameLabel" relPoint="TopRight" />
       </Input>
-      
+
       <Label name="ToolboxFrame_WidthLabel"
           inherits="ToolboxFrame_LabelTemplate"
           text="Width:"
@@ -86,7 +86,7 @@
         <Size x="100" y="20" />
         <Position x="0" y="5" relTo="ToolboxFrame_NameInput" relPoint="BottomLeft" />
       </Input>
-      
+
       <Label name="ToolboxFrame_HeightLabel"
           inherits="ToolboxFrame_LabelTemplate"
           text="Height:"
@@ -113,11 +113,37 @@
         <Position x="0" y="5" relTo="ToolboxFrame_HeightInput" relPoint="BottomLeft" />
       </Input>
 
+      <Label name="ToolboxFrame_TileWidthLabel"
+          inherits="ToolboxFrame_LabelTemplate"
+          text="Tile Width:"
+          target="ToolboxFrame_TileWidthInput">
+        <Position x="0" y="5" relTo="ToolboxFrame_ScaleLabel" relPoint="BottomLeft" />
+      </Label>
+      <Input name="ToolboxFrame_TileWidthInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="int">
+        <Size x="100" y="20" />
+        <Position x="0" y="5" relTo="ToolboxFrame_ScaleInput" relPoint="BottomLeft" />
+      </Input>
+
+      <Label name="ToolboxFrame_TileHeightLabel"
+          inherits="ToolboxFrame_LabelTemplate"
+          text="Tile Height:"
+          target="ToolboxFrame_TileHeightInput">
+        <Position x="0" y="5" relTo="ToolboxFrame_TileWidthLabel" relPoint="BottomLeft" />
+      </Label>
+      <Input name="ToolboxFrame_TileHeightInput"
+          inherits="ToolboxFrame_InputTemplate"
+          type="int">
+        <Size x="100" y="20" />
+        <Position x="0" y="5" relTo="ToolboxFrame_TileWidthInput" relPoint="BottomLeft" />
+      </Input>
+
       <Button name="ToolboxFrame_UpdateSizeButton"
           inherits="ToolboxFrame_ButtonTemplate"
           text="Update Size">
         <Size x="$min" y="20" />
-        <Position x="0" y="10" relTo="ToolboxFrame_ScaleLabel" relPoint="BottomLeft" />
+        <Position x="0" y="10" relTo="ToolboxFrame_TileHeightLabel" relPoint="BottomLeft" />
         <Bindings>
           <OnClick func="ToolboxFrame_UpdateSizeButton_OnClick" />
         </Bindings>
